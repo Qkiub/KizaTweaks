@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>KizaTweaks.App</RootNamespace>
+    <AssemblyName>KizaTweaks</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\kizatweaks.ico</ApplicationIcon>
+    <!-- Permite compilar en Linux/macOS (CI); el .exe solo corre en Windows. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+
+    <Version>1.0.0</Version>
+    <Product>KizaTweaks</Product>
+    <Company>Qkiub</Company>
+    <Authors>Qkiub</Authors>
+    <Copyright>© Qkiub</Copyright>
+    <Description>KizaTweaks by Qkiub: optimización de Windows para juegos.</Description>
+
+    <!-- Publicación: un solo .exe que no requiere instalar .NET -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KizaTweaks.Core\KizaTweaks.Core.csproj" />
+    <ProjectReference Include="..\KizaTweaks.Presentation\KizaTweaks.Presentation.csproj" />
+  </ItemGroup>
+
+  <!-- Medidor de FPS incluido en el .exe (tools/get-presentmon.ps1 lo descarga antes de compilar). -->
+  <ItemGroup Condition="Exists('Tools\PresentMon.exe')">
+    <EmbeddedResource Include="Tools\PresentMon.exe" LogicalName="KizaTweaks.Tools.PresentMon.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\logo.png" />
+    <Resource Include="Assets\kizatweaks.ico" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,37 @@
+<UserControl x:Class="KizaTweaks.App.Views.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,28,32,32" MaxWidth="900" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                <Image Source="/Assets/logo.png" Width="72" Height="72" RenderOptions.BitmapScalingMode="HighQuality" />
+                <StackPanel Margin="18,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="KizaTweaks" Style="{StaticResource H1}" FontSize="32" />
+                    <TextBlock Foreground="{StaticResource MutedBrush}">
+                        <Run Text="by Qkiub · " /><Run Text="{Binding Version, Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock Text="Optimización honesta para gamers: solo lo que tiene efecto real, todo reversible." Margin="0,6,0,0" />
+                </StackPanel>
+            </StackPanel>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Lo que KizaTweaks NO hace (y por qué)" Style="{StaticResource H2}" Margin="0,0,0,10" />
+                    <ItemsControl ItemsSource="{Binding WhatWeDontDo}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <TextBlock Text="&#xE711;" Style="{StaticResource Icon}" FontSize="12" Foreground="{StaticResource DangerBrush}" VerticalAlignment="Top" Margin="0,4,10,0" />
+                                    <TextBlock Text="{Binding}" TextWrapping="Wrap" MaxWidth="780" Foreground="{StaticResource MutedBrush}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Style="{StaticResource Caption}"
+                       Text="KizaTweaks modifica la configuración de Windows. Úsalo bajo tu responsabilidad, crea un punto de restauración antes de cambios grandes y mide los resultados en Benchmark. Datos, respaldos y registros: %ProgramData%\KizaTweaks." />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

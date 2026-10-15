@@ -1,0 +1,10 @@
+<UserControl x:Class="KizaTweaks.App.Views.Pill"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root" VerticalAlignment="Center">
+    <Border CornerRadius="10" Padding="8,2" Margin="0,0,6,0"
+            Background="{Binding Color, ElementName=Root, Converter={StaticResource HexBrush}, ConverterParameter=0.16}">
+        <TextBlock Text="{Binding Text, ElementName=Root}" FontSize="11" FontWeight="SemiBold"
+                   Foreground="{Binding Color, ElementName=Root, Converter={StaticResource HexBrush}}" />
+    </Border>
+</UserControl>

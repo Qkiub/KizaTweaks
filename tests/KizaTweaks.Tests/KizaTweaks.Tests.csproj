@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Pruebas sin dependencias externas: un ejecutable de consola que devuelve 1 si algo falla.
+       Corre en Windows y en Linux (la lógica probada no toca el sistema real). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\KizaTweaks.Core\KizaTweaks.Core.csproj" />
+    <ProjectReference Include="..\..\src\KizaTweaks.Presentation\KizaTweaks.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

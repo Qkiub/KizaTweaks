@@ -1,0 +1,127 @@
+<Window x:Class="KizaTweaks.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:KizaTweaks.Presentation.ViewModels;assembly=KizaTweaks.Presentation"
+        xmlns:views="clr-namespace:KizaTweaks.App.Views"
+        Title="KizaTweaks by Qkiub" Icon="Assets/kizatweaks.ico"
+        Width="1320" Height="840" MinWidth="1060" MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgBrush}" Foreground="{StaticResource TextBrush}"
+        FontFamily="{StaticResource UiFont}" FontSize="14"
+        TextOptions.TextFormattingMode="Display" UseLayoutRounding="True">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><views:DashboardView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TweaksViewModel}"><views:TweaksView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AppsViewModel}"><views:AppsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProcessesViewModel}"><views:ProcessesView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:StartupViewModel}"><views:StartupView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MaintenanceViewModel}"><views:MaintenanceView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BenchmarkViewModel}"><views:BenchmarkView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BackupsViewModel}"><views:BackupsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AboutViewModel}"><views:AboutView /></DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="232" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ================= Barra lateral ================= -->
+        <Border Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="20,22,16,26">
+                    <Image Source="Assets/logo.png" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="KizaTweaks" FontFamily="{StaticResource DisplayFont}" FontSize="18" FontWeight="Bold" />
+                        <TextBlock Text="by Qkiub" FontSize="12" Foreground="{StaticResource MutedBrush}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom" Margin="20,12,16,18">
+                    <Border Background="#33EF4444" CornerRadius="8" Padding="10,8" Margin="0,0,0,10"
+                            Visibility="{Binding IsAdmin, Converter={StaticResource InverseBoolToVis}}">
+                        <TextBlock Text="Sin permisos de administrador: ábrelo como administrador." TextWrapping="Wrap"
+                                   FontSize="12" Foreground="#FCA5A5" />
+                    </Border>
+                    <TextBlock Text="{Binding OsInfo}" Style="{StaticResource Caption}" />
+                    <TextBlock Text="{Binding About.Version}" Style="{StaticResource Caption}" Margin="0,2,0,0" />
+                </StackPanel>
+
+                <ListBox ItemsSource="{Binding Nav}" SelectedItem="{Binding SelectedNav, Mode=TwoWay}"
+                         Style="{StaticResource PlainListBox}" ItemContainerStyle="{StaticResource NavItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Glyph}" Style="{StaticResource Icon}" Width="22" />
+                                <TextBlock Text="{Binding Title}" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <!-- ================= Contenido ================= -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Background="#26F59E0B" BorderBrush="#66F59E0B" BorderThickness="0,0,0,1" Padding="24,10"
+                    Visibility="{Binding RebootRequired, Converter={StaticResource BoolToVis}}">
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="Reiniciar ahora" Command="{Binding RebootCommand}"
+                            Style="{StaticResource PrimaryButton}" Padding="14,6" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="&#xE7BA;" Style="{StaticResource Icon}" Foreground="{StaticResource WarnBrush}" />
+                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#FCD34D"
+                                   Text="Algunos cambios necesitan reiniciar Windows para tener efecto." />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" Focusable="False" />
+        </Grid>
+
+        <!-- ================= Aviso flotante ================= -->
+        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="24" MaxWidth="520"
+                CornerRadius="10" Padding="16,12" BorderThickness="1"
+                Visibility="{Binding HasToast, Converter={StaticResource BoolToVis}}">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="{StaticResource Surface2Brush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ToastIsError}" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.5" Color="Black" />
+            </Border.Effect>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="&#xE711;" FontFamily="{StaticResource IconFont}" FontSize="11"
+                        Style="{StaticResource GhostButton}" Command="{Binding DismissToastCommand}" Margin="12,0,0,0" />
+                <TextBlock Text="{Binding ToastText}" TextWrapping="Wrap" VerticalAlignment="Center" />
+            </DockPanel>
+        </Border>
+
+        <!-- ================= Ocupado ================= -->
+        <Grid Grid.ColumnSpan="2" Background="{StaticResource OverlayBrush}"
+              Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
+            <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="32,28" MinWidth="380" MaxWidth="560">
+                <StackPanel HorizontalAlignment="Center">
+                    <views:Spinner HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding BusyText}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,18,0,0" FontSize="15" />
+                    <TextBlock Text="No cierres KizaTweaks mientras trabaja." Style="{StaticResource Caption}"
+                               HorizontalAlignment="Center" Margin="0,8,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

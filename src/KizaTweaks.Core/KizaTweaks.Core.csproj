@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>KizaTweaks.Core</RootNamespace>
+    <!-- La app solo corre en Windows; las API de Windows se marcan con [SupportedOSPlatform]. -->
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\catalog\tweaks.json" LogicalName="KizaTweaks.Catalog.tweaks.json" />
+    <EmbeddedResource Include="..\..\catalog\apps.json" LogicalName="KizaTweaks.Catalog.apps.json" />
+  </ItemGroup>
+
+</Project>

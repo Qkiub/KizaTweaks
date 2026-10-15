@@ -1,0 +1,1385 @@
+{
+ "version": 1,
+ "apps": [
+  {
+   "ids": [
+    "Clipchamp.Clipchamp"
+   ],
+   "name": "Clipchamp",
+   "description": "Editor de video de Microsoft",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.3DBuilder"
+   ],
+   "name": "3D Builder",
+   "description": "Modelado 3D básico",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.549981C3F5F10"
+   ],
+   "name": "Cortana",
+   "description": "Asistente Cortana (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingFinance"
+   ],
+   "name": "Bing Finance",
+   "description": "Noticias financieras de Bing (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingFoodAndDrink"
+   ],
+   "name": "Bing Food And Drink",
+   "description": "Recetas de Bing (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingHealthAndFitness"
+   ],
+   "name": "Bing Health And Fitness",
+   "description": "Salud y ejercicio de Bing (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingNews"
+   ],
+   "name": "Microsoft News",
+   "description": "App de noticias de Microsoft",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingSports"
+   ],
+   "name": "Bing Sports",
+   "description": "Deportes de Bing (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingTranslator"
+   ],
+   "name": "Bing Translator",
+   "description": "Traductor de Bing",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingTravel"
+   ],
+   "name": "Bing Travel",
+   "description": "Viajes de Bing (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingWeather"
+   ],
+   "name": "Bing Weather",
+   "description": "Clima de Bing",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "XP9CXNGPPJ97XX"
+   ],
+   "name": "Microsoft Copilot",
+   "description": "Asistente de IA Copilot",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "WinGet"
+  },
+  {
+   "ids": [
+    "Microsoft.Windows.AIHub"
+   ],
+   "name": "Copilot+ AI Hub",
+   "description": "Centro de IA de Copilot+",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.PCManager"
+   ],
+   "name": "Microsoft PC Manager",
+   "description": "Microsoft PC Manager (limpiador preinstalado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Getstarted"
+   ],
+   "name": "Get Started",
+   "description": "Tips e introducción a Windows",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Messaging"
+   ],
+   "name": "Messaging",
+   "description": "Mensajería (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Microsoft3DViewer"
+   ],
+   "name": "3D Viewer",
+   "description": "Visor de modelos 3D",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MicrosoftJournal"
+   ],
+   "name": "Microsoft Journal",
+   "description": "Notas a mano para lápiz",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MicrosoftOfficeHub"
+   ],
+   "name": "Office Hub",
+   "description": "Acceso a Office / Microsoft 365",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MicrosoftPowerBIForWindows"
+   ],
+   "name": "Power BI",
+   "description": "Power BI (análisis de negocios)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MicrosoftSolitaireCollection"
+   ],
+   "name": "Solitaire Collection",
+   "description": "Juegos de solitario",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MicrosoftStickyNotes"
+   ],
+   "name": "Sticky Notes",
+   "description": "Notas rápidas",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MixedReality.Portal"
+   ],
+   "name": "Mixed Reality Portal",
+   "description": "Portal de realidad mixta",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.NetworkSpeedTest"
+   ],
+   "name": "Network Speed Test",
+   "description": "Test de velocidad de internet",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Office.OneNote"
+   ],
+   "name": "OneNote",
+   "description": "OneNote (versión UWP)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Office.Sway"
+   ],
+   "name": "Sway",
+   "description": "Presentaciones Sway",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.OneConnect"
+   ],
+   "name": "One Connect",
+   "description": "Planes móviles",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Print3D"
+   ],
+   "name": "Print 3D",
+   "description": "Impresión 3D",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.PowerAutomateDesktop"
+   ],
+   "name": "Power Automate",
+   "description": "Automatización de escritorio",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.SkypeApp"
+   ],
+   "name": "Skype (UWP)",
+   "description": "Skype (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Todos"
+   ],
+   "name": "Microsoft To Do",
+   "description": "Microsoft To Do",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Windows.DevHome"
+   ],
+   "name": "Dev Home",
+   "description": "Dev Home (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsAlarms"
+   ],
+   "name": "Alarms & Clock",
+   "description": "Alarmas y reloj",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsFeedbackHub"
+   ],
+   "name": "Feedback Hub",
+   "description": "Centro de opiniones",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsMaps"
+   ],
+   "name": "Windows Maps",
+   "description": "Mapas",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsSoundRecorder"
+   ],
+   "name": "Sound Recorder",
+   "description": "Grabadora de sonido",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.XboxApp"
+   ],
+   "name": "Xbox Console Companion",
+   "description": "Xbox Console Companion antiguo (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.ZuneVideo"
+   ],
+   "name": "Movies & TV",
+   "description": "Películas y TV",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MicrosoftCorporationII.MicrosoftFamily"
+   ],
+   "name": "Family Safety",
+   "description": "Protección infantil de Microsoft",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MicrosoftCorporationII.QuickAssist"
+   ],
+   "name": "Quick Assist",
+   "description": "Asistencia rápida (soporte remoto)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MicrosoftTeams"
+   ],
+   "name": "Microsoft Teams (Old)",
+   "description": "Teams personal (antiguo)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MSTeams"
+   ],
+   "name": "Microsoft Teams (New)",
+   "description": "Microsoft Teams (nuevo)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "ACGMediaPlayer"
+   ],
+   "name": "ACG Media Player",
+   "description": "Media player app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "ActiproSoftwareLLC"
+   ],
+   "name": "Actipro Software",
+   "description": "Potentially UI controls or software components, often bundled by OEMs",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AdobeSystemsIncorporated.AdobePhotoshopExpress"
+   ],
+   "name": "Adobe Photoshop Express",
+   "description": "Basic photo editing app from Adobe",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Amazon.com.Amazon"
+   ],
+   "name": "Amazon",
+   "description": "Amazon shopping app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AmazonVideo.PrimeVideo"
+   ],
+   "name": "Prime Video",
+   "description": "Amazon Prime Video streaming service app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Asphalt8Airborne"
+   ],
+   "name": "Asphalt 8",
+   "description": "Racing game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AutodeskSketchBook"
+   ],
+   "name": "Autodesk SketchBook",
+   "description": "Digital drawing and sketching app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "CaesarsSlotsFreeCasino"
+   ],
+   "name": "Caesars Slots",
+   "description": "Casino slot machine game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "COOKINGFEVER"
+   ],
+   "name": "Cooking Fever",
+   "description": "Restaurant simulation game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "CyberLinkMediaSuiteEssentials"
+   ],
+   "name": "CyberLink Media Suite",
+   "description": "Multimedia software suite (often preinstalled by OEMs)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "DisneyMagicKingdoms"
+   ],
+   "name": "Disney Magic Kingdoms",
+   "description": "Disney theme park building game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Disney.37853FC22B2CE"
+   ],
+   "name": "Disney+",
+   "description": "Disney+ streaming service app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "DrawboardPDF"
+   ],
+   "name": "Drawboard PDF",
+   "description": "PDF viewing and annotation app, often focused on pen input",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Duolingo-LearnLanguagesforFree"
+   ],
+   "name": "Duolingo",
+   "description": "Language learning app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "FACEBOOK.FACEBOOK"
+   ],
+   "name": "Facebook",
+   "description": "Facebook social media app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "FarmVille2CountryEscape"
+   ],
+   "name": "FarmVille 2",
+   "description": "Farming simulation game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Flipboard"
+   ],
+   "name": "Flipboard",
+   "description": "News and social network aggregator styled as a magazine",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "HiddenCity"
+   ],
+   "name": "Hidden City",
+   "description": "Hidden object puzzle adventure game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "HULULLC.HULUPLUS"
+   ],
+   "name": "Hulu",
+   "description": "Hulu streaming service app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "iHeartRadio"
+   ],
+   "name": "iHeartRadio",
+   "description": "Internet radio streaming app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Facebook.Instagram"
+   ],
+   "name": "Instagram",
+   "description": "Instagram social media app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "king.com.BubbleWitch3Saga"
+   ],
+   "name": "Bubble Witch 3",
+   "description": "Puzzle game from King",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "king.com.CandyCrushSaga"
+   ],
+   "name": "Candy Crush Saga",
+   "description": "Puzzle game from King",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "king.com.CandyCrushSodaSaga"
+   ],
+   "name": "Candy Crush Soda",
+   "description": "Puzzle game from King",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "LinkedInforWindows"
+   ],
+   "name": "LinkedIn",
+   "description": "LinkedIn professional networking app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MarchofEmpires"
+   ],
+   "name": "March of Empires",
+   "description": "Strategy game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "4DF9E0F8.Netflix"
+   ],
+   "name": "Netflix",
+   "description": "Netflix streaming service app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "NYTCrossword"
+   ],
+   "name": "NYT Crossword",
+   "description": "New York Times crossword puzzle app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "OneCalendar"
+   ],
+   "name": "One Calendar",
+   "description": "Calendar aggregation app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "PandoraMediaInc"
+   ],
+   "name": "Pandora",
+   "description": "Pandora music streaming app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "PhototasticCollage"
+   ],
+   "name": "Phototastic Collage",
+   "description": "Photo collage creation app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "PicsArt-PhotoStudio"
+   ],
+   "name": "PicsArt",
+   "description": "Photo editing and creative app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "PolarrPhotoEditorAcademicEdition"
+   ],
+   "name": "Polarr Photo Editor",
+   "description": "Photo editing app (Academic Edition)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "flaregamesGmbH.RoyalRevolt"
+   ],
+   "name": "Royal Revolt",
+   "description": "Tower defense / strategy game",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Sidia.LiveWallpaper"
+   ],
+   "name": "Live Wallpaper",
+   "description": "Live wallpaper app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "SlingTV"
+   ],
+   "name": "Sling TV",
+   "description": "Live TV streaming service app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "SpotifyAB.SpotifyMusic"
+   ],
+   "name": "Spotify",
+   "description": "Spotify music streaming app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "BytedancePte.Ltd.TikTok"
+   ],
+   "name": "TikTok",
+   "description": "TikTok short-form video app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "TuneInRadio"
+   ],
+   "name": "TuneIn Radio",
+   "description": "Internet radio streaming app",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "WinZipUniversal"
+   ],
+   "name": "WinZip",
+   "description": "File compression and extraction utility (Universal Windows Platform version)",
+   "recommendation": "safe",
+   "selectedByDefault": true,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.BingSearch"
+   ],
+   "name": "Bing Search",
+   "description": "Búsqueda web de Bing integrada en Windows",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.GamingApp"
+   ],
+   "name": "Xbox Gaming App",
+   "description": "App Xbox: necesaria para Game Pass y algunos juegos de PC",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.GetHelp"
+   ],
+   "name": "Get Help",
+   "description": "Obtener ayuda: la usan algunos solucionadores de problemas",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.M365Companions"
+   ],
+   "name": "Microsoft 365 Companions",
+   "description": "Mini-apps de Microsoft 365 empresarial",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.MSPaint"
+   ],
+   "name": "Paint 3D",
+   "description": "Paint 3D",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.OneDrive"
+   ],
+   "name": "OneDrive",
+   "description": "Nube OneDrive",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "WinGet"
+  },
+  {
+   "ids": [
+    "Microsoft.OutlookForWindows"
+   ],
+   "name": "Outlook for Windows",
+   "description": "Nuevo Outlook",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Paint"
+   ],
+   "name": "Paint",
+   "description": "Paint",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.People"
+   ],
+   "name": "People",
+   "description": "Contactos (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.RemoteDesktop"
+   ],
+   "name": "Remote Desktop",
+   "description": "Escritorio remoto",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.ScreenSketch"
+   ],
+   "name": "Snipping Tool",
+   "description": "Recortes (capturas de pantalla)",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.StartExperiencesApp"
+   ],
+   "name": "Widgets Experience",
+   "description": "Feed de Widgets",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Whiteboard"
+   ],
+   "name": "Whiteboard",
+   "description": "Pizarra colaborativa",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Windows.Photos"
+   ],
+   "name": "Photos",
+   "description": "Fotos",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsCalculator"
+   ],
+   "name": "Calculator",
+   "description": "Calculadora",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsCamera"
+   ],
+   "name": "Camera",
+   "description": "Cámara",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.windowscommunicationsapps"
+   ],
+   "name": "Mail & Calendar",
+   "description": "Correo y Calendario (descontinuado)",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsNotepad"
+   ],
+   "name": "Notepad",
+   "description": "Bloc de notas",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsStore"
+   ],
+   "name": "Microsoft Store",
+   "description": "Microsoft Store. No se puede reinstalar fácilmente",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WindowsTerminal"
+   ],
+   "name": "Windows Terminal",
+   "description": "Terminal de Windows",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Xbox.TCUI"
+   ],
+   "name": "Xbox TCUI Framework",
+   "description": "Componente de Xbox que usan la Store y algunos juegos",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.XboxGameOverlay"
+   ],
+   "name": "Xbox Game Overlay",
+   "description": "Overlay de Game Bar. Quitarlo puede bajar el rendimiento en ciertos CPUs modernos",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.XboxGamingOverlay"
+   ],
+   "name": "Xbox Gaming Overlay",
+   "description": "Xbox Game Bar. Quitarlo puede bajar el rendimiento en ciertos CPUs modernos",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.XboxIdentityProvider"
+   ],
+   "name": "Xbox Identity Provider",
+   "description": "Inicio de sesión de Xbox, necesario para algunos juegos",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.XboxSpeechToTextOverlay"
+   ],
+   "name": "Xbox Speech To Text",
+   "description": "Accesibilidad de voz en juegos. No se puede reinstalar fácilmente",
+   "recommendation": "unsafe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.YourPhone"
+   ],
+   "name": "Phone Link",
+   "description": "Vínculo móvil (conectar tu celular)",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.ZuneMusic"
+   ],
+   "name": "Media Player",
+   "description": "Reproductor multimedia",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MicrosoftWindows.CrossDevice"
+   ],
+   "name": "Cross Device Experience",
+   "description": "Integración con el celular en Explorador y Cámara",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "MicrosoftWindows.Client.WebExperience"
+   ],
+   "name": "Windows Web Experience Pack",
+   "description": "Paquete que entrega Widgets y otras funciones",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.WidgetsPlatformRuntime"
+   ],
+   "name": "Widgets Platform Runtime",
+   "description": "Motor de Widgets",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "LGElectronics.LGMonitorApp"
+   ],
+   "name": "LG Monitor App",
+   "description": "App de monitores LG",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPAIExperienceCenter"
+   ],
+   "name": "HP AI Experience Center",
+   "description": "HP OEM software, AI-enhanced features and support",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPConnectedMusic"
+   ],
+   "name": "HP Connected Music",
+   "description": "HP OEM software for music (Potentially discontinued)",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPConnectedPhotopoweredbySnapfish"
+   ],
+   "name": "HP Connected Photo",
+   "description": "HP OEM software for photos, integrated with Snapfish (Potentially discontinued)",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPDesktopSupportUtilities"
+   ],
+   "name": "HP Desktop Support Utilities",
+   "description": "HP OEM software providing desktop support tools",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPEasyClean"
+   ],
+   "name": "HP Easy Clean",
+   "description": "HP OEM software for system cleaning or optimization",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPFileViewer"
+   ],
+   "name": "HP File Viewer",
+   "description": "HP OEM software for viewing specific file types",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPJumpStarts"
+   ],
+   "name": "HP JumpStarts",
+   "description": "HP OEM software for tutorials, app discovery, or quick access to HP features",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPPCHardwareDiagnosticsWindows"
+   ],
+   "name": "HP PC Hardware Diagnostics",
+   "description": "HP OEM software for PC hardware diagnostics",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPPowerManager"
+   ],
+   "name": "HP Power Manager",
+   "description": "HP OEM software for managing power settings and battery",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPPrinterControl"
+   ],
+   "name": "HP Printer Control",
+   "description": "HP OEM software for managing HP printers",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPPrivacySettings"
+   ],
+   "name": "HP Privacy Settings",
+   "description": "HP OEM software for managing privacy settings",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPQuickDrop"
+   ],
+   "name": "HP QuickDrop",
+   "description": "HP OEM software for quick file transfer between devices",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPQuickTouch"
+   ],
+   "name": "HP QuickTouch",
+   "description": "HP OEM software, possibly for touch-specific shortcuts or controls",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPRegistration"
+   ],
+   "name": "HP Registration",
+   "description": "HP OEM software for product registration",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPSupportAssistant"
+   ],
+   "name": "HP Support Assistant",
+   "description": "HP OEM software for support, updates, and troubleshooting",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPSureShieldAI"
+   ],
+   "name": "HP Sure Shield AI",
+   "description": "HP OEM security software, likely AI-based threat protection",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPSystemInformation"
+   ],
+   "name": "HP System Information",
+   "description": "HP OEM software for displaying system information",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPWelcome"
+   ],
+   "name": "HP Welcome",
+   "description": "HP OEM software providing a welcome experience or initial setup help",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.HPWorkWell"
+   ],
+   "name": "HP WorkWell",
+   "description": "HP OEM software focused on well-being, possibly with break reminders or ergonomic tips",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AD2F1837.myHP"
+   ],
+   "name": "myHP",
+   "description": "HP OEM central hub app for device info, support, and services",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "E046963F.LenovoCompanion"
+   ],
+   "name": "Lenovo Vantage",
+   "description": "Lenovo OEM hub app for device settings, updates, and support",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "LenovoCompanyLimited.LenovoVantageService"
+   ],
+   "name": "Lenovo Vantage Service",
+   "description": "Background service component for Lenovo Vantage",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "DellInc.DellSupportAssistforPCs"
+   ],
+   "name": "Dell SupportAssist",
+   "description": "Dell OEM support, diagnostic, and update tool",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "DellInc.DellDigitalDelivery"
+   ],
+   "name": "Dell Digital Delivery Services",
+   "description": "Dell OEM software for delivering pre-purchased software",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "DellInc.DellMobileConnect"
+   ],
+   "name": "Dell Mobile Connect",
+   "description": "Dell OEM app for linking Android/iOS phone to PC (superseded by Phone Link)",
+   "recommendation": "optional",
+   "selectedByDefault": false,
+   "method": "Appx"
+  }
+ ]
+}

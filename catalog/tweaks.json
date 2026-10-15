@@ -1,0 +1,5494 @@
+{
+ "version": 1,
+ "categories": [
+  {
+   "id": "gaming",
+   "name": "Juegos",
+   "icon": ""
+  },
+  {
+   "id": "privacy",
+   "name": "Privacidad",
+   "icon": ""
+  },
+  {
+   "id": "ai",
+   "name": "IA",
+   "icon": ""
+  },
+  {
+   "id": "system",
+   "name": "Sistema",
+   "icon": ""
+  },
+  {
+   "id": "start",
+   "name": "Inicio y búsqueda",
+   "icon": ""
+  },
+  {
+   "id": "taskbar",
+   "name": "Barra de tareas",
+   "icon": ""
+  },
+  {
+   "id": "explorer",
+   "name": "Explorador",
+   "icon": ""
+  },
+  {
+   "id": "appearance",
+   "name": "Apariencia",
+   "icon": ""
+  },
+  {
+   "id": "multitasking",
+   "name": "Multitarea",
+   "icon": ""
+  },
+  {
+   "id": "update",
+   "name": "Windows Update",
+   "icon": ""
+  },
+  {
+   "id": "security",
+   "name": "Seguridad vs. rendimiento",
+   "icon": ""
+  },
+  {
+   "id": "experimental",
+   "name": "Experimental",
+   "icon": ""
+  },
+  {
+   "id": "other",
+   "name": "Otros",
+   "icon": ""
+  }
+ ],
+ "tweaks": [
+  {
+   "id": "q.DisableTelemetry",
+   "name": "Desactivar telemetría y anuncios personalizados",
+   "description": "Reduce los datos de diagnóstico al mínimo, desactiva el ID de publicidad, el seguimiento de apps abiertas, el historial de actividad y las encuestas de opinión.",
+   "note": null,
+   "category": "privacy",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+     "name": "TailoredExperiencesWithDiagnosticDataEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+     "name": "HasAccepted",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Input\\TIPC",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization",
+     "name": "RestrictImplicitInkCollection",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization",
+     "name": "RestrictImplicitTextCollection",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+     "name": "HarvestContacts",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Personalization\\Settings",
+     "name": "AcceptedPrivacyPolicy",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
+     "name": "AllowTelemetry",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_TrackProgs",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+     "name": "PublishUserActivities",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Siuf\\Rules",
+     "name": "NumberOfSIUFInPeriod",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Siuf\\Rules",
+     "name": "PeriodInNanoSeconds"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "PersonalizationReportingEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "DiagnosticData",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+     "name": "TailoredExperiencesWithDiagnosticDataEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+     "name": "HasAccepted",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Input\\TIPC",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization",
+     "name": "RestrictImplicitInkCollection"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization",
+     "name": "RestrictImplicitTextCollection"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+     "name": "HarvestContacts",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Personalization\\Settings",
+     "name": "AcceptedPrivacyPolicy",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Diagnostics\\DiagTrack",
+     "name": "ShowedToastAtLevel",
+     "type": "DWord",
+     "value": 3
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
+     "name": "AllowTelemetry",
+     "type": "DWord",
+     "value": 3
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
+     "name": "MaxTelemetryAllowed",
+     "type": "DWord",
+     "value": 3
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_TrackProgs",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+     "name": "PublishUserActivities"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Siuf\\Rules"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Siuf\\Rules",
+     "name": "NumberOfSIUFInPeriod"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Siuf\\Rules",
+     "name": "PeriodInNanoSeconds"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "PersonalizationReportingEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "DiagnosticData"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableSuggestions",
+   "name": "Quitar tips y contenido sugerido",
+   "description": "Deja de mostrar sugerencias, apps promocionadas y 'consejos' en Inicio, Configuración y el Explorador.",
+   "note": null,
+   "category": "privacy",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-310093Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338388Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SystemPaneSuggestionsEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_IrisRecommendations",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338389Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SoftLandingEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338393Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353694Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353696Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353698Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\SystemSettings\\AccountNotifications",
+     "name": "EnableAccountNotifications",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+     "name": "ScoobeSystemSettingEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowSyncProviderNotifications",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SilentInstalledAppsEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.SystemToast.Suggested",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Mobility",
+     "name": "OptedIn",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_AccountNotifications",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.SystemToast.BackupReminder",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-310093Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338388Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SystemPaneSuggestionsEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_IrisRecommendations",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338389Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SoftLandingEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338393Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353694Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353696Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-353698Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\SystemSettings\\AccountNotifications",
+     "name": "EnableAccountNotifications",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+     "name": "ScoobeSystemSettingEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowSyncProviderNotifications",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SilentInstalledAppsEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.SystemToast.Suggested",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Mobility",
+     "name": "OptedIn",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_AccountNotifications",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.SystemToast.BackupReminder",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsBackup",
+     "name": "DisableMonitoring",
+     "type": "DWord",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "q.DisableNotifications",
+   "name": "Desactivar todas las notificaciones",
+   "description": "Bloquea las notificaciones de apps y del sistema.",
+   "note": "También ocultará avisos útiles (Discord, Steam, antivirus).",
+   "category": "privacy",
+   "impact": "cleanup",
+   "risk": "moderate",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+     "name": "ToastEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+     "name": "ToastEnabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableLocationServices",
+   "name": "Desactivar ubicación",
+   "description": "Apaga el servicio de ubicación de Windows y el acceso de las apps a tu ubicación.",
+   "note": "Apps como Clima o Mapas dejarán de detectar dónde estás.",
+   "category": "privacy",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors",
+     "name": "DisableLocation",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors",
+     "name": "DisableLocation"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableFindMyDevice",
+   "name": "Desactivar 'Encontrar mi dispositivo'",
+   "description": "Windows deja de registrar la ubicación del equipo para localizarlo si se pierde.",
+   "note": null,
+   "category": "privacy",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\FindMyDevice",
+     "name": "AllowFindMyDevice",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\FindMyDevice"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\FindMyDevice",
+     "name": "AllowFindMyDevice"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableLockscreenTips",
+   "name": "Quitar tips de la pantalla de bloqueo",
+   "description": "Elimina datos curiosos, sugerencias y anuncios de la pantalla de bloqueo.",
+   "note": null,
+   "category": "privacy",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338387Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "RotatingLockScreenOverlayEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "SubscribedContent-338387Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+     "name": "RotatingLockScreenOverlayEnabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableDesktopSpotlight",
+   "name": "Desactivar fondo Windows Spotlight",
+   "description": "Quita la opción de fondo de escritorio que cambia sola con imágenes de Bing.",
+   "note": null,
+   "category": "appearance",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableSpotlightCollectionOnDesktop",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
+     "name": "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\CloudContent"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableSpotlightCollectionOnDesktop"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
+     "name": "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}"
+    }
+   ]
+  },
+  {
+   "id": "q.HideDesktopSpotlightIcon",
+   "name": "Ocultar 'Más información sobre esta imagen'",
+   "description": "Quita el ícono del escritorio que aparece con el fondo Spotlight.",
+   "note": null,
+   "category": "appearance",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\CloudContent"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableSpotlightCollectionOnDesktop"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
+     "name": "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
+     "name": "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableEdgeAds",
+   "name": "Quitar anuncios y noticias de Edge",
+   "description": "Desactiva sugerencias, contenido patrocinado y el feed de noticias en Microsoft Edge.",
+   "note": null,
+   "category": "privacy",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "NewTabPageContentEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "NewTabPageHideDefaultTopSites",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "EdgeShoppingAssistantEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "TabServicesEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "AlternateErrorPagesEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "UserFeedbackAllowed",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "ShowRecommendationsEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "WalletDonationEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "HideFirstRunExperience",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "DefaultBrowserSettingEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "DefaultBrowserSettingsCampaignEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "SpotlightExperiencesAndRecommendationsEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "ShowAcrobatSubscriptionButton",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "NewTabPageContentEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "NewTabPageHideDefaultTopSites"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "EdgeShoppingAssistantEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "TabServicesEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "AlternateErrorPagesEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "UserFeedbackAllowed"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "ShowRecommendationsEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "WalletDonationEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "HideFirstRunExperience"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "DefaultBrowserSettingEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "DefaultBrowserSettingsCampaignEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "SpotlightExperiencesAndRecommendationsEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "ShowAcrobatSubscriptionButton"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableCopilot",
+   "name": "Desactivar Copilot",
+   "description": "Apaga Microsoft Copilot en Windows y quita su botón de la barra de tareas.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowCopilotButton",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+     "name": "TurnOffWindowsCopilot",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+     "name": "TurnOffWindowsCopilot",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowCopilotButton",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsCopilot"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+     "name": "TurnOffWindowsCopilot"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+     "name": "TurnOffWindowsCopilot"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableRecall",
+   "name": "Desactivar Recall",
+   "description": "Impide que Windows tome capturas periódicas de tu pantalla para la búsqueda con IA.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableAIDataAnalysis",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableAIDataAnalysis",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "AllowRecallEnablement",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "TurnOffSavingSnapshots",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\PolicyManager\\default\\WindowsAI\\DisableAIDataAnalysis",
+     "name": "value",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsAI"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableAIDataAnalysis"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableAIDataAnalysis"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "AllowRecallEnablement"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "TurnOffSavingSnapshots"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableClickToDo",
+   "name": "Desactivar Click to Do",
+   "description": "Apaga el análisis con IA de texto e imágenes en pantalla.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableClickToDo",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableClickToDo",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsAI"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableClickToDo"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+     "name": "DisableClickToDo"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableAISvcAutoStart",
+   "name": "Evitar que el servicio de IA arranque solo",
+   "description": "El servicio WSAIFabricSvc pasa a inicio manual; deja de consumir recursos al arrancar.",
+   "note": null,
+   "category": "ai",
+   "impact": "fps",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Services\\WSAIFabricSvc",
+     "name": "Start",
+     "type": "DWord",
+     "value": 3
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Services\\WSAIFabricSvc",
+     "name": "Start",
+     "type": "DWord",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "id": "q.DisableDVR",
+   "name": "Desactivar grabación en segundo plano",
+   "description": "Apaga la grabación de juego/pantalla de Xbox Game Bar, que puede restar FPS mientras juegas.",
+   "note": "Perderás la función de grabar clips con Win+Alt+G.",
+   "category": "gaming",
+   "impact": "fps",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_Enabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+     "name": "AppCaptureEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+     "name": "AllowGameDVR",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_Enabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+     "name": "AppCaptureEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+     "name": "AllowGameDVR",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableGameBarIntegration",
+   "name": "Desactivar integración de Game Bar",
+   "description": "El botón Xbox del mando deja de abrir Game Bar y se bloquean sus ventanas emergentes.",
+   "note": "Si usas el overlay de Game Bar (FPS, chat de Xbox), no lo apliques.",
+   "category": "gaming",
+   "impact": "cleanup",
+   "risk": "moderate",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\GameBar",
+     "name": "UseNexusForGameBarEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebar",
+     "name": "",
+     "type": "String",
+     "value": "URL:ms-gamebar"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebar",
+     "name": "URL Protocol",
+     "type": "String",
+     "value": ""
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebar",
+     "name": "NoOpenWith",
+     "type": "String",
+     "value": ""
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebar\\shell\\open\\command",
+     "name": "",
+     "type": "String",
+     "value": "%SystemRoot%/System32/systray.exe"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices",
+     "name": "",
+     "type": "String",
+     "value": "URL:ms-gamebarservices"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices",
+     "name": "URL Protocol",
+     "type": "String",
+     "value": ""
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices",
+     "name": "NoOpenWith",
+     "type": "String",
+     "value": ""
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices\\shell\\open\\command",
+     "name": "",
+     "type": "String",
+     "value": "%SystemRoot%/System32/systray.exe"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\GameBar",
+     "name": "UseNexusForGameBarEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebar",
+     "name": "",
+     "type": "String",
+     "value": "URL:ms-gamebar"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebar",
+     "name": "URL Protocol",
+     "type": "String",
+     "value": ""
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCR",
+     "path": "ms-gamebar",
+     "name": "NoOpenWith"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "ms-gamebar\\shell\\open\\command"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices",
+     "name": "",
+     "type": "String",
+     "value": "URL:ms-gamebarservices"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices",
+     "name": "URL Protocol",
+     "type": "String",
+     "value": ""
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices",
+     "name": "NoOpenWith"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "ms-gamebarservices\\shell\\open\\command"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableStartRecommended",
+   "name": "Ocultar 'Recomendado' en Inicio",
+   "description": "Quita la sección de archivos y apps recomendadas del menú Inicio.",
+   "note": null,
+   "category": "start",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+     "name": "HideRecommendedSection",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+     "name": "HideRecommendedSection",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+     "name": "HideRecommendedSection",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Start",
+     "name": "HideRecommendedSection",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Education",
+     "name": "IsEducationEnvironment",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Start_Layout",
+     "type": "DWord",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "q.DisableStartPhoneLink",
+   "name": "Quitar Vínculo móvil del menú Inicio",
+   "description": "Oculta el panel del teléfono conectado en el menú Inicio.",
+   "note": null,
+   "category": "start",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Start\\Companions\\Microsoft.YourPhone_8wekyb3d8bbwe",
+     "name": "IsEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Start\\Companions\\Microsoft.YourPhone_8wekyb3d8bbwe",
+     "name": "IsEnabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableBing",
+   "name": "Búsqueda sin Bing ni web",
+   "description": "El menú Inicio busca solo en tu PC: sin resultados de Bing ni Copilot.",
+   "note": null,
+   "category": "start",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\Explorer",
+     "name": "DisableSearchBoxSuggestions",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+     "name": "AllowCortana",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+     "name": "CortanaConsent",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Policies\\Microsoft\\Windows\\Explorer",
+     "name": "DisableSearchBoxSuggestions",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+     "name": "AllowCortana"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+     "name": "CortanaConsent"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableSettings365Ads",
+   "name": "Quitar anuncios de Microsoft 365 en Configuración",
+   "description": "Oculta las promociones de Microsoft 365 en la página de inicio de Configuración.",
+   "note": null,
+   "category": "privacy",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableConsumerAccountStateContent",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableConsumerAccountStateContent"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableSettingsHome",
+   "name": "Ocultar página 'Inicio' de Configuración",
+   "description": "Configuración abre directo en Sistema en lugar de la página de inicio.",
+   "note": null,
+   "category": "other",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+     "name": "SettingsPageVisibility",
+     "type": "String",
+     "value": "hide:home"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+     "name": "SettingsPageVisibility"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableEdgeAI",
+   "name": "Desactivar IA en Edge",
+   "description": "Apaga Copilot y funciones de IA dentro de Microsoft Edge.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "CopilotCDPPageContext",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "CopilotPageContext",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "HubsSidebarEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "Microsoft365CopilotChatIconEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "EdgeEntraCopilotPageContext",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "EdgeHistoryAISearchEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "ComposeInlineEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "GenAILocalFoundationalModelSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "NewTabPageBingChatEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "CopilotCDPPageContext"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "CopilotPageContext"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "HubsSidebarEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "Microsoft365CopilotChatIconEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "EdgeEntraCopilotPageContext"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "EdgeHistoryAISearchEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "ComposeInlineEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "GenAILocalFoundationalModelSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Edge",
+     "name": "NewTabPageBingChatEnabled"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableChromeAI",
+   "name": "Desactivar IA en Chrome",
+   "description": "Apaga las funciones de IA de Google Chrome mediante políticas.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "AIModeSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "AutofillPredictionSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "ChromeSuggestionsSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "CreateThemesSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "DevToolsGenAiSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "FindAndFillWithGeminiSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "GeminiSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "GeminiSparkSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "GenAILocalFoundationalModelSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "HelpMeWriteSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "HistorySearchSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "SearchContentSharingSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "SmartTabSharingSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "TabCompareSettings",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "ThirdPartyAiChatSettings",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "VoiceTypingSettings",
+     "type": "DWord",
+     "value": 2
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "AIModeSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "AutofillPredictionSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "ChromeSuggestionsSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "CreateThemesSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "DevToolsGenAiSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "FindAndFillWithGeminiSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "GeminiSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "GeminiSparkSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "GenAILocalFoundationalModelSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "HelpMeWriteSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "HistorySearchSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "SearchContentSharingSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "SmartTabSharingSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "TabCompareSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "ThirdPartyAiChatSettings"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Google\\Chrome",
+     "name": "VoiceTypingSettings"
+    }
+   ]
+  },
+  {
+   "id": "q.DisablePaintAI",
+   "name": "Desactivar IA en Paint",
+   "description": "Apaga Cocreator, relleno generativo y otras funciones de IA de Paint.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableCocreator",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableGenerativeFill",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableImageCreator",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableGenerativeErase",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableRemoveBackground",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableCocreator"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableGenerativeFill"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableImageCreator"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableGenerativeErase"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint",
+     "name": "DisableRemoveBackground"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableNotepadAI",
+   "name": "Desactivar IA en el Bloc de notas",
+   "description": "Apaga las funciones de reescritura con IA del Bloc de notas.",
+   "note": null,
+   "category": "ai",
+   "impact": "privacy",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22621,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\WindowsNotepad",
+     "name": "DisableAIFeatures",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\WindowsNotepad"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\WindowsNotepad",
+     "name": "DisableAIFeatures"
+    }
+   ]
+  },
+  {
+   "id": "q.EnableDarkMode",
+   "name": "Modo oscuro",
+   "description": "Activa el tema oscuro para Windows y las apps.",
+   "note": null,
+   "category": "appearance",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "AppsUseLightTheme",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "SystemUsesLightTheme",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "AppsUseLightTheme",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "SystemUsesLightTheme",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableDragTray",
+   "name": "Desactivar bandeja al arrastrar archivos",
+   "description": "Quita la bandeja de compartir que aparece arriba al arrastrar archivos.",
+   "note": null,
+   "category": "system",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 26200,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\CDP",
+     "name": "DragTrayEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\CDP",
+     "name": "DragTrayEnabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.RevertContextMenu",
+   "name": "Menú contextual clásico",
+   "description": "El clic derecho vuelve a mostrar todas las opciones, sin 'Mostrar más opciones'.",
+   "note": null,
+   "category": "system",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32",
+     "name": "",
+     "type": "String",
+     "value": ""
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableMouseAcceleration",
+   "name": "Desactivar aceleración del mouse",
+   "description": "Apaga 'Mejorar precisión del puntero': el movimiento del cursor es 1:1 con la mano, clave para apuntar en shooters.",
+   "note": null,
+   "category": "system",
+   "impact": "latency",
+   "risk": "safe",
+   "requiresReboot": true,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Mouse",
+     "name": "MouseSpeed",
+     "type": "String",
+     "value": "0"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Mouse",
+     "name": "MouseThreshold1",
+     "type": "String",
+     "value": "0"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Mouse",
+     "name": "MouseThreshold2",
+     "type": "String",
+     "value": "0"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Mouse",
+     "name": "MouseSpeed",
+     "type": "String",
+     "value": "1"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Mouse",
+     "name": "MouseThreshold1",
+     "type": "String",
+     "value": "6"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Mouse",
+     "name": "MouseThreshold2",
+     "type": "String",
+     "value": "10"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableStickyKeys",
+   "name": "Desactivar atajo de Teclas especiales",
+   "description": "Presionar Shift 5 veces ya no abre el aviso de Teclas especiales en medio del juego.",
+   "note": null,
+   "category": "system",
+   "impact": "fps",
+   "risk": "safe",
+   "requiresReboot": true,
+   "restartExplorer": true,
+   "minBuild": 26100,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Accessibility\\StickyKeys",
+     "name": "Flags",
+     "type": "String",
+     "value": "506"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Accessibility\\StickyKeys",
+     "name": "Flags",
+     "type": "String",
+     "value": "510"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableWindowSnapping",
+   "name": "Desactivar ajuste de ventanas",
+   "description": "Las ventanas dejan de acomodarse solas al arrastrarlas a los bordes.",
+   "note": null,
+   "category": "multitasking",
+   "impact": "appearance",
+   "risk": "moderate",
+   "requiresReboot": true,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Desktop",
+     "name": "WindowArrangementActive",
+     "type": "String",
+     "value": "0"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Desktop",
+     "name": "WindowArrangementActive",
+     "type": "String",
+     "value": "1"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableSnapAssist",
+   "name": "Desactivar sugerencias de Snap",
+   "description": "Al acomodar una ventana ya no sugiere qué app poner al lado.",
+   "note": null,
+   "category": "multitasking",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "SnapAssist",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "SnapAssist",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableSnapLayouts",
+   "name": "Ocultar diseños de Snap",
+   "description": "Quita el menú de diseños que aparece al pasar el mouse por el botón maximizar.",
+   "note": null,
+   "category": "multitasking",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "EnableSnapBar",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "EnableSnapAssistFlyout",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "EnableSnapBar",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "EnableSnapAssistFlyout",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.HideTabsInAltTab",
+   "name": "Ocultar pestañas de Edge en Alt+Tab",
+   "description": "Alt+Tab muestra solo ventanas, no las pestañas del navegador.",
+   "note": null,
+   "category": "multitasking",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "MultiTaskingAltTabFilter",
+     "type": "DWord",
+     "value": 3
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "MultiTaskingAltTabFilter",
+     "type": "DWord",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "id": "q.TaskbarAlignLeft",
+   "name": "Barra de tareas a la izquierda",
+   "description": "Alinea los íconos de la barra de tareas a la izquierda, como en Windows 10.",
+   "note": null,
+   "category": "taskbar",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "TaskbarAl",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "TaskbarAl"
+    }
+   ]
+  },
+  {
+   "id": "q.HideSearchTb",
+   "name": "Ocultar búsqueda de la barra de tareas",
+   "description": "Quita el cuadro de búsqueda; puedes seguir buscando con la tecla Windows.",
+   "note": null,
+   "category": "taskbar",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+     "name": "SearchboxTaskbarMode",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+     "name": "SearchboxTaskbarMode",
+     "type": "DWord",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "id": "q.HideTaskview",
+   "name": "Ocultar botón Vista de tareas",
+   "description": "Quita el botón de escritorios virtuales de la barra de tareas.",
+   "note": null,
+   "category": "taskbar",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowTaskViewButton",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "ShowTaskViewButton",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.HideChat",
+   "name": "Ocultar Chat de la barra de tareas",
+   "description": "Quita el ícono de Chat/Teams de la barra de tareas.",
+   "note": null,
+   "category": "taskbar",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": 22621,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "TaskbarMn",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+     "name": "HideSCAMeetNow",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "TaskbarMn",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+     "name": "HideSCAMeetNow",
+     "type": "DWord",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "q.DisableStorageSense",
+   "name": "Desactivar Sensor de almacenamiento",
+   "description": "Windows deja de borrar automáticamente temporales y la papelera.",
+   "note": "No recomendado si tu disco del sistema es pequeño (128 GB o menos).",
+   "category": "system",
+   "impact": "storage",
+   "risk": "moderate",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+     "name": "01",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+     "name": "01",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableFastStartup",
+   "name": "Desactivar Inicio rápido",
+   "description": "Apagar el PC lo apaga de verdad. Evita problemas con drivers y actualizaciones que no se aplican.",
+   "note": "El arranque puede tardar 1-3 segundos más.",
+   "category": "system",
+   "impact": "stability",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+     "name": "HiberbootEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+     "name": "HiberbootEnabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableBitlockerAutoEncryption",
+   "name": "Evitar cifrado automático de BitLocker",
+   "description": "Windows no cifrará el disco por su cuenta. No descifra un disco que ya esté cifrado.",
+   "note": "Si tu disco ya está cifrado, guarda tu clave de recuperación.",
+   "category": "system",
+   "impact": "storage",
+   "risk": "moderate",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\BitLocker",
+     "name": "PreventDeviceEncryption",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\BitLocker"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\BitLocker",
+     "name": "PreventDeviceEncryption"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableModernStandbyNetworking",
+   "name": "Sin red en suspensión moderna",
+   "description": "El portátil deja de conectarse a internet mientras está suspendido; ahorra batería.",
+   "note": null,
+   "category": "system",
+   "impact": "storage",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+     "name": "ACSettingIndex",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+     "name": "DCSettingIndex",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+     "name": "ACSettingIndex",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+     "name": "DCSettingIndex",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.EnableEndTask",
+   "name": "'Finalizar tarea' en la barra de tareas",
+   "description": "Agrega 'Finalizar tarea' al clic derecho de las apps: cierra juegos congelados al instante.",
+   "note": null,
+   "category": "taskbar",
+   "impact": "stability",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22631,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
+     "name": "TaskbarEndTask",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
+     "name": "TaskbarEndTask",
+     "type": "DWord",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "id": "q.EnableLastActiveClick",
+   "name": "Clic alterna entre ventanas de la misma app",
+   "description": "Hacer clic varias veces en el ícono de una app cambia entre sus ventanas abiertas.",
+   "note": null,
+   "category": "taskbar",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "LastActiveClick",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "LastActiveClick"
+    }
+   ]
+  },
+  {
+   "id": "q.ExplorerToThisPC",
+   "name": "Explorador abre en 'Este equipo'",
+   "description": "El Explorador de archivos abre mostrando tus discos en lugar de Inicio.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "LaunchTo",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "LaunchTo",
+     "type": "DWord",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "id": "q.ShowKnownFileExt",
+   "name": "Mostrar extensiones de archivo",
+   "description": "Muestra .exe, .zip, .pdf, etc. Ayuda a detectar archivos falsos como 'foto.jpg.exe'.",
+   "note": null,
+   "category": "explorer",
+   "impact": "stability",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "HideFileExt",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "HideFileExt",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.ShowHiddenFolders",
+   "name": "Mostrar archivos ocultos",
+   "description": "Muestra archivos, carpetas y unidades ocultas.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Hidden",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+     "name": "Hidden",
+     "type": "DWord",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "id": "q.HideDupliDrive",
+   "name": "Ocultar unidades extraíbles duplicadas",
+   "description": "Las USB aparecen solo bajo 'Este equipo' en el panel lateral.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\DelegateFolders\\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\DelegateFolders\\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}",
+     "name": "",
+     "type": "String",
+     "value": "Removable Drives"
+    }
+   ]
+  },
+  {
+   "id": "q.HideHome",
+   "name": "Ocultar 'Inicio' del Explorador",
+   "description": "Quita 'Inicio' del panel lateral del Explorador.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+     "name": "",
+     "type": "String",
+     "value": "CLSID_MSGraphHomeFolder"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+     "name": "System.IsPinnedToNameSpaceTree",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "CheckedValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "DefaultValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "HKeyRoot",
+     "type": "DWord",
+     "value": 2147483649
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "Id",
+     "type": "DWord",
+     "value": 13
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "RegPath",
+     "type": "String",
+     "value": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "Text",
+     "type": "String",
+     "value": "Show Home"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "Type",
+     "type": "String",
+     "value": "checkbox"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "UncheckedValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "ValueName",
+     "type": "String",
+     "value": "System.IsPinnedToNameSpaceTree"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+     "name": "",
+     "type": "String",
+     "value": "CLSID_MSGraphHomeFolder"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+     "name": "System.IsPinnedToNameSpaceTree",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "CheckedValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "DefaultValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "HKeyRoot",
+     "type": "DWord",
+     "value": 2147483649
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "Id",
+     "type": "DWord",
+     "value": 13
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "RegPath",
+     "type": "String",
+     "value": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "Text",
+     "type": "String",
+     "value": "Show Home"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "Type",
+     "type": "String",
+     "value": "checkbox"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "UncheckedValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowHome",
+     "name": "ValueName",
+     "type": "String",
+     "value": "System.IsPinnedToNameSpaceTree"
+    }
+   ]
+  },
+  {
+   "id": "q.HideGallery",
+   "name": "Ocultar 'Galería' del Explorador",
+   "description": "Quita 'Galería' del panel lateral del Explorador.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+     "name": "System.IsPinnedToNameSpaceTree",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "CheckedValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "DefaultValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "HKeyRoot",
+     "type": "DWord",
+     "value": 2147483649
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "Id",
+     "type": "DWord",
+     "value": 13
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "RegPath",
+     "type": "String",
+     "value": "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "Text",
+     "type": "String",
+     "value": "Show Gallery"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "Type",
+     "type": "String",
+     "value": "checkbox"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "UncheckedValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "ValueName",
+     "type": "String",
+     "value": "System.IsPinnedToNameSpaceTree"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+     "name": "System.IsPinnedToNameSpaceTree",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "CheckedValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "DefaultValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "HKeyRoot",
+     "type": "DWord",
+     "value": 2147483649
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "Id",
+     "type": "DWord",
+     "value": 13
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "RegPath",
+     "type": "String",
+     "value": "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "Text",
+     "type": "String",
+     "value": "Show Gallery"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "Type",
+     "type": "String",
+     "value": "checkbox"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "UncheckedValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowGallery",
+     "name": "ValueName",
+     "type": "String",
+     "value": "System.IsPinnedToNameSpaceTree"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableTransparency",
+   "name": "Desactivar transparencias",
+   "description": "Quita el efecto translúcido de menús y barra de tareas. Ahorro mínimo de GPU.",
+   "note": null,
+   "category": "appearance",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "EnableTransparency",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+     "name": "EnableTransparency",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableAnimations",
+   "name": "Desactivar animaciones",
+   "description": "Quita animaciones y efectos visuales; Windows se siente más inmediato.",
+   "note": null,
+   "category": "appearance",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": true,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Desktop",
+     "name": "UserPreferencesMask",
+     "type": "Binary",
+     "value": [
+      144,
+      18,
+      7,
+      128,
+      16,
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Desktop",
+     "name": "UserPreferencesMask",
+     "type": "Binary",
+     "value": [
+      158,
+      30,
+      7,
+      128,
+      18,
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q.DisableUpdateASAP",
+   "name": "No recibir actualizaciones apenas salen",
+   "description": "Windows deja de instalar las actualizaciones opcionales en cuanto están disponibles.",
+   "note": null,
+   "category": "update",
+   "impact": "stability",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings",
+     "name": "IsContinuousInnovationOptedIn",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings",
+     "name": "IsContinuousInnovationOptedIn",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.PreventUpdateAutoReboot",
+   "name": "Sin reinicios automáticos por actualizaciones",
+   "description": "Windows no reiniciará solo mientras tengas la sesión iniciada.",
+   "note": null,
+   "category": "update",
+   "impact": "stability",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+     "name": "NoAutoRebootWithLoggedOnUsers",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+     "name": "NoAutoRebootWithLoggedOnUsers"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableDeliveryOptimization",
+   "name": "No compartir actualizaciones con otros PCs",
+   "description": "Desactiva la Optimización de distribución: tu internet no se usa para enviar actualizaciones a otros.",
+   "note": null,
+   "category": "update",
+   "impact": "latency",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKU",
+     "path": "S-1-5-20\\Software\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Settings",
+     "name": "DownloadMode",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKU",
+     "path": "S-1-5-20\\Software\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Settings",
+     "name": "DownloadMode",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.DisableDeviceAutoAppDownload",
+   "name": "Sin apps automáticas de dispositivos",
+   "description": "Evita que Windows instale solo apps de fabricantes al conectar un monitor, mouse, etc.",
+   "note": null,
+   "category": "update",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+     "name": "PreventDeviceMetadataFromNetwork",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+     "name": "PreventDeviceMetadataFromNetwork"
+    }
+   ]
+  },
+  {
+   "id": "q.HideOnedrive",
+   "name": "Ocultar OneDrive del Explorador",
+   "description": "Quita OneDrive del panel lateral del Explorador.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}",
+     "name": "System.IsPinnedToNameSpaceTree",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "CheckedValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "DefaultValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "HKeyRoot",
+     "type": "DWord",
+     "value": 2147483649
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "Id",
+     "type": "DWord",
+     "value": 13
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "RegPath",
+     "type": "String",
+     "value": "Software\\Classes\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "Text",
+     "type": "String",
+     "value": "Show OneDrive"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "Type",
+     "type": "String",
+     "value": "checkbox"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "UncheckedValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "ValueName",
+     "type": "String",
+     "value": "System.IsPinnedToNameSpaceTree"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Classes\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}",
+     "name": "System.IsPinnedToNameSpaceTree",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "CheckedValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "DefaultValue",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "HKeyRoot",
+     "type": "DWord",
+     "value": 2147483649
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "Id",
+     "type": "DWord",
+     "value": 13
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "RegPath",
+     "type": "String",
+     "value": "Software\\Classes\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "Text",
+     "type": "String",
+     "value": "Show OneDrive"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "Type",
+     "type": "String",
+     "value": "checkbox"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "UncheckedValue",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\NavPane\\ShowOneDrive",
+     "name": "ValueName",
+     "type": "String",
+     "value": "System.IsPinnedToNameSpaceTree"
+    }
+   ]
+  },
+  {
+   "id": "q.Hide3dObjects",
+   "name": "Ocultar 'Objetos 3D'",
+   "description": "Quita la carpeta Objetos 3D de 'Este equipo' (Windows 10).",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": 21999,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace"
+    }
+   ]
+  },
+  {
+   "id": "q.HideMusic",
+   "name": "Ocultar carpeta 'Música'",
+   "description": "Quita la carpeta Música de 'Este equipo' (Windows 10).",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": 21999,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}"
+    }
+   ]
+  },
+  {
+   "id": "q.AddFoldersToThisPC",
+   "name": "Carpetas comunes en 'Este equipo'",
+   "description": "Vuelve a mostrar Escritorio, Descargas, Documentos, etc. en 'Este equipo'.",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": 22000,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}",
+     "name": "HideIfEnabled"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{d3162b92-9365-467a-956b-92703aca08af}",
+     "name": "HideIfEnabled"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{d3162b92-9365-467a-956b-92703aca08af}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{088e3905-0323-4b02-9826-5d99428e115f}",
+     "name": "HideIfEnabled"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{088e3905-0323-4b02-9826-5d99428e115f}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}",
+     "name": "HideIfEnabled"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{1CF1260C-4DD0-4ebb-811F-33C572699FDE}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}",
+     "name": "HideIfEnabled"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
+     "name": "HideIfEnabled"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}",
+     "name": "HideIfEnabled",
+     "type": "DWord",
+     "value": 36354489
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{d3162b92-9365-467a-956b-92703aca08af}",
+     "name": "HideIfEnabled",
+     "type": "DWord",
+     "value": 36354489
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{d3162b92-9365-467a-956b-92703aca08af}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{088e3905-0323-4b02-9826-5d99428e115f}",
+     "name": "HideIfEnabled",
+     "type": "DWord",
+     "value": 36354489
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{088e3905-0323-4b02-9826-5d99428e115f}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}",
+     "name": "HideIfEnabled",
+     "type": "DWord",
+     "value": 36354489
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{1CF1260C-4DD0-4ebb-811F-33C572699FDE}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}",
+     "name": "HideIfEnabled",
+     "type": "DWord",
+     "value": 36354489
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
+     "name": "HideIfEnabled",
+     "type": "DWord",
+     "value": 36354489
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
+     "name": "HiddenByDefault",
+     "type": "DWord",
+     "value": 1
+    }
+   ]
+  },
+  {
+   "id": "q.HideIncludeInLibrary",
+   "name": "Quitar 'Incluir en biblioteca' del menú",
+   "description": "Limpia el menú contextual (Windows 10).",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": 21999,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "Folder\\ShellEx\\ContextMenuHandlers\\Library Location"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Classes\\Folder\\ShellEx\\ContextMenuHandlers\\Library Location"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "Folder\\ShellEx\\ContextMenuHandlers\\Library Location",
+     "name": "",
+     "type": "String",
+     "value": "{3dad6c5d-2167-4cae-9914-f99e41c12cfa}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Classes\\Folder\\ShellEx\\ContextMenuHandlers\\Library Location",
+     "name": "",
+     "type": "String",
+     "value": "{3dad6c5d-2167-4cae-9914-f99e41c12cfa}"
+    }
+   ]
+  },
+  {
+   "id": "q.HideGiveAccessTo",
+   "name": "Quitar 'Conceder acceso a' del menú",
+   "description": "Limpia el menú contextual (Windows 10).",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": 21999,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "*\\shellex\\ContextMenuHandlers\\Sharing"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "Directory\\Background\\shellex\\ContextMenuHandlers\\Sharing"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "Directory\\shellex\\ContextMenuHandlers\\Sharing"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "Drive\\shellex\\ContextMenuHandlers\\Sharing"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "LibraryFolder\\background\\shellex\\ContextMenuHandlers\\Sharing"
+    },
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "UserLibraryFolder\\shellex\\ContextMenuHandlers\\Sharing"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "*\\shellex\\ContextMenuHandlers\\Sharing",
+     "name": "",
+     "type": "String",
+     "value": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "Directory\\Background\\shellex\\ContextMenuHandlers\\Sharing",
+     "name": "",
+     "type": "String",
+     "value": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "Directory\\shellex\\ContextMenuHandlers\\Sharing",
+     "name": "",
+     "type": "String",
+     "value": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "Drive\\shellex\\ContextMenuHandlers\\Sharing",
+     "name": "",
+     "type": "String",
+     "value": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "LibraryFolder\\background\\shellex\\ContextMenuHandlers\\Sharing",
+     "name": "",
+     "type": "String",
+     "value": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "UserLibraryFolder\\shellex\\ContextMenuHandlers\\Sharing",
+     "name": "",
+     "type": "String",
+     "value": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+     "name": "NoInplaceSharing"
+    },
+    {
+     "op": "reg.ensureKey",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
+     "name": "{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}"
+    }
+   ]
+  },
+  {
+   "id": "q.HideShare",
+   "name": "Quitar 'Compartir' del menú",
+   "description": "Limpia el menú contextual (Windows 10).",
+   "note": null,
+   "category": "explorer",
+   "impact": "appearance",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "minBuild": null,
+   "maxBuild": 21999,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKCR",
+     "path": "*\\shellex\\ContextMenuHandlers\\ModernSharing"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCR",
+     "path": "*\\shellex\\ContextMenuHandlers\\ModernSharing",
+     "name": "",
+     "type": "String",
+     "value": "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}"
+    }
+   ]
+  },
+  {
+   "id": "q.DisableBraveBloat",
+   "name": "Limpiar Brave",
+   "description": "Desactiva IA, cripto, noticias y VPN promocionada en el navegador Brave.",
+   "note": null,
+   "category": "other",
+   "impact": "cleanup",
+   "risk": "safe",
+   "requiresReboot": false,
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave",
+     "name": "BraveVPNDisabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave",
+     "name": "BraveWalletDisabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave",
+     "name": "BraveAIChatEnabled",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave",
+     "name": "BraveRewardsDisabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave",
+     "name": "BraveTalkDisabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave",
+     "name": "BraveNewsDisabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteKey",
+     "hive": "HKLM",
+     "path": "Software\\Policies\\BraveSoftware\\Brave"
+    }
+   ]
+  },
+  {
+   "id": "kiza.hags",
+   "category": "gaming",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Programación de GPU acelerada por hardware (HAGS)",
+   "description": "La GPU organiza su propia cola de trabajo en lugar del CPU. Frames más estables y requisito para DLSS Frame Generation.",
+   "note": "Requiere GPU compatible (NVIDIA GTX 10 o superior, AMD RX 5000 o superior) y driver actualizado.",
+   "requiresReboot": true,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+     "name": "HwSchMode",
+     "type": "DWord",
+     "value": 2
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+     "name": "HwSchMode",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.windowedOpt",
+   "category": "gaming",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Optimizaciones para juegos en ventana",
+   "description": "Pasa los juegos DirectX 10/11 en ventana o sin bordes al modelo de presentación 'flip': menos latencia y habilita VRR (G-Sync/FreeSync).",
+   "note": null,
+   "requiresReboot": false,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "dx.set",
+     "key": "SwapEffectUpgradeEnable",
+     "value": "1"
+    }
+   ],
+   "undo": [
+    {
+     "op": "dx.set",
+     "key": "SwapEffectUpgradeEnable",
+     "value": "0"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.vrr",
+   "category": "gaming",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Frecuencia de actualización variable (VRR)",
+   "description": "Permite VRR en juegos que no lo soportan de forma nativa, en monitores G-Sync/FreeSync.",
+   "note": "Solo tiene efecto si tu monitor soporta VRR.",
+   "requiresReboot": false,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "dx.set",
+     "key": "VRROptimizeEnable",
+     "value": "1"
+    }
+   ],
+   "undo": [
+    {
+     "op": "dx.set",
+     "key": "VRROptimizeEnable",
+     "value": "0"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.gameMode",
+   "category": "gaming",
+   "impact": "fps",
+   "risk": "safe",
+   "name": "Modo de juego",
+   "description": "Windows prioriza el juego en primer plano y pausa la instalación de actualizaciones y drivers mientras juegas.",
+   "note": null,
+   "requiresReboot": false,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\GameBar",
+     "name": "AutoGameModeEnabled",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\GameBar",
+     "name": "AllowAutoGameMode",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\GameBar",
+     "name": "AutoGameModeEnabled"
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\GameBar",
+     "name": "AllowAutoGameMode"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.powerHigh",
+   "category": "gaming",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Plan de energía: Alto rendimiento",
+   "description": "El CPU sube de frecuencia más rápido y no se 'duerme' entre frames. Ganancia pequeña en CPUs modernas; más notable en equipos antiguos.",
+   "note": "Más consumo y temperatura. En portátil, solo conectado a la corriente.",
+   "requiresReboot": false,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "power.scheme",
+     "scheme": "high"
+    }
+   ],
+   "undo": [
+    {
+     "op": "power.scheme",
+     "scheme": "balanced"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.powerUltimate",
+   "category": "gaming",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Plan de energía: Máximo rendimiento",
+   "description": "Plan oculto de Windows que elimina las micro-latencias de ahorro de energía. Pensado para escritorios.",
+   "note": "No recomendado en portátiles: gasta batería y calienta más.",
+   "requiresReboot": false,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "power.scheme",
+     "scheme": "ultimate"
+    }
+   ],
+   "undo": [
+    {
+     "op": "power.scheme",
+     "scheme": "balanced"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.hibernate",
+   "category": "system",
+   "impact": "storage",
+   "risk": "safe",
+   "name": "Desactivar hibernación",
+   "description": "Borra hiberfil.sys (del tamaño de tu RAM) del disco del sistema. Útil si tu disco C: es pequeño. No afecta FPS.",
+   "note": "En portátiles perderás la opción Hibernar. También desactiva Inicio rápido.",
+   "requiresReboot": false,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "cmd",
+     "file": "powercfg.exe",
+     "args": "/hibernate off"
+    }
+   ],
+   "undo": [
+    {
+     "op": "cmd",
+     "file": "powercfg.exe",
+     "args": "/hibernate on"
+    }
+   ],
+   "detect": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Power",
+     "name": "HibernateEnabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.widgets",
+   "category": "taskbar",
+   "impact": "fps",
+   "risk": "safe",
+   "name": "Desactivar Widgets",
+   "description": "Quita el panel de noticias y clima de la barra de tareas y la pantalla de bloqueo; deja de cargar en segundo plano.",
+   "note": null,
+   "requiresReboot": false,
+   "restartExplorer": true,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+     "name": "AllowNewsAndInterests",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+     "name": "AllowNewsAndInterests"
+    }
+   ],
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.bgApps",
+   "category": "gaming",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Bloquear apps en segundo plano",
+   "description": "Las apps de la Microsoft Store dejan de ejecutarse cuando no están abiertas.",
+   "note": "Apps de Store como WhatsApp o Spotify (versión Store) dejarán de notificar cerradas.",
+   "requiresReboot": false,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+     "name": "GlobalUserDisabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+     "name": "GlobalUserDisabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.telemetryServices",
+   "category": "privacy",
+   "impact": "privacy",
+   "risk": "safe",
+   "name": "Desactivar servicio y tareas de telemetría",
+   "description": "Desactiva el servicio DiagTrack (Experiencias del usuario conectado y telemetría) y las tareas programadas de recolección de datos.",
+   "note": null,
+   "requiresReboot": false,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "service",
+     "name": "DiagTrack",
+     "startType": "Disabled"
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
+     "enabled": false
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Application Experience\\ProgramDataUpdater",
+     "enabled": false
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator",
+     "enabled": false
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip",
+     "enabled": false
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClient",
+     "enabled": false
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload",
+     "enabled": false
+    },
+    {
+     "op": "env",
+     "name": "POWERSHELL_TELEMETRY_OPTOUT",
+     "value": "1"
+    }
+   ],
+   "undo": [
+    {
+     "op": "service",
+     "name": "DiagTrack",
+     "startType": "Automatic"
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
+     "enabled": true
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Application Experience\\ProgramDataUpdater",
+     "enabled": true
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator",
+     "enabled": true
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip",
+     "enabled": true
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClient",
+     "enabled": true
+    },
+    {
+     "op": "task",
+     "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload",
+     "enabled": true
+    },
+    {
+     "op": "env",
+     "name": "POWERSHELL_TELEMETRY_OPTOUT",
+     "value": null
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.consumerFeatures",
+   "category": "privacy",
+   "impact": "cleanup",
+   "risk": "safe",
+   "name": "Bloquear apps promocionadas automáticas",
+   "description": "Evita que Windows instale juegos y apps patrocinadas (Candy Crush, etc.) por su cuenta.",
+   "note": "Solo aplica por completo en Windows Pro/Enterprise/Education.",
+   "requiresReboot": false,
+   "profiles": [
+    "gamer",
+    "privacy"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableWindowsConsumerFeatures",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+     "name": "DisableWindowsConsumerFeatures"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.vmp",
+   "category": "security",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Desactivar Plataforma de máquina virtual (VMP)",
+   "description": "La plataforma de virtualización puede reducir el rendimiento en juegos en algunas configuraciones.",
+   "note": "Rompe WSL2, Docker, emuladores de Android y Windows Sandbox. Mide antes y después.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "feature",
+     "name": "VirtualMachinePlatform",
+     "enabled": false
+    }
+   ],
+   "undo": [
+    {
+     "op": "feature",
+     "name": "VirtualMachinePlatform",
+     "enabled": true
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.memoryIntegrity",
+   "category": "security",
+   "impact": "fps",
+   "risk": "risky",
+   "name": "Desactivar Integridad de memoria (HVCI)",
+   "description": "Puede costar rendimiento en algunos equipos. Lo recomendable es apagarla solo para jugar y reactivarla después.",
+   "note": "Pierdes protección contra drivers maliciosos en el núcleo de Windows. Algunos anti-cheat la exigen activa. Aplícala solo si el benchmark muestra una mejora clara.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
+     "name": "Enabled",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.mmcssGames",
+   "category": "experimental",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Prioridad multimedia para juegos (MMCSS)",
+   "description": "Sube la prioridad de CPU/GPU que el programador multimedia de Windows asigna a los juegos y reduce la reserva para tareas de fondo (SystemResponsiveness 10).",
+   "note": "Muy popular en foros; efecto medido inconsistente. Usa el benchmark para confirmar.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+     "name": "SystemResponsiveness",
+     "type": "DWord",
+     "value": 10
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "GPU Priority",
+     "type": "DWord",
+     "value": 8
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "Priority",
+     "type": "DWord",
+     "value": 6
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "Scheduling Category",
+     "type": "String",
+     "value": "High"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "SFIO Priority",
+     "type": "String",
+     "value": "High"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+     "name": "SystemResponsiveness",
+     "type": "DWord",
+     "value": 20
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "GPU Priority",
+     "type": "DWord",
+     "value": 8
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "Priority",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "Scheduling Category",
+     "type": "String",
+     "value": "Medium"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+     "name": "SFIO Priority",
+     "type": "String",
+     "value": "Normal"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.networkThrottling",
+   "category": "experimental",
+   "impact": "latency",
+   "risk": "moderate",
+   "name": "Quitar límite de red durante multimedia",
+   "description": "Desactiva el límite que Windows pone al tráfico de red mientras reproduce audio/video (NetworkThrottlingIndex).",
+   "note": "Popular en foros para ping; no hay evidencia sólida de mejora en juegos online.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+     "name": "NetworkThrottlingIndex",
+     "type": "DWord",
+     "value": 4294967295
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+     "name": "NetworkThrottlingIndex",
+     "type": "DWord",
+     "value": 10
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.powerThrottling",
+   "category": "experimental",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Desactivar limitación de energía de procesos",
+   "description": "Windows deja de bajar la prioridad de energía a procesos en segundo plano (Power Throttling).",
+   "note": "En portátiles reduce la batería. Efecto en FPS normalmente nulo si el juego está en primer plano.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+     "name": "PowerThrottlingOff",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+     "name": "PowerThrottlingOff"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.startupDelay",
+   "category": "experimental",
+   "impact": "stability",
+   "risk": "safe",
+   "name": "Quitar retraso de apps de inicio",
+   "description": "Las apps de inicio arrancan sin la espera de ~10 segundos que Windows agrega tras iniciar sesión.",
+   "note": "El escritorio puede sentirse más pesado justo al iniciar sesión.",
+   "requiresReboot": false,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+     "name": "StartupDelayInMSec",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+     "name": "StartupDelayInMSec"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.disableMpo",
+   "category": "experimental",
+   "impact": "stability",
+   "risk": "moderate",
+   "name": "Desactivar Multiplane Overlay (MPO)",
+   "description": "Solución conocida para parpadeos y pantallazos negros en el navegador o con varios monitores.",
+   "note": "Aplícalo solo si tienes parpadeos. Puede subir un poco el uso de GPU en escritorio.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\Dwm",
+     "name": "OverlayTestMode",
+     "type": "DWord",
+     "value": 5
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SOFTWARE\\Microsoft\\Windows\\Dwm",
+     "name": "OverlayTestMode"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.fseGlobal",
+   "category": "experimental",
+   "impact": "latency",
+   "risk": "moderate",
+   "name": "Desactivar optimizaciones de pantalla completa (global)",
+   "description": "Fuerza pantalla completa exclusiva 'clásica' en todos los juegos.",
+   "note": "En Windows 11 suele empeorar Alt+Tab y puede romper VRR/Auto HDR. Mejor desactivarlo solo por juego desde Propiedades del .exe.",
+   "requiresReboot": true,
+   "profiles": [],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_FSEBehaviorMode",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_HonorUserFSEBehaviorMode",
+     "type": "DWord",
+     "value": 1
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_FSEBehavior",
+     "type": "DWord",
+     "value": 2
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_DXGIHonorFSEWindowsCompatible",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_FSEBehaviorMode",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_HonorUserFSEBehaviorMode",
+     "type": "DWord",
+     "value": 0
+    },
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_FSEBehavior"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "System\\GameConfigStore",
+     "name": "GameDVR_DXGIHonorFSEWindowsCompatible",
+     "type": "DWord",
+     "value": 0
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  }
+ ]
+}

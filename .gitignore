@@ -1,0 +1,8 @@
+bin/
+obj/
+publish/
+.vs/
+*.user
+*.suo
+.idea/
+src/KizaTweaks.App/Tools/

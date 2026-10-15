@@ -1,0 +1,64 @@
+name: Compilar KizaTweaks
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Compilar
+        run: dotnet build KizaTweaks.sln -c Release
+
+      - name: Pruebas unitarias
+        run: dotnet run --project tests/KizaTweaks.Tests -c Release --no-build
+
+      - name: Pruebas de integración (Windows real)
+        run: dotnet run --project tests/KizaTweaks.Tests -c Release --no-build -- --windows
+
+      - name: Descargar medidor de FPS (va incluido en el .exe)
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./tools/get-presentmon.ps1
+
+      - name: Publicar .exe (un solo archivo, sin instalar .NET)
+        run: dotnet publish src/KizaTweaks.App/KizaTweaks.App.csproj -c Release -o publish
+
+      - name: Prueba de humo de la interfaz (abre todas las páginas)
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath "publish\KizaTweaks.exe" -ArgumentList "--smoke-test" -PassThru
+          if (-not $p.WaitForExit(300000)) { Stop-Process -Id $p.Id -Force; Write-Host "Tiempo agotado" }
+          $log = "$env:ProgramData\KizaTweaks\logs"
+          if (Test-Path "$log\smoke-test.txt") { Get-Content "$log\smoke-test.txt" }
+          Get-ChildItem "$log\kizatweaks-*.log" -ErrorAction SilentlyContinue | Get-Content -Tail 80
+          if ($p.ExitCode -ne 0) { Write-Error "La prueba de humo falló (código $($p.ExitCode))"; exit 1 }
+
+      # Para distribución pública, firma el .exe aquí (Azure Trusted Signing, SignPath o certificado propio).
+      # Sin firma, Windows SmartScreen mostrará "Editor desconocido" la primera vez.
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KizaTweaks-win-x64
+          path: publish/KizaTweaks.exe
+
+      - name: Crear release con el .exe
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: publish/KizaTweaks.exe
+          generate_release_notes: true

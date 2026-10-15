@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{60369B04-DAE4-47C4-9F01-2963B48F7B91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KizaTweaks.Core", "src\KizaTweaks.Core\KizaTweaks.Core.csproj", "{68FAE466-7724-4746-B5C1-498EA9919D7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BBA971AF-92DB-405D-A9B1-C8C94C443666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KizaTweaks.Tests", "tests\KizaTweaks.Tests\KizaTweaks.Tests.csproj", "{07808A3B-EFB7-464C-B40E-0599EAFFD98A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KizaTweaks.Presentation", "src\KizaTweaks.Presentation\KizaTweaks.Presentation.csproj", "{F91C050E-D59A-4958-9293-F565F3BF0371}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KizaTweaks.App", "src\KizaTweaks.App\KizaTweaks.App.csproj", "{23886056-38A7-4DF7-853D-056817FBC4ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68FAE466-7724-4746-B5C1-498EA9919D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FAE466-7724-4746-B5C1-498EA9919D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FAE466-7724-4746-B5C1-498EA9919D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FAE466-7724-4746-B5C1-498EA9919D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07808A3B-EFB7-464C-B40E-0599EAFFD98A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07808A3B-EFB7-464C-B40E-0599EAFFD98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07808A3B-EFB7-464C-B40E-0599EAFFD98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07808A3B-EFB7-464C-B40E-0599EAFFD98A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91C050E-D59A-4958-9293-F565F3BF0371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91C050E-D59A-4958-9293-F565F3BF0371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91C050E-D59A-4958-9293-F565F3BF0371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91C050E-D59A-4958-9293-F565F3BF0371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23886056-38A7-4DF7-853D-056817FBC4ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23886056-38A7-4DF7-853D-056817FBC4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23886056-38A7-4DF7-853D-056817FBC4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23886056-38A7-4DF7-853D-056817FBC4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68FAE466-7724-4746-B5C1-498EA9919D7D} = {60369B04-DAE4-47C4-9F01-2963B48F7B91}
+		{07808A3B-EFB7-464C-B40E-0599EAFFD98A} = {BBA971AF-92DB-405D-A9B1-C8C94C443666}
+		{F91C050E-D59A-4958-9293-F565F3BF0371} = {60369B04-DAE4-47C4-9F01-2963B48F7B91}
+		{23886056-38A7-4DF7-853D-056817FBC4ED} = {60369B04-DAE4-47C4-9F01-2963B48F7B91}
+	EndGlobalSection
+EndGlobal

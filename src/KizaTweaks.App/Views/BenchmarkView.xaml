@@ -1,0 +1,146 @@
+<UserControl x:Class="KizaTweaks.App.Views.BenchmarkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,28,32,32">
+            <TextBlock Text="Benchmark" Style="{StaticResource H1}" />
+            <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,20"
+                       Text="Mide antes y después de optimizar. Si un ajuste no mejora los números, deshazlo: así sabes qué funciona en TU equipo." />
+
+            <!-- ================= FPS ================= -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="FPS en juegos" Style="{StaticResource H2}" />
+                    <TextBlock Style="{StaticResource Caption}" Margin="0,4,0,14"
+                               Text="Abre el juego, vuelve aquí, elígelo y juega la misma escena en cada medición." />
+
+                    <StackPanel Visibility="{Binding PresentMonReady, Converter={StaticResource InverseBoolToVis}}" Orientation="Horizontal">
+                        <Button Content="Activar medición de FPS" Command="{Binding DownloadPresentMonCommand}" Style="{StaticResource PrimaryButton}" />
+                        <TextBlock Text="Descarga el componente de medición una sola vez." Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="12,0,0,0" />
+                    </StackPanel>
+
+                    <Grid Visibility="{Binding PresentMonReady, Converter={StaticResource BoolToVis}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame, Mode=TwoWay}" Margin="0,0,8,0" />
+                        <Button Grid.Column="1" Content="Actualizar lista" Command="{Binding RefreshGamesCommand}" Style="{StaticResource GhostButton}" Margin="0,0,8,0" />
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding Durations}" SelectedItem="{Binding Duration, Mode=TwoWay}"
+                                  ItemStringFormat="{}{0} segundos" Margin="0,0,8,0" />
+                        <TextBox Grid.Column="3" Text="{Binding FpsLabel, UpdateSourceTrigger=PropertyChanged}" Tag="Etiqueta (Antes/Después)" Margin="0,0,8,0" />
+                        <Button Grid.Column="4" Content="Medir FPS" Command="{Binding RunFpsCommand}" Style="{StaticResource PrimaryButton}" />
+                    </Grid>
+
+                    <!-- Resultados -->
+                    <Grid Margin="10,20,10,6" Visibility="{Binding FpsResults.Count, Converter={StaticResource CountToVis}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="110" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource Caption}" />
+                        </Grid.Resources>
+                        <TextBlock Text="MEDICIÓN" />
+                        <TextBlock Grid.Column="1" Text="FPS PROMEDIO" />
+                        <TextBlock Grid.Column="2" Text="1 % LOW" />
+                        <TextBlock Grid.Column="3" Text="0,1 % LOW" />
+                        <TextBlock Grid.Column="4" Text="FRAME P99" />
+                    </Grid>
+                    <ItemsControl ItemsSource="{Binding FpsResults}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource Surface2Brush}" CornerRadius="8" Padding="10,8" Margin="0,0,0,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="110" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Title}" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding When}" Style="{StaticResource Caption}" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" Text="{Binding Avg}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Low1}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource Accent2Brush}" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Text="{Binding Low01}" FontSize="15" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="4" Text="{Binding P99}" FontSize="15" VerticalAlignment="Center" Foreground="{StaticResource MutedBrush}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- ================= Sistema en reposo ================= -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Sistema en reposo" Style="{StaticResource H2}" />
+                    <TextBlock Style="{StaticResource Caption}" Margin="0,4,0,14"
+                               Text="Procesos, servicios, apps de inicio, CPU y RAM sin nada abierto, y el tiempo de arranque que registra Windows. Cierra todo antes de medir." />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding SnapshotLabel, UpdateSourceTrigger=PropertyChanged}" Tag="Etiqueta" Width="200" Margin="0,0,8,0" />
+                        <Button Content="Medir ahora" Command="{Binding TakeSnapshotCommand}" Style="{StaticResource PrimaryButton}" />
+                    </StackPanel>
+
+                    <Grid Margin="0,18,0,0" Visibility="{Binding Snapshots.Count, Converter={StaticResource CountToVis}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox ItemsSource="{Binding Snapshots}" SelectedItem="{Binding CompareA, Mode=TwoWay}" />
+                        <TextBlock Grid.Column="1" Text="  vs  " VerticalAlignment="Center" Foreground="{StaticResource MutedBrush}" />
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding Snapshots}" SelectedItem="{Binding CompareB, Mode=TwoWay}" />
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{Binding Comparison}" Margin="0,12,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="160" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Metric}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Before}" Foreground="{StaticResource MutedBrush}" />
+                                    <TextBlock Grid.Column="2" Text="{Binding After}" FontWeight="SemiBold" />
+                                    <TextBlock x:Name="Change" Grid.Column="3" Text="{Binding Change}" Foreground="{StaticResource MutedBrush}" />
+                                </Grid>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Better}" Value="True">
+                                        <Setter TargetName="Change" Property="Foreground" Value="{StaticResource OkBrush}" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Text="Mediciones guardadas" Style="{StaticResource Caption}" Margin="0,16,0,6"
+                               Visibility="{Binding Snapshots.Count, Converter={StaticResource CountToVis}}" />
+                    <ItemsControl ItemsSource="{Binding Snapshots}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,6">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding Summary}" Style="{StaticResource Caption}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
