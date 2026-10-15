@@ -23,7 +23,8 @@ public static class WindowsIntegration
             Console.WriteLine("Las pruebas de integración solo corren en Windows.");
             return 0;
         }
-        Log.Written += l => { if (l.Contains("[WARN]") || l.Contains("[ERROR]")) Console.WriteLine("    log: " + l); };
+        var logLines = new List<string>();
+        Log.Written += l => { if (l.Contains("[WARN]") || l.Contains("[ERROR]")) { Console.WriteLine("    log: " + l); lock (logLines) logLines.Add(l); } };
         var tests = new List<(string, Action)>
         {
             ("Hardware: detección completa", Hardware),
@@ -46,6 +47,7 @@ public static class WindowsIntegration
                 Gh("error", name, ex.ToString());
             }
         }
+        if (logLines.Count > 0) Gh("warning", "Avisos del registro", string.Join("\n", logLines.Take(40)));
         Console.WriteLine(failed == 0 ? "\nINTEGRACIÓN OK" : $"\nINTEGRACIÓN: {failed} fallos");
         return failed == 0 ? 0 : 1;
     }
@@ -74,7 +76,7 @@ public static class WindowsIntegration
         foreach (var d in r.Displays) Console.WriteLine($"      Pantalla: {d.MonitorName} {d.Width}x{d.Height} {d.CurrentHz}/{d.MaxHz} Hz");
         Console.WriteLine($"      TRIM={r.TrimEnabled} VBS={r.VbsRunning} HVCI={r.HvciRunning} HAGS={r.HagsEnabled} Energía={r.PowerSchemeName} Portátil={r.IsLaptop}");
         Check(!string.IsNullOrWhiteSpace(r.Cpu.Name) && r.Cpu.Threads > 0, "CPU no detectada");
-        Check(r.RamTotalBytes > 0, "RAM no detectada");
+        Check(r.RamTotalBytes > 0, $"RAM no detectada (módulos WMI: {r.Ram.Count}, GPUs: {r.Gpus.Count})");
         Check(r.Disks.Count > 0, "discos no detectados");
         Check(r.Volumes.Any(v => v.Letter.Equals(r.SystemDrive, StringComparison.OrdinalIgnoreCase)), "volumen del sistema no detectado");
         Gh("notice", "Hardware detectado", $"{r.Os} | CPU {r.Cpu.Name} | RAM {Fmt(r.RamTotalBytes)} | GPU {string.Join(", ", r.Gpus.Select(g => g.Name))} | Discos {string.Join("; ", r.Disks.Select(d => $"{d.Model} {d.Kind} {d.Health} {string.Join(",", d.Letters)}"))} | TRIM={r.TrimEnabled} VBS={r.VbsRunning}");
