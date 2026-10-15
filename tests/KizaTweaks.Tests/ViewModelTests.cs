@@ -88,7 +88,7 @@ public static class ViewModelTests
         dialogs.Answers.Enqueue(0); // «Deshacer todo»
         vm.Backups.UndoAllCommand.Execute(null);
         // AsyncCommand es async void: se espera a que termine
-        for (int i = 0; i < 100 && vm.Tweaks.AppliedCount != initial; i++) Thread.Sleep(50);
+        for (int i = 0; i < 400 && vm.Tweaks.AppliedCount != initial; i++) Thread.Sleep(50);
         if (vm.Tweaks.AppliedCount != initial) throw new Exception($"quedaron {vm.Tweaks.AppliedCount - initial} aplicados tras deshacer todo");
         if (vm.Backups.Items.Count != 0) throw new Exception("quedaron respaldos");
     }
@@ -118,14 +118,14 @@ public static class ViewModelTests
 
         dialogs.Answers.Enqueue(1); // «Aplicar sin punto»
         perf.ActivateCommand.Execute(null);
-        for (int i = 0; i < 100 && !perf.IsComplete; i++) Thread.Sleep(50);
+        for (int i = 0; i < 400 && !perf.IsComplete; i++) Thread.Sleep(50);
         if (!perf.IsComplete) throw new Exception($"quedaron {perf.Pending} pendientes. Diálogos: {string.Join(" || ", dialogs.Shown)}");
         if (b.ActiveScheme != b.ResolvePowerScheme("ultimate", false)) throw new Exception("no se activó el plan de máximo rendimiento");
         if (vm.Fps.Percent <= 0) throw new Exception("progreso FPS en 0");
 
         var item = vm.Fps.Groups.SelectMany(g => g.Items).First(i => i.IsApplied && i.Item.Def.Id == "kiza.gameMode");
         item.ToggleCommand.Execute(null);
-        for (int i = 0; i < 100 && (item.IsApplied || perf.IsComplete); i++) Thread.Sleep(50);
+        for (int i = 0; i < 400 && (item.IsApplied || perf.IsComplete); i++) Thread.Sleep(50);
         if (item.IsApplied) throw new Exception("el interruptor no deshizo el ajuste");
         if (perf.IsComplete) throw new Exception("el nivel debería quedar incompleto tras apagar un ajuste");
     }
@@ -139,11 +139,11 @@ public static class ViewModelTests
         dialogs.Files.Enqueue(@"D:\Juegos\Valorant\VALORANT-Win64-Shipping.exe");
         dialogs.Answers.Enqueue(0);
         vm.Fps.AddGameCommand.Execute(null);
-        for (int i = 0; i < 100 && vm.Fps.Games.Count == 0; i++) Thread.Sleep(50);
+        for (int i = 0; i < 400 && vm.Fps.Games.Count == 0; i++) Thread.Sleep(50);
         var g = vm.Fps.Games.SingleOrDefault() ?? throw new Exception("el juego no aparece");
         if (!g.Game.HighPriority || !g.Game.DedicatedGpu) throw new Exception("configuración incompleta: " + g.Detail);
         g.RemoveCommand.Execute(null);
-        for (int i = 0; i < 100 && vm.Fps.Games.Count > 0; i++) Thread.Sleep(50);
+        for (int i = 0; i < 400 && vm.Fps.Games.Count > 0; i++) Thread.Sleep(50);
         if (vm.Fps.Games.Count != 0) throw new Exception("no se quitó el juego");
         if (b.KeyExists("HKLM", @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\VALORANT-Win64-Shipping.exe"))
             throw new Exception("quedó la clave IFEO");

@@ -48,6 +48,7 @@ foreach (var (name, body) in tests)
     {
         failed++;
         Console.WriteLine($"  ✘ {name}\n      {ex.GetType().Name}: {ex.Message}");
+        WindowsIntegration.Gh("error", name, ex.ToString());
     }
 }
 Console.WriteLine(failed == 0 ? $"\nOK: {tests.Count} pruebas" : $"\nFALLARON {failed} de {tests.Count}");
