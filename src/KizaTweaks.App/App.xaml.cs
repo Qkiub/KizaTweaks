@@ -162,7 +162,8 @@ public partial class App : Application
             Directory.CreateDirectory(dir);
             if (MainWindow?.Content is not FrameworkElement root) return;
             Save(root, Path.Combine(dir, $"{index:00}-{key}.png"));
-            if (FindChild<ScrollViewer>(root) is { ScrollableHeight: > 40 } sv)
+            var sv = FindAll<ScrollViewer>(root).Where(s => s.Name != "PART_ContentHost").OrderByDescending(s => s.ScrollableHeight).FirstOrDefault();
+            if (sv is { ScrollableHeight: > 40 })
             {
                 sv.ScrollToVerticalOffset(sv.ViewportHeight - 80);
                 root.UpdateLayout();
@@ -189,15 +190,14 @@ public partial class App : Application
         enc.Save(fs);
     }
 
-    private static T? FindChild<T>(DependencyObject parent) where T : DependencyObject
+    private static IEnumerable<T> FindAll<T>(DependencyObject parent) where T : DependencyObject
     {
         for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
         {
             var c = VisualTreeHelper.GetChild(parent, i);
-            if (c is T t && (c is not ScrollViewer sv || sv.Name != "PART_ContentHost")) return t;
-            if (FindChild<T>(c) is { } found) return found;
+            if (c is T t) yield return t;
+            foreach (var x in FindAll<T>(c)) yield return x;
         }
-        return null;
     }
 
     private readonly List<string> _unhandled = new();

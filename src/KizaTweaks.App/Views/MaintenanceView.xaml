@@ -5,7 +5,7 @@
     <Grid Margin="32,28,32,24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="420" />
+            <ColumnDefinition Width="0.8*" MinWidth="300" MaxWidth="440" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -21,28 +21,27 @@
         <!-- ============ Tareas ============ -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,16,0">
             <StackPanel>
-                <Grid Margin="0,0,0,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Border Style="{StaticResource Card}" Margin="0,0,8,0">
+                <Border Style="{StaticResource Card}" Margin="0,0,0,10">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Content="Ejecutar" Command="{Binding QuickCommand}" Style="{StaticResource PrimaryButton}"
+                                VerticalAlignment="Center" Margin="16,0,0,0" />
                         <StackPanel>
                             <TextBlock Text="Mantenimiento rápido" Style="{StaticResource H2}" />
-                            <TextBlock Text="1 a 3 minutos · seguro para hacer cada semana" Style="{StaticResource Caption}" Margin="0,2,0,8" />
-                            <TextBlock Text="{Binding QuickList}" Style="{StaticResource Muted}" FontSize="12.5" Margin="0,0,0,12" />
-                            <Button Content="Ejecutar" Command="{Binding QuickCommand}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" />
+                            <TextBlock Text="De 1 a 3 minutos. Seguro para hacer cada semana." Style="{StaticResource Caption}" Margin="0,2,0,8" />
+                            <TextBlock Text="{Binding QuickList}" Style="{StaticResource Muted}" FontSize="12.5" />
                         </StackPanel>
-                    </Border>
-                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="8,0,0,0">
+                    </DockPanel>
+                </Border>
+                <Border Style="{StaticResource Card}" Margin="0,0,0,22">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Content="Ejecutar" Command="{Binding FullCommand}" VerticalAlignment="Center" Margin="16,0,0,0" />
                         <StackPanel>
                             <TextBlock Text="Mantenimiento completo" Style="{StaticResource H2}" />
-                            <TextBlock Text="15 a 60 minutos · una vez al mes" Style="{StaticResource Caption}" Margin="0,2,0,8" />
-                            <TextBlock Text="{Binding FullList}" Style="{StaticResource Muted}" FontSize="12.5" Margin="0,0,0,12" />
-                            <Button Content="Ejecutar" Command="{Binding FullCommand}" HorizontalAlignment="Left" />
+                            <TextBlock Text="De 15 a 60 minutos. Una vez al mes." Style="{StaticResource Caption}" Margin="0,2,0,8" />
+                            <TextBlock Text="{Binding FullList}" Style="{StaticResource Muted}" FontSize="12.5" />
                         </StackPanel>
-                    </Border>
-                </Grid>
+                    </DockPanel>
+                </Border>
 
                 <ItemsControl ItemsSource="{Binding Groups}">
                     <ItemsControl.ItemTemplate>

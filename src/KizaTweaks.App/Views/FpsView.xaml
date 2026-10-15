@@ -97,7 +97,7 @@
             </StackPanel>
 
             <!-- ============ Niveles ============ -->
-            <ItemsControl ItemsSource="{Binding Levels}" Margin="0,0,0,18">
+            <ItemsControl ItemsSource="{Binding Levels}" Margin="0,0,-14,18">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
@@ -219,7 +219,7 @@
                                 <TextBlock Text="{Binding Title}" Style="{StaticResource H2}" FontSize="22" Margin="10,0,0,0" />
                             </DockPanel>
                             <TextBlock Text="{Binding Subtitle}" Style="{StaticResource Muted}" Margin="0,0,0,12" />
-                            <ItemsControl ItemsSource="{Binding Items}">
+                            <ItemsControl ItemsSource="{Binding Items}" Margin="0,0,-12,0">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>

@@ -74,8 +74,8 @@ public sealed class MaintenanceViewModel : ObservableObject
         ClearOutputCommand = new RelayCommand(() => { _output.Clear(); OnPropertyChanged(nameof(Output)); });
     }
 
-    public string QuickList => string.Join(" · ", _items.Where(i => i.Task.InQuick).Select(i => i.Name));
-    public string FullList => string.Join(" · ", _items.Where(i => i.Task.InFull).Select(i => i.Name));
+    public string QuickList => string.Join(", ", _items.Where(i => i.Task.InQuick).Select(i => i.Name));
+    public string FullList => string.Join(", ", _items.Where(i => i.Task.InFull).Select(i => i.Name));
 
     public string Output => _output.ToString();
 

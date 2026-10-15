@@ -77,7 +77,7 @@ public sealed class FpsLevelViewModel : ObservableObject
     public string Adjusted { get => _adjusted; private set { SetProperty(ref _adjusted, value); OnPropertyChanged(nameof(HasAdjusted)); } }
     public bool HasAdjusted => Adjusted.Length > 0;
     public bool IsComplete => Total > 0 && Pending == 0;
-    public string ProgressText => IsComplete ? $"Todo activo · {Total} ajustes" : $"{Total - Pending} de {Total} activos · faltan {Pending}";
+    public string ProgressText => IsComplete ? $"Los {Total} ajustes están activos" : $"{Total - Pending} de {Total} activos, faltan {Pending}";
     public string ButtonText => IsComplete ? "Activado" : "Activar";
 
     public void Update(int pending, int total, IReadOnlyList<string> adjusted)
@@ -282,7 +282,7 @@ public sealed class FpsViewModel : ObservableObject
             .Where(compatible.ContainsKey).Select(id => compatible[id]).ToList();
         var applied = target.Count(t => t.IsApplied);
         Percent = target.Count == 0 ? 0 : (int)Math.Round(100.0 * applied / target.Count);
-        ScoreText = $"{applied} de {target.Count} ajustes FPS activos";
+        ScoreText = $"{applied} de {target.Count} ajustes de rendimiento activos";
         ScoreLabel = Percent >= 85 ? "Listo para competir" : Percent >= 50 ? "Buen camino" : Percent > 0 ? "Hay FPS sobre la mesa" : "Sin optimizar";
         OnPropertyChanged(nameof(ScoreColor));
         foreach (var g in Groups) g.Refresh();
@@ -300,7 +300,7 @@ public sealed class FpsViewModel : ObservableObject
             HardwareText = "No se pudo detectar el hardware.";
             return;
         }
-        HardwareText = $"{(r.IsLaptop ? "Portátil" : "Escritorio")} · {r.Cpu.Name} · {r.MainGpu?.Name ?? "GPU desconocida"}";
+        HardwareText = $"{(r.IsLaptop ? "Portátil" : "Escritorio")} con {r.Cpu.Name} y {r.MainGpu?.Name ?? "GPU sin identificar"}";
         ICommand Open(string uri) => new RelayCommand(() => ProcessRunner.OpenShell(uri));
 
         foreach (var d in r.Displays.Take(2))

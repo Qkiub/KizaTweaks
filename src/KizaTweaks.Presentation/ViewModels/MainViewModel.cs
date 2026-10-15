@@ -89,7 +89,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Backups = new BackupsViewModel(services, dialogs, this, Tweaks);
 
         Nav.Add(new NavItem { Key = "home", Title = "Inicio", Glyph = "", Page = Dashboard, OnFirstOpen = Dashboard.LoadAsync });
-        Nav.Add(new NavItem { Key = "fps", Title = "Modo FPS", Glyph = "\uE945", Page = Fps, OnFirstOpen = Fps.LoadAsync });
+        Nav.Add(new NavItem { Key = "fps", Title = "Modo FPS", Glyph = "\uEC4A", Page = Fps, OnFirstOpen = Fps.LoadAsync });
         Nav.Add(new NavItem { Key = "tweaks", Title = "Optimizar", Glyph = "", Page = Tweaks, OnFirstOpen = async () => { if (!Tweaks.Loaded) await Tweaks.RefreshAsync(); } });
         Nav.Add(new NavItem { Key = "apps", Title = "Apps", Glyph = "", Page = Apps, OnFirstOpen = Apps.ScanAsync });
         Nav.Add(new NavItem { Key = "processes", Title = "Procesos", Glyph = "", Page = Processes, OnFirstOpen = Processes.RefreshAsync });
