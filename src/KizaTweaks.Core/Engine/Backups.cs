@@ -13,6 +13,7 @@ namespace KizaTweaks.Core.Engine;
 [JsonDerivedType(typeof(FeatureBackup), "feature")]
 [JsonDerivedType(typeof(DxBackup), "dx")]
 [JsonDerivedType(typeof(PowerBackup), "power")]
+[JsonDerivedType(typeof(PowerSettingBackup), "powerSetting")]
 public abstract class BackupEntry
 {
     /// <summary>Identificador del objetivo, para no respaldar dos veces lo mismo dentro de un tweak.</summary>
@@ -82,6 +83,16 @@ public sealed class PowerBackup : BackupEntry
 {
     public string? PreviousScheme { get; set; }
     public override string TargetKey => "p";
+}
+
+public sealed class PowerSettingBackup : BackupEntry
+{
+    public string Scheme { get; set; } = "";
+    public string Sub { get; set; } = "";
+    public string Setting { get; set; } = "";
+    public uint? Previous { get; set; }
+    public bool Dc { get; set; }
+    public override string TargetKey => $"ps|{Scheme}|{Setting}".ToLowerInvariant();
 }
 
 public sealed class TweakBackup

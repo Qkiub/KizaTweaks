@@ -37,7 +37,7 @@ jobs:
         run: ./tools/get-presentmon.ps1
 
       - name: Publicar .exe (un solo archivo, sin instalar .NET)
-        run: dotnet publish src/KizaTweaks.App/KizaTweaks.App.csproj -c Release -o publish
+        run: dotnet publish src/KizaTweaks.App/KizaTweaks.App.csproj -c Release -o publish -p:Version=1.0.${{ github.run_number }}
 
       - name: Prueba de humo de la interfaz (abre todas las páginas)
         shell: pwsh
@@ -56,6 +56,18 @@ jobs:
           Get-ChildItem "$log\kizatweaks-*.log" -ErrorAction SilentlyContinue | Get-Content -Tail 80
           if ($p.ExitCode -ne 0) { Write-Error "La prueba de humo falló (código $($p.ExitCode))"; exit 1 }
 
+      - name: Guardar capturas de pantalla (rama ci-screens)
+        if: always() && github.event_name == 'push'
+        shell: pwsh
+        run: |
+          $dir = "$env:ProgramData\KizaTweaks\logs\screens"
+          if (-not (Test-Path $dir)) { Write-Host "Sin capturas"; exit 0 }
+          Set-Location $dir
+          git init -q -b ci-screens
+          git add -A
+          git -c user.name="KizaTweaks CI" -c user.email="ci@kizatweaks.local" commit -q -m "Capturas de ${{ github.sha }}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-screens
+
       # Para distribución pública, firma el .exe aquí (Azure Trusted Signing, SignPath o certificado propio).
       # Sin firma, Windows SmartScreen mostrará "Editor desconocido" la primera vez.
 
@@ -65,7 +77,7 @@ jobs:
           path: publish/KizaTweaks.exe
 
       - name: Crear release con el .exe
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+        if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[preview]') && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || format('v1.0.{0}', github.run_number) }}

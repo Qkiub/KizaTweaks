@@ -89,6 +89,8 @@ public interface IDialogService
     /// <summary>Muestra un mensaje con varios botones; devuelve el índice elegido o -1 si se cierra.</summary>
     Task<int> ChooseAsync(string title, string message, params string[] buttons);
     Task InfoAsync(string title, string message);
+    /// <summary>Selector de archivo; null si se cancela. filter con el formato de Windows: "Juegos (*.exe)|*.exe".</summary>
+    Task<string?> PickFileAsync(string title, string filter);
 }
 
 public static class DialogExtensions

@@ -60,11 +60,11 @@
                                                         <WrapPanel>
                                                             <TextBlock Text="{Binding Name}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0" />
                                                             <views:Pill Text="{Binding RiskLabel}" Color="{Binding RiskColor}" />
-                                                            <views:Pill Text="Reinicio" Color="#F59E0B" Visibility="{Binding RequiresReboot, Converter={StaticResource BoolToVis}}" />
-                                                            <views:Pill Text="{Binding Duration}" Color="#94A3B8" />
+                                                            <views:Pill Text="Reinicio" Color="#FFB547" Visibility="{Binding RequiresReboot, Converter={StaticResource BoolToVis}}" />
+                                                            <views:Pill Text="{Binding Duration}" Color="#8B95AB" />
                                                         </WrapPanel>
                                                         <TextBlock Text="{Binding Description}" Style="{StaticResource Muted}" Margin="0,6,0,0" />
-                                                        <TextBlock Text="{Binding Note}" Foreground="#FCD34D" TextWrapping="Wrap" Margin="0,4,0,0"
+                                                        <TextBlock Text="{Binding Note}" Foreground="#FFC978" TextWrapping="Wrap" Margin="0,4,0,0"
                                                                    Visibility="{Binding HasNote, Converter={StaticResource BoolToVis}}" />
                                                         <TextBlock Text="{Binding Command}" FontFamily="{StaticResource MonoFont}" FontSize="12"
                                                                    Foreground="{StaticResource SubtleBrush}" TextWrapping="Wrap" Margin="0,6,0,0" />
@@ -101,7 +101,7 @@
                 </DockPanel>
                 <TextBox x:Name="ConsoleBox" Text="{Binding Output, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Auto" FontFamily="{StaticResource MonoFont}" FontSize="12"
-                         Background="{StaticResource BgBrush}" Foreground="#C4C4D4" BorderThickness="0"
+                         Background="{StaticResource BgBrush}" Foreground="#C9D0DE" BorderThickness="0"
                          Height="Auto" VerticalContentAlignment="Top" Padding="12,8" Margin="1,0,1,1"
                          TextChanged="Console_TextChanged">
                     <TextBox.Template>

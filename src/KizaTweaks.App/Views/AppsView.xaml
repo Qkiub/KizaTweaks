@@ -34,7 +34,7 @@
                                   IsEnabled="{Binding IsInstalled}" VerticalAlignment="Center" />
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                             <views:Pill Text="{Binding RecommendationLabel}" Color="{Binding RecommendationColor}" />
-                            <views:Pill Text="{Binding InstalledLabel}" Color="#94A3B8" />
+                            <views:Pill Text="{Binding InstalledLabel}" Color="#8B95AB" />
                         </StackPanel>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />

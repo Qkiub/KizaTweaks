@@ -106,7 +106,8 @@ public sealed class InMemoryBackend : ISystemBackend
         + "\ntasks:" + string.Join(",", Tasks.OrderBy(s => s.Key).Select(s => $"{s.Key}={s.Value}"))
         + "\nenv:" + string.Join(",", Env.OrderBy(s => s.Key).Select(s => $"{s.Key}={s.Value}"))
         + "\nfeatures:" + string.Join(",", Features.OrderBy(s => s.Key).Select(s => $"{s.Key}={s.Value}"))
-        + "\npower:" + ActiveScheme;
+        + "\npower:" + ActiveScheme
+        + "\npowerSettings:" + string.Join(",", PowerSettings.OrderBy(s => s.Key).Select(s => $"{s.Key}={s.Value}"));
 
     public string? GetServiceStartType(string name) => Services.TryGetValue(name, out var s) ? s : null;
     public void SetServiceStartType(string name, string startType) => Services[name] = startType;
@@ -140,6 +141,13 @@ public sealed class InMemoryBackend : ISystemBackend
     }
 
     public void SetActivePowerScheme(string guid) => ActiveScheme = guid;
+
+    /// <summary>Ajustes de energía por plan: clave "plan|ajuste".</summary>
+    public Dictionary<string, uint> PowerSettings { get; } = new(StringComparer.OrdinalIgnoreCase);
+    public uint? GetPowerSetting(string scheme, string subGroup, string setting) =>
+        PowerSettings.TryGetValue($"{scheme}|{setting}", out var v) ? v : null;
+    public void SetPowerSetting(string scheme, string subGroup, string setting, uint value, bool dc) =>
+        PowerSettings[$"{scheme}|{setting}"] = value;
 
     public CommandResult Run(string file, string args, int timeoutMs = 120000)
     {

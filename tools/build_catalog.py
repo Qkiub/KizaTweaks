@@ -417,6 +417,18 @@ def w11d_tweaks(w11d):
     return out
 
 
+# Máximo rendimiento: lo del perfil Gamer + esto (sin tocar funciones básicas).
+# La app quita lo que no conviene según el hardware (portátil, Ryzen X3D).
+PROFILE_PERF = {
+    "kiza.powerUltimate", "kiza.usbSuspend", "kiza.pcieLspm", "kiza.mmcssGames",
+    "kiza.powerThrottling", "kiza.startupDelay",
+}
+# Competitivo: Máximo rendimiento + experimentales y menos efectos visuales.
+PROFILE_PRO = PROFILE_PERF | {
+    "kiza.coreParking", "kiza.win32Priority", "kiza.timerResolution", "kiza.networkThrottling",
+    "kiza.bgApps", "q.DisableTransparency", "q.DisableAnimations",
+}
+
 # --------------------------------------------------------------------------
 # Tweaks propios de KizaTweaks
 # --------------------------------------------------------------------------
@@ -439,6 +451,14 @@ TELEMETRY_TASKS = [
     r"\Microsoft\Windows\Feedback\Siuf\DmClient",
     r"\Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload",
 ]
+
+# GUIDs de powercfg (subgrupo, ajuste)
+PWR_USB = "2a737441-1930-4402-8d77-b2bebba308a3"
+PWR_USB_SUSPEND = "48e6b7a6-50f5-4782-a5d4-53bb8f07e226"
+PWR_PCIE = "501a4d13-42af-4429-9fd1-a8218c268e20"
+PWR_PCIE_LSPM = "ee12f906-d277-404b-b6da-e5fa1a576df5"
+PWR_CPU = "54533251-82be-4824-96c1-47b60b740d00"
+PWR_CPU_MINCORES = "0cc5b647-c1df-4637-891a-dec35c318583"
 
 KIZA = [
     # ---------------- Juegos: efecto documentado ----------------
@@ -544,6 +564,25 @@ KIZA = [
         "apply": [reg("HKLM", r"SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures", "DWord", 1)],
         "undo": [regdel("HKLM", r"SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures")],
     },
+    # ---------------- Energía para juegos (plan activo) ----------------
+    {
+        "id": "kiza.usbSuspend", "category": "gaming", "impact": "latency", "risk": "safe",
+        "name": "Sin ahorro de energía en USB",
+        "description": "Windows deja de 'dormir' los puertos USB para ahorrar energía. Evita micro-cortes del mouse, teclado o audífonos USB en medio de la partida.",
+        "note": "Se aplica al plan de energía activo. En portátil, gasta un poco más de batería.",
+        "requiresReboot": False, "profiles": ["perf"],
+        "apply": [{"op": "power.setting", "sub": PWR_USB, "setting": PWR_USB_SUSPEND, "value": 0}],
+        "undo": [{"op": "power.setting", "sub": PWR_USB, "setting": PWR_USB_SUSPEND, "value": 1}],
+    },
+    {
+        "id": "kiza.pcieLspm", "category": "gaming", "impact": "latency", "risk": "safe",
+        "name": "Sin ahorro de energía en PCI Express",
+        "description": "La GPU y el SSD NVMe no entran en estados de bajo consumo del bus PCIe. Quita pequeñas demoras al 'despertar' entre cargas.",
+        "note": "Se aplica al plan de energía activo. Los planes Alto y Máximo rendimiento ya lo traen así.",
+        "requiresReboot": False, "profiles": ["perf"],
+        "apply": [{"op": "power.setting", "sub": PWR_PCIE, "setting": PWR_PCIE_LSPM, "value": 0}],
+        "undo": [{"op": "power.setting", "sub": PWR_PCIE, "setting": PWR_PCIE_LSPM, "value": 1}],
+    },
     # ---------------- Seguridad vs rendimiento ----------------
     {
         "id": "kiza.vmp", "category": "security", "impact": "fps", "risk": "moderate",
@@ -598,6 +637,33 @@ KIZA = [
         "requiresReboot": True, "profiles": [],
         "apply": [reg("HKLM", r"SYSTEM\CurrentControlSet\Control\Power\PowerThrottling", "PowerThrottlingOff", "DWord", 1)],
         "undo": [regdel("HKLM", r"SYSTEM\CurrentControlSet\Control\Power\PowerThrottling", "PowerThrottlingOff")],
+    },
+    {
+        "id": "kiza.coreParking", "category": "experimental", "impact": "fps", "risk": "moderate",
+        "name": "Todos los núcleos del CPU despiertos",
+        "description": "Desactiva el 'estacionamiento' de núcleos: el CPU no apaga núcleos para ahorrar energía. Puede mejorar los 1 % low en juegos que usan muchos hilos.",
+        "note": "No lo uses en Ryzen X3D de dos chiplets (7900X3D, 7950X3D, 9900X3D, 9950X3D): dependen de esto para mandar el juego a los núcleos con caché extra. Más consumo en portátil.",
+        "requiresReboot": False, "profiles": ["pro"],
+        "apply": [{"op": "power.setting", "sub": PWR_CPU, "setting": PWR_CPU_MINCORES, "value": 100}],
+        "undo": [{"op": "power.setting", "sub": PWR_CPU, "setting": PWR_CPU_MINCORES, "value": 10}],
+    },
+    {
+        "id": "kiza.win32Priority", "category": "experimental", "impact": "latency", "risk": "moderate",
+        "name": "Más prioridad a la ventana activa",
+        "description": "Cambia cómo Windows reparte el CPU: turnos cortos y más tiempo para el programa en primer plano (Win32PrioritySeparation 0x26). Puede mejorar la respuesta del juego.",
+        "note": "Popular en la escena competitiva; el efecto varía según el juego y el CPU. Mide con el Benchmark.",
+        "requiresReboot": False, "profiles": ["pro"],
+        "apply": [reg("HKLM", r"SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", "DWord", 0x26)],
+        "undo": [reg("HKLM", r"SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", "DWord", 2)],
+    },
+    {
+        "id": "kiza.timerResolution", "category": "experimental", "impact": "latency", "risk": "moderate",
+        "name": "Resolución de temporizador global",
+        "description": "Desde Windows 11 cada programa recibe su propia precisión de temporizador. Esto vuelve al modo anterior: si el juego pide 0,5 ms, se respeta aunque esté minimizado o haya otras apps. Ayuda a la consistencia de frame time en algunos juegos.",
+        "note": "Aumenta un poco el consumo en reposo. En portátil no conviene.",
+        "requiresReboot": True, "profiles": ["pro"], "minBuild": 22000,
+        "apply": [reg("HKLM", r"SYSTEM\CurrentControlSet\Control\Session Manager\kernel", "GlobalTimerResolutionRequests", "DWord", 1)],
+        "undo": [regdel("HKLM", r"SYSTEM\CurrentControlSet\Control\Session Manager\kernel", "GlobalTimerResolutionRequests")],
     },
     {
         "id": "kiza.startupDelay", "category": "experimental", "impact": "stability", "risk": "safe",
@@ -775,6 +841,12 @@ def main():
     except Exception:
         commit = "desconocido"
     tweaks = w11d_tweaks(w11d) + KIZA
+    for t in tweaks:
+        for tag, ids_ in (("perf", PROFILE_PERF), ("pro", PROFILE_PRO)):
+            if t["id"] in ids_ and tag not in t["profiles"]:
+                t["profiles"].append(tag)
+    missing = (PROFILE_PERF | PROFILE_PRO) - {t["id"] for t in tweaks}
+    assert not missing, f"ids de perfil inexistentes: {missing}"
     ids = [t["id"] for t in tweaks]
     assert len(ids) == len(set(ids)), "ids duplicados"
     for t in tweaks:

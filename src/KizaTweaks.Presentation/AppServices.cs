@@ -31,6 +31,15 @@ public sealed class AppServices
     public bool IsAdmin { get; init; }
     public bool RestorePointCreated { get; set; }
 
+    /// <summary>Última detección de hardware (la usan los perfiles y el Modo FPS).</summary>
+    public HardwareReport? LastHardware { get; set; }
+
+    public async Task<HardwareReport> GetHardwareAsync(bool refresh = false)
+    {
+        if (LastHardware is null || refresh) LastHardware = await Task.Run(() => Hardware.Collect());
+        return LastHardware;
+    }
+
     public static AppServices CreateForWindows()
     {
         Directory.CreateDirectory(AppPaths.StateDir);
@@ -62,14 +71,14 @@ public sealed class AppServices
 /// <summary>Textos y colores para etiquetas (impacto, riesgo, estado).</summary>
 public static class Labels
 {
-    public const string Green = "#22C55E";
-    public const string Amber = "#F59E0B";
-    public const string Red = "#EF4444";
-    public const string Cyan = "#22D3EE";
-    public const string Violet = "#A78BFA";
-    public const string Slate = "#94A3B8";
-    public const string Pink = "#F472B6";
-    public const string Blue = "#60A5FA";
+    public const string Green = "#3DDC97";
+    public const string Amber = "#FFB547";
+    public const string Red = "#FF5470";
+    public const string Cyan = "#4FD1E8";
+    public const string Violet = "#A98BFF";
+    public const string Slate = "#8B95AB";
+    public const string Pink = "#FF7AB6";
+    public const string Blue = "#6EA8FF";
 
     public static (string text, string color) Impact(string impact) => impact switch
     {

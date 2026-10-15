@@ -17,22 +17,43 @@ public sealed class NavItem : ObservableObject
     internal bool Opened { get; set; }
 }
 
+public sealed record AboutPoint(string Glyph, string Title, string Text);
+
 public sealed class AboutViewModel
 {
+    public const string RepoUrl = "https://github.com/QkiubYT/KizaTweaks";
+
     public string Version { get; } = "v" + (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.0.0");
+    public string Author => "Qkiub";
+    public string Tagline => "Gamer de Colombia · creador de KizaTweaks";
+
+    public IReadOnlyList<string> Bio { get; } = new[]
+    {
+        "Soy Qkiub. Hice KizaTweaks para mi propio PC: quería sacarle más FPS sin instalar «optimizadores» que prometen milagros, llenan Windows de basura o lo dañan sin decirte qué tocaron.",
+        "Así que me tocó hacer el mío. Cada ajuste dice qué cambia, cuánto ayuda y qué riesgo tiene, y todo se deshace con un clic. Lo que no sirve no está, y lo dudoso va marcado como experimental para que lo midas tú mismo en tu equipo.",
+    };
+
+    public IReadOnlyList<AboutPoint> Promises { get; } = new[]
+    {
+        new AboutPoint("\uE890", "Nada escondido", "Ves exactamente qué toca cada ajuste antes de aplicarlo."),
+        new AboutPoint("\uE7A7", "Todo reversible", "Guardo el estado original de tu PC antes de cambiar cualquier cosa."),
+        new AboutPoint("\uE72E", "Sin anuncios ni rastreo", "La app no envía tus datos a ningún lado."),
+    };
 
     public IReadOnlyList<string> WhatWeDontDo { get; } = new[]
     {
-        "Desactivar Microsoft Defender: te deja expuesto y no da FPS medibles.",
-        "Desactivar Windows Update: bloquea parches de seguridad y drivers.",
-        "Quitar Microsoft Edge: WebView2, launchers y apps dependen de él.",
-        "Borrar el archivo de paginación: provoca cierres de juegos cuando se llena la RAM.",
-        "Cambiar temporizadores con BCDEdit (HPET, useplatformclock): sin mejora demostrada y puede empeorar la latencia.",
-        "Desactivar servicios de Windows en masa: rompe funciones de forma silenciosa y difícil de diagnosticar.",
-        "'Limpiadores de RAM': Windows ya gestiona la memoria; vaciarla solo obliga a recargar todo.",
-        "Borrar la carpeta Prefetch: Windows la usa para abrir programas más rápido; borrarla los vuelve más lentos.",
-        "Cambiar el autoajuste TCP o 'optimizar' la red con netsh: no baja el ping y puede reducir la velocidad.",
+        "Apagar Microsoft Defender: te deja expuesto y no da FPS medibles.",
+        "Apagar Windows Update: te quedas sin parches de seguridad ni drivers.",
+        "Quitar Microsoft Edge: launchers y apps dependen de su motor (WebView2).",
+        "Borrar el archivo de paginación: los juegos se cierran cuando se llena la RAM.",
+        "Tocar los temporizadores con BCDEdit (HPET): no hay mejora real y puede empeorar la latencia.",
+        "Desactivar servicios de Windows en masa: rompe cosas en silencio y luego nadie sabe por qué.",
+        "«Limpiar la RAM» o borrar Prefetch: Windows la usa a propósito; vaciarla solo vuelve todo más lento.",
+        "«Optimizar» la red con netsh: no baja el ping y puede bajar la velocidad.",
     };
+
+    public RelayCommand OpenRepoCommand { get; } = new(() => ProcessRunner.OpenShell(RepoUrl));
+    public RelayCommand OpenIssuesCommand { get; } = new(() => ProcessRunner.OpenShell(RepoUrl + "/issues"));
 }
 
 [SupportedOSPlatform("windows")]
@@ -46,6 +67,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
     public ProcessesViewModel Processes { get; }
     public StartupViewModel Startup { get; }
     public MaintenanceViewModel Maintenance { get; }
+    public FpsViewModel Fps { get; }
     public BenchmarkViewModel Benchmark { get; }
     public BackupsViewModel Backups { get; }
     public AboutViewModel About { get; } = new();
@@ -58,6 +80,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Services = services;
         Tweaks = new TweaksViewModel(services, dialogs, this);
         Dashboard = new DashboardViewModel(services, dialogs, this, Tweaks);
+        Fps = new FpsViewModel(services, dialogs, this, Tweaks);
         Apps = new AppsViewModel(services, dialogs, this);
         Processes = new ProcessesViewModel(services, dialogs, this);
         Startup = new StartupViewModel(services, this);
@@ -66,6 +89,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Backups = new BackupsViewModel(services, dialogs, this, Tweaks);
 
         Nav.Add(new NavItem { Key = "home", Title = "Inicio", Glyph = "", Page = Dashboard, OnFirstOpen = Dashboard.LoadAsync });
+        Nav.Add(new NavItem { Key = "fps", Title = "Modo FPS", Glyph = "\uE945", Page = Fps, OnFirstOpen = Fps.LoadAsync });
         Nav.Add(new NavItem { Key = "tweaks", Title = "Optimizar", Glyph = "", Page = Tweaks, OnFirstOpen = async () => { if (!Tweaks.Loaded) await Tweaks.RefreshAsync(); } });
         Nav.Add(new NavItem { Key = "apps", Title = "Apps", Glyph = "", Page = Apps, OnFirstOpen = Apps.ScanAsync });
         Nav.Add(new NavItem { Key = "processes", Title = "Procesos", Glyph = "", Page = Processes, OnFirstOpen = Processes.RefreshAsync });

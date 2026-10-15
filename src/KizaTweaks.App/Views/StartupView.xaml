@@ -32,7 +32,7 @@
                         <DockPanel>
                             <CheckBox DockPanel.Dock="Left" Style="{StaticResource Switch}" IsChecked="{Binding IsEnabled, Mode=TwoWay}"
                                       VerticalAlignment="Center" Margin="0,0,16,0" />
-                            <views:Pill DockPanel.Dock="Right" Text="{Binding Location}" Color="#94A3B8" />
+                            <views:Pill DockPanel.Dock="Right" Text="{Binding Location}" Color="#8B95AB" />
                             <StackPanel VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
                                 <TextBlock Text="{Binding Command}" Style="{StaticResource Caption}" TextWrapping="NoWrap"

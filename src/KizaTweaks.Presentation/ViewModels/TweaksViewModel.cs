@@ -4,6 +4,7 @@ using System.Text;
 using KizaTweaks.Core;
 using KizaTweaks.Core.Catalog;
 using KizaTweaks.Core.Engine;
+using KizaTweaks.Core.Hardware;
 using KizaTweaks.Core.Platform;
 using KizaTweaks.Presentation.Mvvm;
 
@@ -74,7 +75,7 @@ public sealed class CategoryFilterViewModel : ObservableObject
     public int Count { get => _count; set => SetProperty(ref _count, value); }
 }
 
-public sealed record ProfileOption(string Id, string Name, string Description);
+public sealed record ProfileOption(string Id, string Name, string Description, string Glyph);
 
 [SupportedOSPlatform("windows")]
 public sealed class TweaksViewModel : ObservableObject
@@ -86,13 +87,9 @@ public sealed class TweaksViewModel : ObservableObject
 
     public ObservableCollection<TweakItemViewModel> Visible { get; } = new();
     public ObservableCollection<CategoryFilterViewModel> Categories { get; } = new();
-    public IReadOnlyList<ProfileOption> ProfilesList { get; } = new[]
-    {
-        new ProfileOption(Profiles.Gamer, "Gamer recomendado", "Rendimiento y limpieza con riesgo bajo."),
-        new ProfileOption(Profiles.Privacy, "Gamer + privacidad máxima", "Lo anterior, más ubicación, IA y OneDrive fuera."),
-        new ProfileOption("safe", "Todo lo seguro", "Todos los ajustes marcados como seguros (incluye apariencia)."),
-        new ProfileOption("none", "Limpiar selección", ""),
-    };
+    public IReadOnlyList<ProfileOption> ProfilesList { get; } =
+        ProfileResolver.All.Select(p => new ProfileOption(p.Id, p.Name, p.Description, p.Glyph))
+            .Append(new ProfileOption(ProfileResolver.None, "Limpiar selección", "", "\uE894")).ToList();
 
     public AsyncCommand RefreshCommand { get; }
     public AsyncCommand ApplySelectedCommand { get; }
@@ -125,7 +122,7 @@ public sealed class TweaksViewModel : ObservableObject
         RefreshCommand = new AsyncCommand(RefreshAsync);
         ApplySelectedCommand = new AsyncCommand(ApplySelectedAsync);
         RevertSelectedCommand = new AsyncCommand(RevertSelectedAsync);
-        SelectProfileCommand = new RelayCommand(p => SelectProfile(p as string ?? "none"));
+        SelectProfileCommand = new RelayCommand(p => _ = SelectProfileAsync(p as string ?? ProfileResolver.None));
         SelectVisibleCommand = new RelayCommand(() =>
         {
             var allSelected = Visible.Where(v => v.IsCompatible).All(v => v.IsSelected);
@@ -185,21 +182,27 @@ public sealed class TweaksViewModel : ObservableObject
         if (_hideApplied) ApplyFilter();
     }
 
-    public void SelectProfile(string id)
+    /// <summary>Marca los ajustes del perfil (adaptado al hardware) que aún no están aplicados.</summary>
+    public async Task<ProfileSelection> SelectProfileAsync(string id, bool quiet = false)
     {
-        foreach (var t in _all)
+        HardwareReport? hw = null;
+        if (id is Profiles.Performance or Profiles.Competitive)
         {
-            t.IsSelected = id switch
-            {
-                "none" => false,
-                "safe" => t.Def.Risk == "safe" && !t.IsExperimental && t.Def.Category != "security",
-                _ => t.Def.Profiles.Contains(id),
-            } && !t.IsApplied;
+            try { hw = await _s.GetHardwareAsync(); }
+            catch (Exception ex) { Log.Warn("No se pudo detectar el hardware para el perfil: " + ex.Message); }
         }
+        var sel = ProfileResolver.Resolve(id, _s.Catalog, hw);
+        foreach (var t in _all) t.IsSelected = sel.Ids.Contains(t.Def.Id) && !t.IsApplied;
         SelectedCategory = Categories[0];
         OnPropertyChanged(nameof(SelectedCount));
-        if (id != "none")
-            _shell.Toast($"{SelectedCount} ajustes seleccionados. Revisa la lista y pulsa «Aplicar seleccionados».");
+        if (id != ProfileResolver.None && !quiet)
+        {
+            var extra = sel.AdjustedForHardware.Count > 0 ? " " + string.Join(" ", sel.AdjustedForHardware) : "";
+            _shell.Toast(SelectedCount == 0
+                ? "Todo lo de este perfil ya está aplicado." + extra
+                : $"{SelectedCount} ajustes seleccionados. Revisa la lista y pulsa «Aplicar seleccionados».{extra}");
+        }
+        return sel;
     }
 
     /// <summary>Selecciona solo los tweaks indicados (usado desde el inicio y las recomendaciones).</summary>
@@ -224,6 +227,7 @@ public sealed class TweaksViewModel : ObservableObject
     /// <summary>Flujo completo: advertencias, punto de restauración, aplicar, reiniciar Explorador.</summary>
     public async Task ApplyAsync(IReadOnlyList<TweakDefinition> targets)
     {
+        targets = ProfileResolver.ApplyOrder(targets);
         var risky = targets.Where(t => t.Risk != "safe" || t.IsExperimental).ToList();
         var sb = new StringBuilder($"Se aplicarán {targets.Count} ajustes.");
         if (risky.Count > 0)

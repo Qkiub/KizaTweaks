@@ -114,7 +114,7 @@ public sealed class DashboardViewModel : ObservableObject
         IsLoading = true;
         try
         {
-            var report = await Task.Run(() => _s.Hardware.Collect());
+            var report = await _s.GetHardwareAsync(refresh: true);
             Report = report;
             Disks.Clear();
             foreach (var d in report.Disks.OrderByDescending(d => d.HasSystem)) Disks.Add(new DiskViewModel { Disk = d });
@@ -145,7 +145,7 @@ public sealed class DashboardViewModel : ObservableObject
 
     private async Task ApplyGamerAsync()
     {
-        _tweaks.SelectProfile(Profiles.Gamer);
+        await _tweaks.SelectProfileAsync(Profiles.Gamer, quiet: true);
         var targets = _tweaks.All.Where(t => t.IsSelected).Select(t => t.Def).ToList();
         if (targets.Count == 0)
         {

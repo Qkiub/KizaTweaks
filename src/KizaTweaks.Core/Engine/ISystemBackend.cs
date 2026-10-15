@@ -46,6 +46,10 @@ public interface ISystemBackend
     /// <summary>Devuelve el GUID del plan (balanced|high|ultimate). Si create es true y no existe, lo crea.</summary>
     string? ResolvePowerScheme(string kind, bool create);
     void SetActivePowerScheme(string guid);
+    /// <summary>Valor (con corriente) de un ajuste de energía del plan indicado; null si el ajuste no existe en este equipo.</summary>
+    uint? GetPowerSetting(string scheme, string subGroup, string setting);
+    /// <summary>Escribe el valor (con corriente y, si dc es true, también con batería) y vuelve a aplicar el plan si está activo.</summary>
+    void SetPowerSetting(string scheme, string subGroup, string setting, uint value, bool dc);
 
     // ---- Comandos ----
     CommandResult Run(string file, string args, int timeoutMs = 120_000);

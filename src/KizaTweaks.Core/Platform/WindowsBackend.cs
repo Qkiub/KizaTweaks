@@ -323,6 +323,35 @@ public sealed class WindowsBackend : ISystemBackend
         if (!r.Ok) throw new InvalidOperationException($"powercfg /setactive falló: {r.Output.Trim()}");
     }
 
+    public uint? GetPowerSetting(string scheme, string subGroup, string setting)
+    {
+        var sc = Guid.Parse(scheme); var sg = Guid.Parse(subGroup); var st = Guid.Parse(setting);
+        return PowerNative.PowerReadACValueIndex(IntPtr.Zero, ref sc, ref sg, ref st, out var v) == 0 ? v : null;
+    }
+
+    public void SetPowerSetting(string scheme, string subGroup, string setting, uint value, bool dc)
+    {
+        var sc = Guid.Parse(scheme); var sg = Guid.Parse(subGroup); var st = Guid.Parse(setting);
+        var err = PowerNative.PowerWriteACValueIndex(IntPtr.Zero, ref sc, ref sg, ref st, value);
+        if (err != 0) throw new InvalidOperationException($"No se pudo escribir el ajuste de energía (código {err}).");
+        if (dc) PowerNative.PowerWriteDCValueIndex(IntPtr.Zero, ref sc, ref sg, ref st, value);
+        // Los cambios en el plan activo se aplican al volver a activarlo.
+        if (string.Equals(GetActivePowerScheme(), scheme, StringComparison.OrdinalIgnoreCase))
+            PowerNative.PowerSetActiveScheme(IntPtr.Zero, ref sc);
+    }
+
+    private static class PowerNative
+    {
+        [System.Runtime.InteropServices.DllImport("powrprof.dll")]
+        public static extern uint PowerReadACValueIndex(IntPtr root, ref Guid scheme, ref Guid sub, ref Guid setting, out uint value);
+        [System.Runtime.InteropServices.DllImport("powrprof.dll")]
+        public static extern uint PowerWriteACValueIndex(IntPtr root, ref Guid scheme, ref Guid sub, ref Guid setting, uint value);
+        [System.Runtime.InteropServices.DllImport("powrprof.dll")]
+        public static extern uint PowerWriteDCValueIndex(IntPtr root, ref Guid scheme, ref Guid sub, ref Guid setting, uint value);
+        [System.Runtime.InteropServices.DllImport("powrprof.dll")]
+        public static extern uint PowerSetActiveScheme(IntPtr root, ref Guid scheme);
+    }
+
     // =====================================================================
     // Comandos
     // =====================================================================

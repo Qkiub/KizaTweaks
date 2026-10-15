@@ -106,6 +106,12 @@ public sealed class TweakEngine
                 if (target is null) return false;
                 return string.Equals(_b.GetActivePowerScheme(), target, StringComparison.OrdinalIgnoreCase);
             }
+            case "power.setting":
+            {
+                if (_b.GetActivePowerScheme() is not { } scheme) return null;
+                var cur = _b.GetPowerSetting(scheme, op.Sub!, op.Setting!);
+                return cur is null ? null : cur == UInt(op);
+            }
             default:
                 return null; // cmd y otros: no verificables
         }
@@ -202,6 +208,14 @@ public sealed class TweakEngine
             case "power.scheme":
                 yield return new PowerBackup { PreviousScheme = _b.GetActivePowerScheme() };
                 break;
+            case "power.setting":
+                if (_b.GetActivePowerScheme() is { } scheme)
+                    yield return new PowerSettingBackup
+                    {
+                        Scheme = scheme, Sub = op.Sub!, Setting = op.Setting!, Dc = op.Dc == true,
+                        Previous = _b.GetPowerSetting(scheme, op.Sub!, op.Setting!),
+                    };
+                break;
         }
     }
 
@@ -256,6 +270,17 @@ public sealed class TweakEngine
                 var guid = _b.ResolvePowerScheme(op.Scheme!, create: true)
                            ?? throw new InvalidOperationException($"No se pudo crear el plan de energía '{op.Scheme}'.");
                 _b.SetActivePowerScheme(guid);
+                break;
+            }
+            case "power.setting":
+            {
+                var scheme = _b.GetActivePowerScheme() ?? throw new InvalidOperationException("No se pudo leer el plan de energía activo.");
+                if (_b.GetPowerSetting(scheme, op.Sub!, op.Setting!) is null)
+                {
+                    Log.Info($"El ajuste de energía {op.Setting} no existe en este equipo; se omite.");
+                    break;
+                }
+                _b.SetPowerSetting(scheme, op.Sub!, op.Setting!, UInt(op), op.Dc == true);
                 break;
             }
             case "cmd":
@@ -382,6 +407,10 @@ public sealed class TweakEngine
             case PowerBackup p:
                 if (!string.IsNullOrEmpty(p.PreviousScheme)) _b.SetActivePowerScheme(p.PreviousScheme);
                 break;
+            case PowerSettingBackup ps:
+                if (ps.Previous is { } prev && _b.GetPowerSetting(ps.Scheme, ps.Sub, ps.Setting) is not null)
+                    _b.SetPowerSetting(ps.Scheme, ps.Sub, ps.Setting, prev, ps.Dc);
+                break;
         }
     }
 
@@ -418,6 +447,9 @@ public sealed class TweakEngine
         }
         return list;
     }
+
+    private static uint UInt(TweakOp op) =>
+        op.Value.ValueKind == JsonValueKind.Number ? op.Value.GetUInt32() : uint.Parse(op.ValueAsString() ?? "0");
 
     private static string Trim(string s) => s.Length > 300 ? s[..300] + "…" : s.Trim();
 }

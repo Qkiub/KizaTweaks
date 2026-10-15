@@ -2,6 +2,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using KizaTweaks.App.Dialogs;
 using KizaTweaks.Core;
@@ -76,6 +79,12 @@ public partial class App : Application
         AsyncCommand.ErrorHandler = ex => vm.Toast($"Error: {ex.Message}", error: true);
 
         var window = new MainWindow { DataContext = vm };
+        if (_smoke)
+        {
+            // Tamaño fijo para que las capturas de la prueba automática sean comparables.
+            window.Width = 1440;
+            window.Height = 960;
+        }
         MainWindow = window;
         window.Show();
 
@@ -109,6 +118,8 @@ public partial class App : Application
                 await Task.Delay(3000);
                 for (int i = 0; i < 120 && vm.IsBusy; i++) await Task.Delay(500);
                 await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle);
+                await Task.Delay(1200); // animaciones de la página
+                Screenshot(vm.Nav.IndexOf(item), item.Key, report);
                 report.AppendLine($"OK página: {item.Title}");
             }
             report.AppendLine($"Tweaks cargados: {vm.Tweaks.All.Count}, aplicados: {vm.Tweaks.AppliedCount}");
@@ -140,6 +151,53 @@ public partial class App : Application
         }
         catch { }
         Shutdown(failures == 0 ? 0 : 1);
+    }
+
+    /// <summary>Guarda una captura de la página (y una segunda bajando el scroll si la página es larga).</summary>
+    private void Screenshot(int index, string key, StringBuilder report)
+    {
+        try
+        {
+            var dir = Path.Combine(AppPaths.LogsDir, "screens");
+            Directory.CreateDirectory(dir);
+            if (MainWindow?.Content is not FrameworkElement root) return;
+            Save(root, Path.Combine(dir, $"{index:00}-{key}.png"));
+            if (FindChild<ScrollViewer>(root) is { ScrollableHeight: > 40 } sv)
+            {
+                sv.ScrollToVerticalOffset(sv.ViewportHeight - 80);
+                root.UpdateLayout();
+                Save(root, Path.Combine(dir, $"{index:00}-{key}-2.png"));
+                if (sv.ScrollableHeight > sv.ViewportHeight)
+                {
+                    sv.ScrollToVerticalOffset(2 * (sv.ViewportHeight - 80));
+                    root.UpdateLayout();
+                    Save(root, Path.Combine(dir, $"{index:00}-{key}-3.png"));
+                }
+                sv.ScrollToTop();
+            }
+        }
+        catch (Exception ex) { report.AppendLine($"(captura de {key} falló: {ex.Message})"); }
+    }
+
+    private static void Save(FrameworkElement root, string file)
+    {
+        var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+        rtb.Render(root);
+        var enc = new PngBitmapEncoder();
+        enc.Frames.Add(BitmapFrame.Create(rtb));
+        using var fs = File.Create(file);
+        enc.Save(fs);
+    }
+
+    private static T? FindChild<T>(DependencyObject parent) where T : DependencyObject
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        {
+            var c = VisualTreeHelper.GetChild(parent, i);
+            if (c is T t && (c is not ScrollViewer sv || sv.Name != "PART_ContentHost")) return t;
+            if (FindChild<T>(c) is { } found) return found;
+        }
+        return null;
     }
 
     private readonly List<string> _unhandled = new();

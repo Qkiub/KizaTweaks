@@ -4,7 +4,7 @@
         xmlns:vm="clr-namespace:KizaTweaks.Presentation.ViewModels;assembly=KizaTweaks.Presentation"
         xmlns:views="clr-namespace:KizaTweaks.App.Views"
         Title="KizaTweaks by Qkiub" Icon="Assets/kizatweaks.ico"
-        Width="1320" Height="840" MinWidth="1060" MinHeight="680"
+        Width="1320" Height="860" MinWidth="1080" MinHeight="680"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource BgBrush}" Foreground="{StaticResource TextBrush}"
         FontFamily="{StaticResource UiFont}" FontSize="14"
@@ -12,6 +12,7 @@
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><views:DashboardView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FpsViewModel}"><views:FpsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:TweaksViewModel}"><views:TweaksView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:AppsViewModel}"><views:AppsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:ProcessesViewModel}"><views:ProcessesView /></DataTemplate>
@@ -22,28 +23,28 @@
         <DataTemplate DataType="{x:Type vm:AboutViewModel}"><views:AboutView /></DataTemplate>
     </Window.Resources>
 
-    <Grid>
+    <Grid x:Name="RootGrid" Background="{StaticResource BgBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="232" />
+            <ColumnDefinition Width="240" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- ================= Barra lateral ================= -->
         <Border Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,1,0">
             <DockPanel>
-                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="20,22,16,26">
-                    <Image Source="Assets/logo.png" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality" />
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="22,22,16,28">
+                    <Image Source="Assets/logo.png" Width="40" Height="40" RenderOptions.BitmapScalingMode="HighQuality" />
                     <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="KizaTweaks" FontFamily="{StaticResource DisplayFont}" FontSize="18" FontWeight="Bold" />
-                        <TextBlock Text="by Qkiub" FontSize="12" Foreground="{StaticResource MutedBrush}" />
+                        <TextBlock Text="KizaTweaks" FontFamily="{StaticResource DisplayFont}" FontSize="21" FontWeight="SemiBold" />
+                        <TextBlock Text="by Qkiub" FontSize="12" Foreground="{StaticResource SubtleBrush}" Margin="1,-2,0,0" />
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel DockPanel.Dock="Bottom" Margin="20,12,16,18">
-                    <Border Background="#33EF4444" CornerRadius="8" Padding="10,8" Margin="0,0,0,10"
+                <StackPanel DockPanel.Dock="Bottom" Margin="24,12,16,20">
+                    <Border Background="#26FF5470" CornerRadius="8" Padding="10,8" Margin="0,0,0,12"
                             Visibility="{Binding IsAdmin, Converter={StaticResource InverseBoolToVis}}">
                         <TextBlock Text="Sin permisos de administrador: ábrelo como administrador." TextWrapping="Wrap"
-                                   FontSize="12" Foreground="#FCA5A5" />
+                                   FontSize="12" Foreground="#FFA3B3" />
                     </Border>
                     <TextBlock Text="{Binding OsInfo}" Style="{StaticResource Caption}" />
                     <TextBlock Text="{Binding About.Version}" Style="{StaticResource Caption}" Margin="0,2,0,0" />
@@ -54,9 +55,14 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Glyph}" Style="{StaticResource Icon}" Width="22" />
+                                <TextBlock x:Name="Glyph" Text="{Binding Glyph}" Style="{StaticResource Icon}" Width="22" />
                                 <TextBlock Text="{Binding Title}" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold" />
                             </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                    <Setter TargetName="Glyph" Property="Foreground" Value="{StaticResource AccentBrush}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -70,14 +76,14 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Border Background="#26F59E0B" BorderBrush="#66F59E0B" BorderThickness="0,0,0,1" Padding="24,10"
+            <Border Background="#1FFFB547" BorderBrush="#4DFFB547" BorderThickness="0,0,0,1" Padding="28,10"
                     Visibility="{Binding RebootRequired, Converter={StaticResource BoolToVis}}">
                 <DockPanel>
                     <Button DockPanel.Dock="Right" Content="Reiniciar ahora" Command="{Binding RebootCommand}"
                             Style="{StaticResource PrimaryButton}" Padding="14,6" />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="&#xE7BA;" Style="{StaticResource Icon}" Foreground="{StaticResource WarnBrush}" />
-                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#FCD34D"
+                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#FFC978"
                                    Text="Algunos cambios necesitan reiniciar Windows para tener efecto." />
                     </StackPanel>
                 </DockPanel>
@@ -87,13 +93,13 @@
         </Grid>
 
         <!-- ================= Aviso flotante ================= -->
-        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="24" MaxWidth="520"
-                CornerRadius="10" Padding="16,12" BorderThickness="1"
+        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="28" MaxWidth="540"
+                CornerRadius="12" Padding="16,12" BorderThickness="1"
                 Visibility="{Binding HasToast, Converter={StaticResource BoolToVis}}">
             <Border.Style>
                 <Style TargetType="Border">
                     <Setter Property="Background" Value="{StaticResource Surface2Brush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ToastIsError}" Value="True">
                             <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
@@ -102,11 +108,26 @@
                 </Style>
             </Border.Style>
             <Border.Effect>
-                <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.5" Color="Black" />
+                <DropShadowEffect BlurRadius="28" ShadowDepth="6" Opacity="0.55" Color="Black" />
             </Border.Effect>
             <DockPanel>
                 <Button DockPanel.Dock="Right" Content="&#xE711;" FontFamily="{StaticResource IconFont}" FontSize="11"
-                        Style="{StaticResource GhostButton}" Command="{Binding DismissToastCommand}" Margin="12,0,0,0" />
+                        Style="{StaticResource GhostButton}" Command="{Binding DismissToastCommand}" Margin="12,0,0,0"
+                        ToolTip="Cerrar aviso" />
+                <TextBlock DockPanel.Dock="Left" Style="{StaticResource Icon}" Margin="0,0,12,0" VerticalAlignment="Top">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource Icon}">
+                            <Setter Property="Text" Value="&#xE73E;" />
+                            <Setter Property="Foreground" Value="{StaticResource OkBrush}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ToastIsError}" Value="True">
+                                    <Setter Property="Text" Value="&#xE783;" />
+                                    <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <TextBlock Text="{Binding ToastText}" TextWrapping="Wrap" VerticalAlignment="Center" />
             </DockPanel>
         </Border>
@@ -114,7 +135,7 @@
         <!-- ================= Ocupado ================= -->
         <Grid Grid.ColumnSpan="2" Background="{StaticResource OverlayBrush}"
               Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
-            <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="32,28" MinWidth="380" MaxWidth="560">
+            <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="36,30" MinWidth="400" MaxWidth="580">
                 <StackPanel HorizontalAlignment="Center">
                     <views:Spinner HorizontalAlignment="Center" />
                     <TextBlock Text="{Binding BusyText}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,18,0,0" FontSize="15" />

@@ -29,6 +29,11 @@ public sealed class TweakOp
     // power.scheme
     [JsonPropertyName("scheme")] public string? Scheme { get; set; }
 
+    // power.setting (GUIDs de subgrupo y ajuste de powercfg)
+    [JsonPropertyName("sub")] public string? Sub { get; set; }
+    [JsonPropertyName("setting")] public string? Setting { get; set; }
+    [JsonPropertyName("dc")] public bool? Dc { get; set; }
+
     // cmd
     [JsonPropertyName("file")] public string? File { get; set; }
     [JsonPropertyName("args")] public string? Args { get; set; }
@@ -52,6 +57,7 @@ public sealed class TweakOp
         "task" => $"tarea {Path} → {(Enabled == true ? "activada" : "desactivada")}",
         "feature" => $"característica {Name} → {(Enabled == true ? "activada" : "desactivada")}",
         "power.scheme" => $"plan de energía {Scheme}",
+        "power.setting" => $"energía (plan activo) {Setting} = {ValueAsString()}",
         "dx.set" => $"DirectX {Key}={ValueAsString()}",
         "env" => $"variable {Name}={ValueAsString()}",
         "cmd" => $"{File} {Args}",
@@ -128,4 +134,6 @@ public static class Profiles
 {
     public const string Gamer = "gamer";
     public const string Privacy = "privacy";
+    public const string Performance = "perf";
+    public const string Competitive = "pro";
 }

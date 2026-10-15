@@ -3718,7 +3718,9 @@
    "restartExplorer": true,
    "minBuild": null,
    "maxBuild": null,
-   "profiles": [],
+   "profiles": [
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",
@@ -3752,7 +3754,9 @@
    "restartExplorer": true,
    "minBuild": null,
    "maxBuild": null,
-   "profiles": [],
+   "profiles": [
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",
@@ -4860,7 +4864,10 @@
    "description": "Plan oculto de Windows que elimina las micro-latencias de ahorro de energía. Pensado para escritorios.",
    "note": "No recomendado en portátiles: gasta batería y calienta más.",
    "requiresReboot": false,
-   "profiles": [],
+   "profiles": [
+    "perf",
+    "pro"
+   ],
    "apply": [
     {
      "op": "power.scheme",
@@ -4959,7 +4966,9 @@
    "description": "Las apps de la Microsoft Store dejan de ejecutarse cuando no están abiertas.",
    "note": "Apps de Store como WhatsApp o Spotify (versión Store) dejarán de notificar cerradas.",
    "requiresReboot": false,
-   "profiles": [],
+   "profiles": [
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",
@@ -5121,6 +5130,72 @@
    "maxBuild": null
   },
   {
+   "id": "kiza.usbSuspend",
+   "category": "gaming",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Sin ahorro de energía en USB",
+   "description": "Windows deja de 'dormir' los puertos USB para ahorrar energía. Evita micro-cortes del mouse, teclado o audífonos USB en medio de la partida.",
+   "note": "Se aplica al plan de energía activo. En portátil, gasta un poco más de batería.",
+   "requiresReboot": false,
+   "profiles": [
+    "perf",
+    "pro"
+   ],
+   "apply": [
+    {
+     "op": "power.setting",
+     "sub": "2a737441-1930-4402-8d77-b2bebba308a3",
+     "setting": "48e6b7a6-50f5-4782-a5d4-53bb8f07e226",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "power.setting",
+     "sub": "2a737441-1930-4402-8d77-b2bebba308a3",
+     "setting": "48e6b7a6-50f5-4782-a5d4-53bb8f07e226",
+     "value": 1
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.pcieLspm",
+   "category": "gaming",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Sin ahorro de energía en PCI Express",
+   "description": "La GPU y el SSD NVMe no entran en estados de bajo consumo del bus PCIe. Quita pequeñas demoras al 'despertar' entre cargas.",
+   "note": "Se aplica al plan de energía activo. Los planes Alto y Máximo rendimiento ya lo traen así.",
+   "requiresReboot": false,
+   "profiles": [
+    "perf",
+    "pro"
+   ],
+   "apply": [
+    {
+     "op": "power.setting",
+     "sub": "501a4d13-42af-4429-9fd1-a8218c268e20",
+     "setting": "ee12f906-d277-404b-b6da-e5fa1a576df5",
+     "value": 0
+    }
+   ],
+   "undo": [
+    {
+     "op": "power.setting",
+     "sub": "501a4d13-42af-4429-9fd1-a8218c268e20",
+     "setting": "ee12f906-d277-404b-b6da-e5fa1a576df5",
+     "value": 1
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
    "id": "kiza.vmp",
    "category": "security",
    "impact": "fps",
@@ -5191,7 +5266,10 @@
    "description": "Sube la prioridad de CPU/GPU que el programador multimedia de Windows asigna a los juegos y reduce la reserva para tareas de fondo (SystemResponsiveness 10).",
    "note": "Muy popular en foros; efecto medido inconsistente. Usa el benchmark para confirmar.",
    "requiresReboot": true,
-   "profiles": [],
+   "profiles": [
+    "perf",
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",
@@ -5289,7 +5367,9 @@
    "description": "Desactiva el límite que Windows pone al tráfico de red mientras reproduce audio/video (NetworkThrottlingIndex).",
    "note": "Popular en foros para ping; no hay evidencia sólida de mejora en juegos online.",
    "requiresReboot": true,
-   "profiles": [],
+   "profiles": [
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",
@@ -5323,7 +5403,10 @@
    "description": "Windows deja de bajar la prioridad de energía a procesos en segundo plano (Power Throttling).",
    "note": "En portátiles reduce la batería. Efecto en FPS normalmente nulo si el juego está en primer plano.",
    "requiresReboot": true,
-   "profiles": [],
+   "profiles": [
+    "perf",
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",
@@ -5347,6 +5430,108 @@
    "maxBuild": null
   },
   {
+   "id": "kiza.coreParking",
+   "category": "experimental",
+   "impact": "fps",
+   "risk": "moderate",
+   "name": "Todos los núcleos del CPU despiertos",
+   "description": "Desactiva el 'estacionamiento' de núcleos: el CPU no apaga núcleos para ahorrar energía. Puede mejorar los 1 % low en juegos que usan muchos hilos.",
+   "note": "No lo uses en Ryzen X3D de dos chiplets (7900X3D, 7950X3D, 9900X3D, 9950X3D): dependen de esto para mandar el juego a los núcleos con caché extra. Más consumo en portátil.",
+   "requiresReboot": false,
+   "profiles": [
+    "pro"
+   ],
+   "apply": [
+    {
+     "op": "power.setting",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "setting": "0cc5b647-c1df-4637-891a-dec35c318583",
+     "value": 100
+    }
+   ],
+   "undo": [
+    {
+     "op": "power.setting",
+     "sub": "54533251-82be-4824-96c1-47b60b740d00",
+     "setting": "0cc5b647-c1df-4637-891a-dec35c318583",
+     "value": 10
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.win32Priority",
+   "category": "experimental",
+   "impact": "latency",
+   "risk": "moderate",
+   "name": "Más prioridad a la ventana activa",
+   "description": "Cambia cómo Windows reparte el CPU: turnos cortos y más tiempo para el programa en primer plano (Win32PrioritySeparation 0x26). Puede mejorar la respuesta del juego.",
+   "note": "Popular en la escena competitiva; el efecto varía según el juego y el CPU. Mide con el Benchmark.",
+   "requiresReboot": false,
+   "profiles": [
+    "pro"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+     "name": "Win32PrioritySeparation",
+     "type": "DWord",
+     "value": 38
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+     "name": "Win32PrioritySeparation",
+     "type": "DWord",
+     "value": 2
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.timerResolution",
+   "category": "experimental",
+   "impact": "latency",
+   "risk": "moderate",
+   "name": "Resolución de temporizador global",
+   "description": "Desde Windows 11 cada programa recibe su propia precisión de temporizador. Esto vuelve al modo anterior: si el juego pide 0,5 ms, se respeta aunque esté minimizado o haya otras apps. Ayuda a la consistencia de frame time en algunos juegos.",
+   "note": "Aumenta un poco el consumo en reposo. En portátil no conviene.",
+   "requiresReboot": true,
+   "profiles": [
+    "pro"
+   ],
+   "minBuild": 22000,
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+     "name": "GlobalTimerResolutionRequests",
+     "type": "DWord",
+     "value": 1
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.deleteValue",
+     "hive": "HKLM",
+     "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+     "name": "GlobalTimerResolutionRequests"
+    }
+   ],
+   "restartExplorer": false,
+   "maxBuild": null
+  },
+  {
    "id": "kiza.startupDelay",
    "category": "experimental",
    "impact": "stability",
@@ -5355,7 +5540,10 @@
    "description": "Las apps de inicio arrancan sin la espera de ~10 segundos que Windows agrega tras iniciar sesión.",
    "note": "El escritorio puede sentirse más pesado justo al iniciar sesión.",
    "requiresReboot": false,
-   "profiles": [],
+   "profiles": [
+    "perf",
+    "pro"
+   ],
    "apply": [
     {
      "op": "reg.set",

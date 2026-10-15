@@ -59,4 +59,13 @@ public sealed class WpfDialogService : IDialogService
     }
 
     public Task InfoAsync(string title, string message) => ChooseAsync(title, message, "Entendido");
+
+    public Task<string?> PickFileAsync(string title, string filter)
+    {
+        if (Unattended) return Task.FromResult<string?>(null);
+        var dlg = new Microsoft.Win32.OpenFileDialog { Title = title, Filter = filter, CheckFileExists = true };
+        var owner = Application.Current?.MainWindow;
+        var ok = owner is not null && owner.IsVisible ? dlg.ShowDialog(owner) : dlg.ShowDialog();
+        return Task.FromResult(ok == true ? dlg.FileName : null);
+    }
 }

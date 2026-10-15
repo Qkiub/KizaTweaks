@@ -100,14 +100,14 @@
                                     <WrapPanel Margin="0,8,0,0">
                                         <views:Pill Text="{Binding ImpactLabel}" Color="{Binding ImpactColor}" />
                                         <views:Pill Text="{Binding RiskLabel}" Color="{Binding RiskColor}" />
-                                        <views:Pill Text="Reinicio" Color="#F59E0B" Visibility="{Binding RequiresReboot, Converter={StaticResource BoolToVis}}" />
-                                        <views:Pill Text="Experimental" Color="#F472B6" Visibility="{Binding IsExperimental, Converter={StaticResource BoolToVis}}" />
-                                        <views:Pill Text="{Binding CategoryName}" Color="#94A3B8" />
+                                        <views:Pill Text="Reinicio" Color="#FFB547" Visibility="{Binding RequiresReboot, Converter={StaticResource BoolToVis}}" />
+                                        <views:Pill Text="Experimental" Color="#FF7AB6" Visibility="{Binding IsExperimental, Converter={StaticResource BoolToVis}}" />
+                                        <views:Pill Text="{Binding CategoryName}" Color="#8B95AB" />
                                     </WrapPanel>
                                     <TextBlock Text="{Binding Description}" Style="{StaticResource Muted}" Margin="0,8,0,0" />
                                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0" Visibility="{Binding HasNote, Converter={StaticResource BoolToVis}}">
                                         <TextBlock Text="&#xE7BA;" Style="{StaticResource Icon}" FontSize="12" Foreground="{StaticResource WarnBrush}" VerticalAlignment="Top" Margin="0,3,6,0" />
-                                        <TextBlock Text="{Binding Note}" Foreground="#FCD34D" TextWrapping="Wrap" MaxWidth="900" />
+                                        <TextBlock Text="{Binding Note}" Foreground="#FFC978" TextWrapping="Wrap" MaxWidth="900" />
                                     </StackPanel>
                                     <Button Content="Qué cambia exactamente" Style="{StaticResource LinkButton}" HorizontalAlignment="Left" Margin="0,8,0,0"
                                             Command="{Binding DataContext.ToggleDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />

@@ -19,6 +19,9 @@ var tests = new List<(string name, Action body)>
     ("Motor: sin respaldo usa las operaciones 'undo' del catálogo", RevertWithoutBackupUsesUndo),
     ("DirectX: los ajustes conviven sin pisarse", DxSettingsIndependent),
     ("Energía: deshacer vuelve al plan anterior", PowerSchemeRestores),
+    ("Energía: ajuste del plan activo se aplica y se restaura exacto", PowerSettingRestores),
+    ("Perfiles: Máximo rendimiento y Competitivo se adaptan a portátil y Ryzen X3D", ProfilesAdaptToHardware),
+    ("Perfiles: el plan de energía se aplica antes que sus ajustes", ProfileApplyOrder),
     ("FPS: promedio, 1 % low y 0,1 % low", FrameStatsMath),
     ("FPS: lectura de CSV de PresentMon", PresentMonCsv),
     ("Recomendaciones: caso real (BX500 + NV3, 60/144 Hz, RAM sin XMP)", RecommendationsRealCase),
@@ -29,6 +32,8 @@ var tests = new List<(string name, Action body)>
     ("Interfaz: perfil Gamer → aplicar → respaldos → deshacer todo", ViewModelTests.GamerProfileFlow),
     ("Interfaz: cancelar no modifica nada", ViewModelTests.CancelDoesNothing),
     ("Interfaz: navegación, filtros y búsqueda", ViewModelTests.NavigationAndFilters),
+    ("Modo FPS: activar nivel, progreso e interruptor", ViewModelTests.FpsModeFlow),
+    ("Modo FPS: configurar y quitar un juego", ViewModelTests.GameConfigFlow),
 };
 
 int failed = 0;
@@ -98,6 +103,10 @@ static void ApplyRevertWholeCatalogRestoresState()
     b.Services["DiagTrack"] = "Automatic";
     b.Tasks[@"\Microsoft\Windows\Application Experience\ProgramDataUpdater"] = true;
     b.Features["VirtualMachinePlatform"] = true;
+    // Ajustes de energía existentes en el plan equilibrado (USB, PCIe, núcleos)
+    b.PowerSettings["381b4222-f694-41f0-9685-ff5bb260df2e|48e6b7a6-50f5-4782-a5d4-53bb8f07e226"] = 1;
+    b.PowerSettings["381b4222-f694-41f0-9685-ff5bb260df2e|ee12f906-d277-404b-b6da-e5fa1a576df5"] = 1;
+    b.PowerSettings["381b4222-f694-41f0-9685-ff5bb260df2e|0cc5b647-c1df-4637-891a-dec35c318583"] = 10;
     b.SetValue("HKCU", @"Control Panel\Mouse", "MouseSpeed", RegValue.Str("1"));
     b.SetValue("HKCU", @"Software\Microsoft\DirectX\UserGpuPreferences", "DirectXUserGlobalSettings", RegValue.Str("VRROptimizeEnable=0;"));
     var before = b.Dump();
@@ -360,4 +369,51 @@ static void CleanerRefusesCriticalFolders()
     Assert(Cleaner.IsSafeRoot(Path.Combine(Path.GetTempPath(), "kiza", "x")), "subcarpeta temporal debería permitirse");
     var r = Cleaner.CleanDirectory(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), null);
     Assert(r.Files == 0, "intentó limpiar el perfil de usuario");
+}
+
+static void PowerSettingRestores()
+{
+    const string usb = "48e6b7a6-50f5-4782-a5d4-53bb8f07e226";
+    var b = new InMemoryBackend();
+    b.PowerSettings[$"{b.ActiveScheme}|{usb}"] = 1;
+    var e = NewEngine(b);
+    var t = CatalogLoader.LoadTweaks().Find("kiza.usbSuspend")!;
+    Assert(e.GetState(t) == TweakState.NotApplied, "debería estar sin aplicar");
+    Assert(e.Apply(t).Success, "aplicar");
+    Assert(b.GetPowerSetting(b.ActiveScheme, "", usb) == 0, "no se escribió 0");
+    Assert(e.GetState(t) == TweakState.Applied, "no figura aplicado");
+    Assert(e.Revert(t).Success, "deshacer");
+    Assert(b.GetPowerSetting(b.ActiveScheme, "", usb) == 1, "no volvió a 1");
+
+    // Si el ajuste no existe en el equipo, se omite sin error.
+    var b2 = new InMemoryBackend();
+    var e2 = NewEngine(b2);
+    Assert(e2.Apply(t).Success && e2.Revert(t).Success, "ajuste inexistente debería omitirse");
+}
+
+static void ProfilesAdaptToHardware()
+{
+    var c = CatalogLoader.LoadTweaks();
+    var desktop = new HardwareReport { IsLaptop = false, Cpu = new CpuInfo { Name = "Intel Core i5-12400F", Cores = 6 } };
+    var laptop = new HardwareReport { IsLaptop = true, Cpu = new CpuInfo { Name = "AMD Ryzen 7 6800H", Cores = 8 } };
+    var x3d = new HardwareReport { IsLaptop = false, Cpu = new CpuInfo { Name = "AMD Ryzen 9 7950X3D 16-Core Processor", Cores = 16 } };
+    var gamer = ProfileResolver.Resolve(Profiles.Gamer, c, null).Ids;
+    var perf = ProfileResolver.Resolve(Profiles.Performance, c, desktop).Ids;
+    var pro = ProfileResolver.Resolve(Profiles.Competitive, c, desktop).Ids;
+    Assert(gamer.IsSubsetOf(perf) && perf.IsSubsetOf(pro), "los perfiles deben ser acumulativos");
+    Assert(perf.Contains("kiza.powerUltimate") && perf.Contains("kiza.usbSuspend"), "máximo rendimiento incompleto");
+    Assert(!perf.Contains("kiza.coreParking") && pro.Contains("kiza.coreParking"), "coreParking solo en competitivo");
+    Assert(!perf.Contains("q.DisableLocationServices") && !pro.Contains("q.DisableNotifications"), "no debe quitar funciones básicas");
+    Assert(!pro.Any(id => c.Find(id)!.Risk == "risky" || c.Find(id)!.Category == "security"), "ningún perfil toca la seguridad");
+    var lap = ProfileResolver.Resolve(Profiles.Competitive, c, laptop);
+    Assert(!lap.Ids.Contains("kiza.powerUltimate") && !lap.Ids.Contains("kiza.timerResolution") && lap.AdjustedForHardware.Count == 1, "portátil");
+    var amd = ProfileResolver.Resolve(Profiles.Competitive, c, x3d);
+    Assert(!amd.Ids.Contains("kiza.coreParking") && amd.AdjustedForHardware.Count == 1, "X3D");
+}
+
+static void ProfileApplyOrder()
+{
+    var c = CatalogLoader.LoadTweaks();
+    var order = ProfileResolver.ApplyOrder(new[] { c.Find("kiza.usbSuspend")!, c.Find("kiza.gameMode")!, c.Find("kiza.powerUltimate")! });
+    Assert(order[0].Id == "kiza.powerUltimate" && order[2].Id == "kiza.usbSuspend", string.Join(",", order.Select(t => t.Id)));
 }
