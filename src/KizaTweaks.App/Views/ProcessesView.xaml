@@ -9,7 +9,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="340" />
+            <ColumnDefinition Width="0.55*" MinWidth="270" MaxWidth="340" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.ColumnSpan="2" Margin="0,0,0,16">
@@ -27,31 +27,31 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <DockPanel Margin="0,0,0,10">
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                        <CheckBox Content="Mostrar procesos de Windows" IsChecked="{Binding ShowSystem}" Margin="12,0,8,0" />
-                        <Button Content="Actualizar" Command="{Binding RefreshCommand}" Style="{StaticResource GhostButton}" />
-                    </StackPanel>
+                <StackPanel Margin="0,0,0,10">
                     <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Tag="Buscar proceso…" />
-                </DockPanel>
+                    <DockPanel Margin="0,8,0,0">
+                        <Button DockPanel.Dock="Right" Content="Actualizar" Command="{Binding RefreshCommand}" Style="{StaticResource GhostButton}" />
+                        <CheckBox Content="Mostrar procesos de Windows" IsChecked="{Binding ShowSystem}" />
+                    </DockPanel>
+                </StackPanel>
 
                 <!-- Encabezados -->
                 <Grid Grid.Row="1" Margin="10,0,18,6">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" MinWidth="120" />
+                        <ColumnDefinition Width="62" />
                         <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="96" />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource Caption}" />
                     </Grid.Resources>
-                    <TextBlock Text="NOMBRE" />
+                    <TextBlock Text="Nombre" TextWrapping="NoWrap" />
                     <TextBlock Grid.Column="1" Text="CPU" />
                     <TextBlock Grid.Column="2" Text="RAM" />
-                    <TextBlock Grid.Column="3" Text="PRIORIDAD" />
-                    <TextBlock Grid.Column="4" Text="TIPO" />
+                    <TextBlock Grid.Column="3" Text="Prioridad" />
+                    <TextBlock Grid.Column="4" Text="Tipo" />
                 </Grid>
 
                 <ListBox Grid.Row="2" ItemsSource="{Binding Visible}" SelectedItem="{Binding Selected, Mode=TwoWay}"
@@ -60,11 +60,11 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" MinWidth="120" />
+                                    <ColumnDefinition Width="62" />
                                     <ColumnDefinition Width="70" />
-                                    <ColumnDefinition Width="80" />
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="140" />
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="96" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel>
                                     <TextBlock Text="{Binding Display}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
