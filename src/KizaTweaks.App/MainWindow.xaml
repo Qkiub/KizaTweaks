@@ -114,7 +114,7 @@
                 <Button DockPanel.Dock="Right" Content="&#xE711;" FontFamily="{StaticResource IconFont}" FontSize="11"
                         Style="{StaticResource GhostButton}" Command="{Binding DismissToastCommand}" Margin="12,0,0,0"
                         ToolTip="Cerrar aviso" />
-                <TextBlock DockPanel.Dock="Left" Style="{StaticResource Icon}" Margin="0,0,12,0" VerticalAlignment="Top">
+                <TextBlock DockPanel.Dock="Left" Margin="0,0,12,0" VerticalAlignment="Top">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource Icon}">
                             <Setter Property="Text" Value="&#xE73E;" />
