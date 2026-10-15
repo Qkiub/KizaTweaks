@@ -39,10 +39,24 @@ public static class WindowsIntegration
         foreach (var (name, body) in tests)
         {
             try { body(); Console.WriteLine($"  ✔ {name}"); }
-            catch (Exception ex) { failed++; Console.WriteLine($"  ✘ {name}\n      {ex}"); }
+            catch (Exception ex)
+            {
+                failed++;
+                Console.WriteLine($"  ✘ {name}\n      {ex}");
+                Gh("error", name, ex.ToString());
+            }
         }
         Console.WriteLine(failed == 0 ? "\nINTEGRACIÓN OK" : $"\nINTEGRACIÓN: {failed} fallos");
         return failed == 0 ? 0 : 1;
+    }
+
+    /// <summary>En GitHub Actions, publica el mensaje como anotación visible en el resumen del run.</summary>
+    public static void Gh(string level, string title, string message)
+    {
+        if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") != "true") return;
+        var msg = message.Length > 3000 ? message[..3000] : message;
+        msg = msg.Replace("%", "%25").Replace("\r", "").Replace("\n", "%0A");
+        Console.WriteLine($"::{level} title={title.Replace(",", " ").Replace(":", " ")}::{msg}");
     }
 
     private static void Check(bool cond, string msg)
@@ -63,6 +77,7 @@ public static class WindowsIntegration
         Check(r.RamTotalBytes > 0, "RAM no detectada");
         Check(r.Disks.Count > 0, "discos no detectados");
         Check(r.Volumes.Any(v => v.Letter.Equals(r.SystemDrive, StringComparison.OrdinalIgnoreCase)), "volumen del sistema no detectado");
+        Gh("notice", "Hardware detectado", $"{r.Os} | CPU {r.Cpu.Name} | RAM {Fmt(r.RamTotalBytes)} | GPU {string.Join(", ", r.Gpus.Select(g => g.Name))} | Discos {string.Join("; ", r.Disks.Select(d => $"{d.Model} {d.Kind} {d.Health} {string.Join(",", d.Letters)}"))} | TRIM={r.TrimEnabled} VBS={r.VbsRunning}");
         var recs = RecommendationEngine.Build(r);
         Console.WriteLine($"      {recs.Count} recomendaciones, puntaje {RecommendationEngine.Score(recs)}");
     }

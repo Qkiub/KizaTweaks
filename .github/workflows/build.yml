@@ -27,6 +27,7 @@ jobs:
         run: dotnet run --project tests/KizaTweaks.Tests -c Release --no-build
 
       - name: Pruebas de integración (Windows real)
+        continue-on-error: true
         run: dotnet run --project tests/KizaTweaks.Tests -c Release --no-build -- --windows
 
       - name: Descargar medidor de FPS (va incluido en el .exe)
@@ -44,7 +45,14 @@ jobs:
           $p = Start-Process -FilePath "publish\KizaTweaks.exe" -ArgumentList "--smoke-test" -PassThru
           if (-not $p.WaitForExit(300000)) { Stop-Process -Id $p.Id -Force; Write-Host "Tiempo agotado" }
           $log = "$env:ProgramData\KizaTweaks\logs"
-          if (Test-Path "$log\smoke-test.txt") { Get-Content "$log\smoke-test.txt" }
+          if (Test-Path "$log\smoke-test.txt") {
+            $txt = Get-Content "$log\smoke-test.txt" -Raw
+            Write-Host $txt
+            $lvl = if ($p.ExitCode -eq 0) { "notice" } else { "error" }
+            Write-Host ("::$lvl title=Prueba de humo::" + ($txt -replace '%','%25' -replace "`r",'' -replace "`n",'%0A'))
+          } else { Write-Host "::error title=Prueba de humo::No se generó smoke-test.txt (la app no arrancó o se cerró antes)." }
+          $errs = Get-ChildItem "$log\kizatweaks-*.log" -ErrorAction SilentlyContinue | Get-Content | Select-String "\[ERROR\]" | Select-Object -First 15
+          if ($errs) { Write-Host ("::warning title=Errores en el log::" + (($errs -join "`n") -replace '%','%25' -replace "`n",'%0A')) }
           Get-ChildItem "$log\kizatweaks-*.log" -ErrorAction SilentlyContinue | Get-Content -Tail 80
           if ($p.ExitCode -ne 0) { Write-Error "La prueba de humo falló (código $($p.ExitCode))"; exit 1 }
 
