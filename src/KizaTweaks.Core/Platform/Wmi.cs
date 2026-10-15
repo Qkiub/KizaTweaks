@@ -32,7 +32,8 @@ public static class Wmi
                 var row = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
                 foreach (var p in props)
                 {
-                    try { row[p] = obj.Properties_.Item(p).Value; }
+                    // WMI devuelve DBNull para propiedades vacías: se normaliza a null.
+                    try { object? v = obj.Properties_.Item(p).Value; row[p] = v is DBNull ? null : v; }
                     catch { row[p] = null; }
                 }
                 rows.Add(row);
@@ -68,7 +69,7 @@ public static class Wmi
     {
         if (!row.TryGetValue(key, out var v) || v is null) return Array.Empty<int>();
         if (v is Array arr)
-            return arr.Cast<object?>().Where(x => x is not null).Select(x => Convert.ToInt32(x, CultureInfo.InvariantCulture)).ToArray();
+            return arr.Cast<object?>().Where(x => x is not null and not DBNull).Select(x => Convert.ToInt32(x, CultureInfo.InvariantCulture)).ToArray();
         return new[] { Convert.ToInt32(v, CultureInfo.InvariantCulture) };
     }
 
