@@ -3,6 +3,8 @@ using KizaTweaks.Core.Catalog;
 using KizaTweaks.Core.Engine;
 using KizaTweaks.Core.Hardware;
 using KizaTweaks.Core.Maintenance;
+using KizaTweaks.Core.Platform;
+using KizaTweaks.Core.Processes;
 using KizaTweaks.Tests;
 
 if (args.Contains("--windows")) return WindowsIntegration.Run();
@@ -34,6 +36,9 @@ var tests = new List<(string name, Action body)>
     ("Interfaz: navegación, filtros y búsqueda", ViewModelTests.NavigationAndFilters),
     ("Modo FPS: activar nivel, progreso e interruptor", ViewModelTests.FpsModeFlow),
     ("Modo FPS: configurar y quitar un juego", ViewModelTests.GameConfigFlow),
+    ("Apps de trabajo: proteger y desproteger sin pisar otras preferencias", CreativeAppsProtect),
+    ("Cierres: lectura del registro de eventos y explicación del módulo", CrashLogParse),
+    ("Modo FPS: proteger una app de trabajo desde la interfaz", ViewModelTests.WorkAppFlow),
 };
 
 int failed = 0;
@@ -417,4 +422,42 @@ static void ProfileApplyOrder()
     var c = CatalogLoader.LoadTweaks();
     var order = ProfileResolver.ApplyOrder(new[] { c.Find("kiza.usbSuspend")!, c.Find("kiza.gameMode")!, c.Find("kiza.powerUltimate")! });
     Assert(order[0].Id == "kiza.powerUltimate" && order[2].Id == "kiza.usbSuspend", string.Join(",", order.Select(t => t.Id)));
+}
+
+static void CreativeAppsProtect()
+{
+    const string ps = @"C:\Program Files\Adobe\Adobe Photoshop 2025\Photoshop.exe";
+    var b = new InMemoryBackend();
+    b.SetValue("HKCU", DxSettings.Path, ps, RegValue.Str("GpuPreference=1;"));
+    Assert(!CreativeApps.IsProtected(b, ps), "no debería estar protegida");
+    CreativeApps.Protect(b, ps);
+    Assert(CreativeApps.IsProtected(b, ps), "no quedó protegida");
+    var raw = b.GetValue("HKCU", DxSettings.Path, ps)!.Text!;
+    Assert(raw.Contains("GpuPreference=1") && raw.Contains("SwapEffectUpgradeEnable=0") && raw.Contains("VRROptimizeEnable=0"), raw);
+    Assert(GameService.List(b).Count == 0, "una app protegida no es un juego");
+    var list = CreativeApps.List(b, Array.Empty<string>());
+    Assert(list.Count == 1 && list[0].Protected && list[0].Name == "Adobe Photoshop 2025", string.Join(",", list));
+    CreativeApps.Unprotect(b, ps);
+    Assert(b.GetValue("HKCU", DxSettings.Path, ps)!.Text == "GpuPreference=1;", "debe conservar la preferencia de GPU");
+    var other = @"D:\Apps\Krita\krita.exe";
+    CreativeApps.Protect(b, other);
+    CreativeApps.Unprotect(b, other);
+    Assert(b.GetValue("HKCU", DxSettings.Path, other) is null, "si no quedan preferencias, se borra el valor");
+}
+
+static void CrashLogParse()
+{
+    var xml = "<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><EventID>1000</EventID>" +
+              "<TimeCreated SystemTime='2026-10-16T16:40:00.000Z'/></System><EventData>" +
+              "<Data Name='AppName'>Photoshop.exe</Data><Data Name='AppVersion'>26.0</Data><Data Name='AppTimeStamp'>0</Data>" +
+              "<Data Name='ModuleName'>nvoglv64.dll</Data><Data Name='ModuleVersion'>32.0</Data><Data Name='ModuleTimeStamp'>0</Data>" +
+              "<Data Name='ExceptionCode'>c0000005</Data></EventData></Event>" +
+              "<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><TimeCreated SystemTime='2026-10-15T10:00:00Z'/></System>" +
+              "<EventData><Data>chrome.exe</Data><Data>1</Data><Data>0</Data><Data>ntdll.dll</Data><Data>1</Data><Data>0</Data><Data>c0000374</Data></EventData></Event>";
+    var list = CrashLog.Parse(xml);
+    Assert(list.Count == 2, $"eventos: {list.Count}");
+    Assert(list[0].App == "Photoshop.exe" && list[0].Module == "nvoglv64.dll" && list[0].ExceptionCode == "c0000005", list[0].ToString());
+    Assert(list[0].Hint.Contains("NVIDIA"), list[0].Hint);
+    Assert(list[1].App == "chrome.exe" && list[1].Module == "ntdll.dll", list[1].ToString());
+    Assert(CrashLog.Parse("basura <<").Count == 0, "XML dañado");
 }

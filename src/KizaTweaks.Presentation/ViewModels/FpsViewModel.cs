@@ -116,6 +116,23 @@ public sealed class GameItemViewModel
     public required ICommand RemoveCommand { get; init; }
 }
 
+public sealed class WorkAppViewModel : ObservableObject
+{
+    public required WorkApp App { get; init; }
+    public string Name => App.Name;
+    public string Path => App.ExePath;
+    public bool IsProtected => App.Protected;
+    public string StatusText => IsProtected ? "Protegida" : "Sin proteger";
+    public string StatusColor => IsProtected ? Labels.Green : Labels.Amber;
+    public string ButtonText => IsProtected ? "Quitar protección" : "Proteger";
+    public CrashEntry? LastCrash { get; init; }
+    public bool HasCrash => LastCrash is not null;
+    public string CrashText => LastCrash is { } c
+        ? $"Se cerró el {c.Time:dd/MM HH:mm}. Falló: {(c.Module.Length > 0 ? c.Module : "desconocido")}. {c.Hint}"
+        : "";
+    public required ICommand ToggleCommand { get; init; }
+}
+
 /// <summary>
 /// Modo FPS: solo lo que sube FPS o baja la latencia, agrupado por nivel, con la revisión del hardware
 /// y herramientas para la partida (sesión de juego, configuración por juego).
@@ -136,6 +153,10 @@ public sealed class FpsViewModel : ObservableObject
     public ObservableCollection<FpsGroupViewModel> Groups { get; } = new();
     public ObservableCollection<FpsCheckViewModel> Checks { get; } = new();
     public ObservableCollection<GameItemViewModel> Games { get; } = new();
+    public ObservableCollection<WorkAppViewModel> WorkApps { get; } = new();
+    public AsyncCommand ProtectAllCommand { get; }
+    public AsyncCommand AddWorkAppCommand { get; }
+    public AsyncCommand CrashReportCommand { get; }
 
     public AsyncCommand RefreshCommand { get; }
     public AsyncCommand GameSessionCommand { get; }
@@ -152,6 +173,9 @@ public sealed class FpsViewModel : ObservableObject
         GameSessionCommand = new AsyncCommand(GameSessionAsync);
         AddGameCommand = new AsyncCommand(AddGameAsync);
         BenchmarkCommand = new RelayCommand(() => _shell.Navigate("benchmark"));
+        ProtectAllCommand = new AsyncCommand(ProtectAllAsync);
+        AddWorkAppCommand = new AsyncCommand(AddWorkAppAsync);
+        CrashReportCommand = new AsyncCommand(CrashReportAsync);
         // Se mantiene al día aunque los ajustes se cambien desde otra página.
         foreach (var t in tweaks.All)
             t.PropertyChanged += (_, e) => { if (e.PropertyName == nameof(TweakItemViewModel.State) && _built) UpdateProgress(); };
@@ -185,6 +209,8 @@ public sealed class FpsViewModel : ObservableObject
     public string HardwareText { get => _hardwareText; private set => SetProperty(ref _hardwareText, value); }
 
     public bool HasGames => Games.Count > 0;
+    public bool HasWorkApps => WorkApps.Count > 0;
+    public bool HasUnprotected => WorkApps.Any(a => !a.IsProtected);
 
     public async Task LoadAsync()
     {
@@ -197,6 +223,7 @@ public sealed class FpsViewModel : ObservableObject
             BuildGroups();
             BuildChecks();
             RefreshGames();
+            await RefreshWorkAppsAsync();
             _built = true;
             UpdateProgress();
         }
@@ -432,5 +459,93 @@ public sealed class FpsViewModel : ObservableObject
             });
         }
         OnPropertyChanged(nameof(HasGames));
+    }
+
+    // ------------------------------------------------------------------
+    // Apps de trabajo (Photoshop y similares)
+    // ------------------------------------------------------------------
+
+    private List<string> _detected = new();
+    private List<CrashEntry> _crashes = new();
+
+    private async Task RefreshWorkAppsAsync(bool rescan = true)
+    {
+        if (rescan)
+        {
+            (_detected, _crashes) = await Task.Run(() =>
+            {
+                List<string> d;
+                try { d = CreativeApps.FindInstalled(); }
+                catch (Exception ex) { Log.Warn("Búsqueda de apps de trabajo: " + ex.Message); d = new(); }
+                return (d, CrashLog.Recent());
+            });
+        }
+        WorkApps.Clear();
+        foreach (var a in CreativeApps.List(_s.Backend, _detected))
+        {
+            var app = a;
+            var exe = GameService.ExeName(app.ExePath);
+            WorkApps.Add(new WorkAppViewModel
+            {
+                App = app,
+                LastCrash = _crashes.Where(c => c.App.Equals(exe, StringComparison.OrdinalIgnoreCase))
+                                    .OrderByDescending(c => c.Time).FirstOrDefault(),
+                ToggleCommand = new AsyncCommand(async () =>
+                {
+                    await Task.Run(() =>
+                    {
+                        if (app.Protected) CreativeApps.Unprotect(_s.Backend, app.ExePath);
+                        else CreativeApps.Protect(_s.Backend, app.ExePath);
+                    });
+                    _shell.Toast(app.Protected ? $"{app.Name} vuelve a usar las optimizaciones de juegos."
+                                               : $"{app.Name} protegida. Ciérrala y ábrela de nuevo para que tome el cambio.");
+                    await RefreshWorkAppsAsync(rescan: false);
+                }),
+            });
+        }
+        OnPropertyChanged(nameof(HasWorkApps));
+        OnPropertyChanged(nameof(HasUnprotected));
+    }
+
+    private async Task ProtectAllAsync()
+    {
+        var pending = WorkApps.Where(a => !a.IsProtected).ToList();
+        if (pending.Count == 0)
+        {
+            _shell.Toast("Todas tus apps de trabajo ya están protegidas.");
+            return;
+        }
+        await Task.Run(() => { foreach (var a in pending) CreativeApps.Protect(_s.Backend, a.Path); });
+        _shell.Toast($"{pending.Count} apps protegidas. Si alguna estaba abierta, ciérrala y ábrela de nuevo.");
+        await RefreshWorkAppsAsync(rescan: false);
+    }
+
+    private async Task AddWorkAppAsync()
+    {
+        var path = await _dialogs.PickFileAsync("Elige el .exe de la app que quieres proteger", "Programas (*.exe)|*.exe");
+        if (path is null) return;
+        try
+        {
+            await Task.Run(() => CreativeApps.Protect(_s.Backend, path));
+            _shell.Toast($"{GameService.ExeName(path)} protegida.");
+        }
+        catch (Exception ex) { _shell.Toast(ex.Message, true); }
+        if (!_detected.Contains(path, StringComparer.OrdinalIgnoreCase)) _detected.Add(path);
+        await RefreshWorkAppsAsync(rescan: false);
+    }
+
+    private async Task CrashReportAsync()
+    {
+        _crashes = await Task.Run(() => CrashLog.Recent());
+        var recent = _crashes.Where(c => c.Time > DateTime.Now.AddDays(-14)).Take(8).ToList();
+        if (recent.Count == 0)
+        {
+            await _dialogs.InfoAsync("Cierres recientes", "Windows no registró ningún programa que se haya cerrado solo en las últimas dos semanas.");
+            return;
+        }
+        var text = string.Join("\n\n", recent.Select(c =>
+            $"{c.Time:dd/MM HH:mm}  {c.App}\nFalló: {(c.Module.Length > 0 ? c.Module : "desconocido")} ({c.ExceptionCode})\n{c.Hint}"));
+        await _dialogs.InfoAsync("Cierres recientes", "Programas que se cerraron solos y qué falló:\n\n" + text);
+        await RefreshWorkAppsAsync(rescan: false);
     }
 }

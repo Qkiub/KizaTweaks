@@ -88,7 +88,7 @@ public static class ViewModelTests
         dialogs.Answers.Enqueue(0); // «Deshacer todo»
         vm.Backups.UndoAllCommand.Execute(null);
         // AsyncCommand es async void: se espera a que termine
-        for (int i = 0; i < 400 && vm.Tweaks.AppliedCount != initial; i++) Thread.Sleep(50);
+        for (int i = 0; i < 400 && (vm.Tweaks.AppliedCount != initial || vm.Backups.Items.Count != 0); i++) Thread.Sleep(50);
         if (vm.Tweaks.AppliedCount != initial) throw new Exception($"quedaron {vm.Tweaks.AppliedCount - initial} aplicados tras deshacer todo");
         if (vm.Backups.Items.Count != 0) throw new Exception("quedaron respaldos");
     }
@@ -147,6 +147,21 @@ public static class ViewModelTests
         if (vm.Fps.Games.Count != 0) throw new Exception("no se quitó el juego");
         if (b.KeyExists("HKLM", @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\VALORANT-Win64-Shipping.exe"))
             throw new Exception("quedó la clave IFEO");
+    }
+
+    public static void WorkAppFlow()
+    {
+        var (vm, dialogs, b) = Create();
+        vm.Services.LastHardware = new HardwareReport();
+        vm.Fps.LoadAsync().GetAwaiter().GetResult();
+        dialogs.Files.Enqueue(@"C:\Program Files\Adobe\Adobe Photoshop 2025\Photoshop.exe");
+        vm.Fps.AddWorkAppCommand.Execute(null);
+        for (int i = 0; i < 400 && vm.Fps.WorkApps.Count == 0; i++) Thread.Sleep(50);
+        var app = vm.Fps.WorkApps.SingleOrDefault() ?? throw new Exception("la app no aparece");
+        if (!app.IsProtected) throw new Exception("no quedó protegida");
+        app.ToggleCommand.Execute(null);
+        for (int i = 0; i < 400 && vm.Fps.WorkApps.Count > 0; i++) Thread.Sleep(50);
+        if (vm.Fps.WorkApps.Any(a => a.IsProtected)) throw new Exception("no se quitó la protección");
     }
 
     public static void NavigationAndFilters()
