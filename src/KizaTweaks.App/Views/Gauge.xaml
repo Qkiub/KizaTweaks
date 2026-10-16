@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Name="Root" Width="196" Height="196">
     <Grid>
-        <Path x:Name="Track" Stroke="{StaticResource Surface2Brush}" StrokeThickness="14"
+        <Path x:Name="Track" Stroke="{StaticResource LineBrush}" StrokeThickness="14"
               StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
         <Path x:Name="Bar" Stroke="{StaticResource BrandGradient}" StrokeThickness="14"
               StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
