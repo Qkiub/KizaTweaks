@@ -38,10 +38,12 @@
         <Border Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,1,0">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="22,22,16,28">
-                    <Image Source="Assets/logo-mark.png" Width="40" Height="40" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Image Source="Assets/logo-mark.png" Width="44" Height="44" RenderOptions.BitmapScalingMode="HighQuality" />
                     <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                         <TextBlock Text="KizaTweaks" FontFamily="{StaticResource DisplayFont}" FontSize="21" FontWeight="SemiBold" />
-                        <TextBlock Text="by Qkiub" FontSize="12" Foreground="{StaticResource SubtleBrush}" Margin="1,-2,0,0" />
+                        <!-- El "KT" en japonés del logo, como texto real para que se lea en tamaño pequeño -->
+                        <TextBlock Text="ケーティー" FontFamily="Yu Gothic UI, Meiryo UI, Segoe UI" FontSize="12"
+                                   Foreground="{StaticResource MutedBrush}" Margin="1,0,0,0" />
                     </StackPanel>
                 </StackPanel>
 
@@ -52,7 +54,9 @@
                                    FontSize="12" Foreground="#FFAFC0" />
                     </Border>
                     <TextBlock Text="{Binding OsInfo}" Style="{StaticResource Caption}" />
-                    <TextBlock Text="{Binding About.Version}" Style="{StaticResource Caption}" Margin="0,2,0,0" />
+                    <TextBlock Style="{StaticResource Caption}" Margin="0,2,0,0">
+                        <Run Text="Qkiub," /> <Run Text="{Binding About.Version, Mode=OneWay}" />
+                    </TextBlock>
                 </StackPanel>
 
                 <ListBox ItemsSource="{Binding Nav}" SelectedItem="{Binding SelectedNav, Mode=TwoWay}"
