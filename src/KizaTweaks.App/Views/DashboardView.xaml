@@ -168,9 +168,9 @@
                                     <TextBlock Text="{Binding Model}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
                                 </DockPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                    <views:Pill Text="{Binding Kind}" Color="#6EA8FF" />
-                                    <views:Pill Text="{Binding Size}" Color="#8B95AB" />
-                                    <views:Pill Text="Windows" Color="#A98BFF" Visibility="{Binding IsSystem, Converter={StaticResource BoolToVis}}" />
+                                    <views:Pill Text="{Binding Kind}" Color="#8FB5FF" />
+                                    <views:Pill Text="{Binding Size}" Color="#9C8A95" />
+                                    <views:Pill Text="Windows" Color="#C8A2FF" Visibility="{Binding IsSystem, Converter={StaticResource BoolToVis}}" />
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource Caption}" Margin="0,8,0,0">
                                     <Run Text="Unidades: " /><Run Text="{Binding Letters, Mode=OneWay}" />

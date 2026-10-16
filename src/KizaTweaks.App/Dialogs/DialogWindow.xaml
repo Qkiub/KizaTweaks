@@ -4,7 +4,7 @@
         Width="560" SizeToContent="Height" MaxHeight="720"
         WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner"
-        Background="{StaticResource SurfaceBrush}" Foreground="{StaticResource TextBrush}"
+        Background="{StaticResource SurfaceSolidBrush}" Foreground="{StaticResource TextBrush}"
         FontFamily="{StaticResource UiFont}" FontSize="14">
     <Border BorderBrush="{StaticResource LineBrush}" BorderThickness="1">
         <Grid Margin="24,20,24,20">

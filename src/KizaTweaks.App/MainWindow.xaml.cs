@@ -27,9 +27,9 @@ public partial class MainWindow : Window
             if (DwmSetWindowAttribute(hwnd, 20, ref on, sizeof(int)) != 0)
                 DwmSetWindowAttribute(hwnd, 19, ref on, sizeof(int)); // builds antiguos
             // Solo Windows 11: barra de título del mismo color que la barra lateral (COLORREF = BGR)
-            int caption = 0x00180F0B;  // #0B0F18
-            int text = 0x00F7F1EE;     // #EEF1F7
-            int border = 0x00473027;   // #273047
+            int caption = 0x000A0608;  // #08060A
+            int text = 0x00F3EEF8;     // #F8EEF3
+            int border = 0x0032263A;   // #3A2632
             DwmSetWindowAttribute(hwnd, 35, ref caption, sizeof(int));
             DwmSetWindowAttribute(hwnd, 36, ref text, sizeof(int));
             DwmSetWindowAttribute(hwnd, 34, ref border, sizeof(int));

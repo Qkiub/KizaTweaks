@@ -21,12 +21,17 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Compilar
+        id: build
         run: dotnet build KizaTweaks.sln -c Release
 
       - name: Pruebas unitarias
-        run: dotnet run --project tests/KizaTweaks.Tests -c Release --no-build
+        id: unit
+        run: |
+          New-Item -ItemType Directory -Force "$env:ProgramData\KizaTweaks\logs\screens" | Out-Null
+          dotnet run --project tests/KizaTweaks.Tests -c Release --no-build | Tee-Object -FilePath "$env:ProgramData\KizaTweaks\logs\screens\unit-tests.txt"
 
       - name: Pruebas de integración (Windows real)
+        id: integration
         continue-on-error: true
         run: dotnet run --project tests/KizaTweaks.Tests -c Release --no-build -- --windows
 
@@ -40,6 +45,7 @@ jobs:
         run: dotnet publish src/KizaTweaks.App/KizaTweaks.App.csproj -c Release -o publish -p:Version=1.0.${{ github.run_number }}
 
       - name: Prueba de humo de la interfaz (abre todas las páginas)
+        id: smoke
         shell: pwsh
         run: |
           $p = Start-Process -FilePath "publish\KizaTweaks.exe" -ArgumentList "--smoke-test" -PassThru
@@ -56,18 +62,6 @@ jobs:
           Get-ChildItem "$log\kizatweaks-*.log" -ErrorAction SilentlyContinue | Get-Content -Tail 80
           if ($p.ExitCode -ne 0) { Write-Error "La prueba de humo falló (código $($p.ExitCode))"; exit 1 }
 
-      - name: Guardar capturas de pantalla (rama ci-screens)
-        if: always() && github.event_name == 'push'
-        shell: pwsh
-        run: |
-          $dir = "$env:ProgramData\KizaTweaks\logs\screens"
-          if (-not (Test-Path $dir)) { Write-Host "Sin capturas"; exit 0 }
-          Set-Location $dir
-          git init -q -b ci-screens
-          git add -A
-          git -c user.name="KizaTweaks CI" -c user.email="ci@kizatweaks.local" commit -q -m "Capturas de ${{ github.sha }}"
-          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-screens
-
       # Para distribución pública, firma el .exe aquí (Azure Trusted Signing, SignPath o certificado propio).
       # Sin firma, Windows SmartScreen mostrará "Editor desconocido" la primera vez.
 
@@ -77,6 +71,7 @@ jobs:
           path: publish/KizaTweaks.exe
 
       - name: Crear release con el .exe
+        id: release
         if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[preview]') && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
         uses: softprops/action-gh-release@v2
         with:
@@ -86,3 +81,18 @@ jobs:
           files: publish/KizaTweaks.exe
           make_latest: true
           generate_release_notes: true
+
+      - name: Guardar capturas de pantalla (rama ci-screens)
+        if: always() && github.event_name == 'push'
+        shell: pwsh
+        run: |
+          $dir = "$env:ProgramData\KizaTweaks\logs\screens"
+          New-Item -ItemType Directory -Force $dir | Out-Null
+          $log = "$env:ProgramData\KizaTweaks\logs"
+          if (Test-Path "$log\smoke-test.txt") { Copy-Item "$log\smoke-test.txt" $dir }
+          "commit=${{ github.sha }}`nbuild=${{ steps.build.outcome }}`nunit=${{ steps.unit.outcome }}`nintegration=${{ steps.integration.outcome }}`nsmoke=${{ steps.smoke.outcome }}`nrelease=${{ steps.release.outcome }}`nversion=1.0.${{ github.run_number }}" | Set-Content "$dir\status.txt"
+          Set-Location $dir
+          git init -q -b ci-screens
+          git add -A
+          git -c user.name="KizaTweaks CI" -c user.email="ci@kizatweaks.local" commit -q -m "Capturas de ${{ github.sha }}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-screens

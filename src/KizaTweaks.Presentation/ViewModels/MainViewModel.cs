@@ -19,7 +19,7 @@ public sealed class NavItem : ObservableObject
 
 public sealed class AboutViewModel
 {
-    public const string RepoUrl = "https://github.com/QkiubYT/KizaTweaks";
+    public const string RepoUrl = "https://github.com/Qkiub/KizaTweaks";
 
     public string Version { get; } = "v" + (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.0.0");
 

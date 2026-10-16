@@ -55,7 +55,8 @@ public sealed class ProcessService
         new BackgroundCandidate("Microsoft Teams", new[] { "ms-teams", "Teams" }, true, "Chat corporativo en segundo plano."),
         new BackgroundCandidate("Copilot", new[] { "Copilot" }, true, "Asistente de IA."),
         new BackgroundCandidate("Microsoft PC Manager", new[] { "MSPCManager", "MSPCManagerService" }, true, "Limpiador preinstalado."),
-        new BackgroundCandidate("Actualizador de Adobe", new[] { "AdobeARM", "CCXProcess", "AdobeIPCBroker", "CoreSync" }, true, "Servicios de Adobe en segundo plano."),
+        // Solo el actualizador: AdobeIPCBroker, CoreSync y CCXProcess los usan Photoshop y demás apps de Adobe abiertas.
+        new BackgroundCandidate("Actualizador de Adobe", new[] { "AdobeARM" }, true, "Busca actualizaciones de Acrobat/Reader en segundo plano."),
         new BackgroundCandidate("Google Drive", new[] { "GoogleDriveFS" }, false, "Sincronización en la nube."),
         new BackgroundCandidate("Dropbox", new[] { "Dropbox" }, false, "Sincronización en la nube."),
         new BackgroundCandidate("Spotify", new[] { "Spotify" }, false, "Ciérralo solo si no escuchas música mientras juegas."),

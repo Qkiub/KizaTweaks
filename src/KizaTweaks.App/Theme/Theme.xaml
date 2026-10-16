@@ -3,30 +3,33 @@
                     xmlns:conv="clr-namespace:KizaTweaks.App.Converters">
 
     <!-- =========================================================
-         Paleta KizaTweaks by Qkiub
-         Grafito azulado + "calor" (brasa → magenta) para lo que da rendimiento,
-         hielo para estados correctos/informativos.
+         Paleta KizaTweaks by Qkiub: noche japonesa
+         Negro con un toque ciruela, rosa sakura para lo que da rendimiento y dorado
+         (laca japonesa) para enlaces y foco. Las superficies son algo translúcidas
+         para que se adivine el fondo.
          ========================================================= -->
-    <Color x:Key="BgColor">#0F1420</Color>
-    <Color x:Key="SidebarColor">#0B0F18</Color>
-    <Color x:Key="SurfaceColor">#161C2A</Color>
-    <Color x:Key="Surface2Color">#1D2435</Color>
-    <Color x:Key="LineColor">#273047</Color>
-    <Color x:Key="TextColor">#EEF1F7</Color>
-    <Color x:Key="MutedColor">#A0A9BC</Color>
-    <Color x:Key="SubtleColor">#6E7891</Color>
-    <Color x:Key="AccentColor">#FF5A4E</Color>
-    <Color x:Key="AccentHoverColor">#FF7466</Color>
-    <Color x:Key="EmberColor">#FF8A3D</Color>
-    <Color x:Key="HeatColor">#FF2E7E</Color>
-    <Color x:Key="Accent2Color">#4FD1E8</Color>
-    <Color x:Key="DangerColor">#FF5470</Color>
-    <Color x:Key="WarnColor">#FFB547</Color>
-    <Color x:Key="OkColor">#3DDC97</Color>
+    <Color x:Key="BgColor">#0A0709</Color>
+    <Color x:Key="SidebarColor">#D908060A</Color>
+    <Color x:Key="SurfaceColor">#D9150F15</Color>
+    <Color x:Key="SurfaceSolidColor">#160F15</Color>
+    <Color x:Key="Surface2Color">#E61F161D</Color>
+    <Color x:Key="LineColor">#3A2632</Color>
+    <Color x:Key="TextColor">#F8EEF3</Color>
+    <Color x:Key="MutedColor">#C2ABB7</Color>
+    <Color x:Key="SubtleColor">#88717E</Color>
+    <Color x:Key="AccentColor">#F06292</Color>
+    <Color x:Key="AccentHoverColor">#F48FB1</Color>
+    <Color x:Key="SakuraLightColor">#FFA6C9</Color>
+    <Color x:Key="SakuraDeepColor">#C2185B</Color>
+    <Color x:Key="Accent2Color">#E8C07D</Color>
+    <Color x:Key="DangerColor">#FF5C7A</Color>
+    <Color x:Key="WarnColor">#FFB86B</Color>
+    <Color x:Key="OkColor">#7FD6A4</Color>
 
     <SolidColorBrush x:Key="BgBrush" Color="{StaticResource BgColor}" />
     <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}" />
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="SurfaceSolidBrush" Color="{StaticResource SurfaceSolidColor}" />
     <SolidColorBrush x:Key="Surface2Brush" Color="{StaticResource Surface2Color}" />
     <SolidColorBrush x:Key="LineBrush" Color="{StaticResource LineColor}" />
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" />
@@ -34,25 +37,25 @@
     <SolidColorBrush x:Key="SubtleBrush" Color="{StaticResource SubtleColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
-    <SolidColorBrush x:Key="EmberBrush" Color="{StaticResource EmberColor}" />
+    <SolidColorBrush x:Key="SakuraLightBrush" Color="{StaticResource SakuraLightColor}" />
     <SolidColorBrush x:Key="Accent2Brush" Color="{StaticResource Accent2Color}" />
     <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
     <SolidColorBrush x:Key="WarnBrush" Color="{StaticResource WarnColor}" />
     <SolidColorBrush x:Key="OkBrush" Color="{StaticResource OkColor}" />
-    <SolidColorBrush x:Key="HoverBrush" Color="#12FFFFFF" />
-    <SolidColorBrush x:Key="SelectedBrush" Color="#1D2435" />
-    <SolidColorBrush x:Key="OverlayBrush" Color="#D90B0F18" />
+    <SolidColorBrush x:Key="HoverBrush" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="SelectedBrush" Color="#E61F161D" />
+    <SolidColorBrush x:Key="OverlayBrush" Color="#D908060A" />
 
-    <!-- El gradiente de "calor": solo para lo que sube rendimiento (botón principal, medidor, interruptores) -->
+    <!-- Degradado sakura: solo para lo que sube rendimiento (botón principal, medidor, interruptores) -->
     <LinearGradientBrush x:Key="BrandGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="{StaticResource EmberColor}" Offset="0" />
-        <GradientStop Color="#FF4D5E" Offset="0.55" />
-        <GradientStop Color="{StaticResource HeatColor}" Offset="1" />
+        <GradientStop Color="{StaticResource SakuraLightColor}" Offset="0" />
+        <GradientStop Color="{StaticResource AccentColor}" Offset="0.5" />
+        <GradientStop Color="{StaticResource SakuraDeepColor}" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="BrandGradientHover" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#FFA05C" Offset="0" />
-        <GradientStop Color="#FF6574" Offset="0.55" />
-        <GradientStop Color="#FF4C92" Offset="1" />
+        <GradientStop Color="#FFBCD7" Offset="0" />
+        <GradientStop Color="#F57AA6" Offset="0.5" />
+        <GradientStop Color="#D63374" Offset="1" />
     </LinearGradientBrush>
 
     <!-- Bahnschrift (incluida en Windows 10/11) para títulos y números: aire técnico, de telemetría -->
@@ -143,7 +146,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="#3A4560" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="#5A3A4C" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Accent2Brush}" />

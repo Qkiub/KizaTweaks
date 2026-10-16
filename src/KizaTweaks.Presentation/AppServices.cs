@@ -71,14 +71,14 @@ public sealed class AppServices
 /// <summary>Textos y colores para etiquetas (impacto, riesgo, estado).</summary>
 public static class Labels
 {
-    public const string Green = "#3DDC97";
-    public const string Amber = "#FFB547";
-    public const string Red = "#FF5470";
-    public const string Cyan = "#4FD1E8";
-    public const string Violet = "#A98BFF";
-    public const string Slate = "#8B95AB";
-    public const string Pink = "#FF7AB6";
-    public const string Blue = "#6EA8FF";
+    public const string Green = "#7FD6A4";
+    public const string Amber = "#FFB86B";
+    public const string Red = "#FF5C7A";
+    public const string Cyan = "#A9C7FF";
+    public const string Violet = "#C8A2FF";
+    public const string Slate = "#9C8A95";
+    public const string Pink = "#FF9EC4";
+    public const string Blue = "#8FB5FF";
 
     public static (string text, string color) Impact(string impact) => impact switch
     {

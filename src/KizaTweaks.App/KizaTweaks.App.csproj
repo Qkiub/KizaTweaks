@@ -43,6 +43,7 @@
   <ItemGroup>
     <Resource Include="Assets\logo.png" />
     <Resource Include="Assets\kizatweaks.ico" />
+    <Resource Include="Assets\background.jpg" />
   </ItemGroup>
 
 </Project>

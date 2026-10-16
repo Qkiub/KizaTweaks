@@ -29,6 +29,11 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <!-- Fondo: noche de sakura con siluetas muy difuminadas -->
+        <Image Grid.ColumnSpan="2" Source="Assets/background.jpg" Stretch="UniformToFill"
+               HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="False"
+               RenderOptions.BitmapScalingMode="HighQuality" />
+
         <!-- ================= Barra lateral ================= -->
         <Border Background="{StaticResource SidebarBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,1,0">
             <DockPanel>
@@ -41,10 +46,10 @@
                 </StackPanel>
 
                 <StackPanel DockPanel.Dock="Bottom" Margin="24,12,16,20">
-                    <Border Background="#26FF5470" CornerRadius="8" Padding="10,8" Margin="0,0,0,12"
+                    <Border Background="#26FF5C7A" CornerRadius="8" Padding="10,8" Margin="0,0,0,12"
                             Visibility="{Binding IsAdmin, Converter={StaticResource InverseBoolToVis}}">
                         <TextBlock Text="Sin permisos de administrador: ábrelo como administrador." TextWrapping="Wrap"
-                                   FontSize="12" Foreground="#FFA3B3" />
+                                   FontSize="12" Foreground="#FFAFC0" />
                     </Border>
                     <TextBlock Text="{Binding OsInfo}" Style="{StaticResource Caption}" />
                     <TextBlock Text="{Binding About.Version}" Style="{StaticResource Caption}" Margin="0,2,0,0" />
@@ -83,7 +88,7 @@
                             Style="{StaticResource PrimaryButton}" Padding="14,6" />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="&#xE7BA;" Style="{StaticResource Icon}" Foreground="{StaticResource WarnBrush}" />
-                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#FFC978"
+                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#F3CD8F"
                                    Text="Algunos cambios necesitan reiniciar Windows para tener efecto." />
                     </StackPanel>
                 </DockPanel>
@@ -98,7 +103,7 @@
                 Visibility="{Binding HasToast, Converter={StaticResource BoolToVis}}">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Background" Value="{StaticResource Surface2Brush}" />
+                    <Setter Property="Background" Value="{StaticResource SurfaceSolidBrush}" />
                     <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ToastIsError}" Value="True">

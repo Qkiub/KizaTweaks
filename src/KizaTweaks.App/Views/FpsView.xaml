@@ -43,8 +43,8 @@
                 <Border.Background>
                     <!-- Calor tenue detrás del medidor -->
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="#2E1C27" Offset="0" />
-                        <GradientStop Color="#161C2A" Offset="0.42" />
+                        <GradientStop Color="#E0301626" Offset="0" />
+                        <GradientStop Color="#D9150F15" Offset="0.45" />
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
@@ -124,14 +124,14 @@
                                 </DockPanel>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Border Width="36" Height="36" CornerRadius="9" Background="#1FFF5A4E">
+                                        <Border Width="36" Height="36" CornerRadius="9" Background="#26F06292">
                                             <TextBlock Text="{Binding Glyph}" Style="{StaticResource Icon}" FontSize="17"
                                                        Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Center" />
                                         </Border>
                                         <TextBlock Text="{Binding Name}" Style="{StaticResource H2}" FontSize="22" Margin="12,0,0,0" VerticalAlignment="Center" />
                                     </StackPanel>
                                     <TextBlock Text="{Binding Description}" Style="{StaticResource Muted}" Margin="0,12,0,0" />
-                                    <TextBlock Text="{Binding Adjusted}" Foreground="#FFC978" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0"
+                                    <TextBlock Text="{Binding Adjusted}" Foreground="#F3CD8F" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0"
                                                Visibility="{Binding HasAdjusted, Converter={StaticResource BoolToVis}}" />
                                 </StackPanel>
                             </DockPanel>
@@ -238,9 +238,9 @@
                                                     <WrapPanel Margin="0,10,0,0">
                                                         <views:Pill Text="{Binding ImpactLabel}" Color="{Binding ImpactColor}" />
                                                         <views:Pill Text="{Binding RiskLabel}" Color="{Binding RiskColor}" />
-                                                        <views:Pill Text="Reinicio" Color="#FFB547" Visibility="{Binding RequiresReboot, Converter={StaticResource BoolToVis}}" />
+                                                        <views:Pill Text="Reinicio" Color="#FFB86B" Visibility="{Binding RequiresReboot, Converter={StaticResource BoolToVis}}" />
                                                     </WrapPanel>
-                                                    <TextBlock Text="{Binding Warning}" Foreground="#FFC978" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0"
+                                                    <TextBlock Text="{Binding Warning}" Foreground="#F3CD8F" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0"
                                                                Visibility="{Binding HasWarning, Converter={StaticResource BoolToVis}}" />
                                                     <TextBlock Text="{Binding Note}" Style="{StaticResource Caption}" Margin="0,6,0,0"
                                                                Visibility="{Binding HasNote, Converter={StaticResource BoolToVis}}" />

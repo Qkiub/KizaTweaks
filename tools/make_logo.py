@@ -1,9 +1,9 @@
 """Genera el logo de KizaTweaks (logo.png + kizatweaks.ico). Uso: python3 tools/make_logo.py [carpeta]"""
-import sys
+import os, sys
 from PIL import Image, ImageDraw
 S=4; N=256*S
 def lerp(a,b,t): return tuple(int(a[i]+(b[i]-a[i])*t) for i in range(3))
-c0=(0xFF,0x8A,0x3D); c1=(0xFF,0x4D,0x5E); c2=(0xFF,0x2E,0x7E)
+c0=(0xFF,0xA6,0xC9); c1=(0xF0,0x62,0x92); c2=(0xC2,0x18,0x5B)
 grad=Image.new('RGB',(N,N))
 px=grad.load()
 for y in range(N):
@@ -27,4 +27,5 @@ prev=Image.new('RGBA',(256+48+32+16+40,256),(13,17,26,255))
 prev.paste(big,(0,0),big); x=266
 for s in (48,32,16):
     sm=img.resize((s,s),Image.LANCZOS); prev.paste(sm,(x,10),sm); x+=s+6
-prev.save(out+'/preview.png')
+# vista previa (no se usa en la app)
+prev.save(os.path.join(os.environ.get('TMPDIR', '/tmp'), 'kizatweaks-logo-preview.png'))
