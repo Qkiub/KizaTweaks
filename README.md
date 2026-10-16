@@ -83,7 +83,7 @@ deshacer todo el catálogo deja el sistema idéntico**.
   en el workflow donde va el paso de firma.
 - **Licencia**: decide la licencia de KizaTweaks. `THIRD-PARTY-NOTICES.md` es un aviso legal obligatorio que debe
   acompañar el repositorio; no aparece en la app.
-- **Marca**: el logo se genera con `python3 tools/make_logo.py` (requiere Pillow). Si Qkiub tiene logo propio, reemplaza
+- **Marca**: el logo (monograma KT con ケーティー) se genera con `python3 tools/make_logo.py` y el fondo con `python3 tools/make_background.py` (requieren Pillow). Si Qkiub tiene logo propio, reemplaza
   `logo.png` y `kizatweaks.ico` en `src/KizaTweaks.App/Assets`.
 
 ## Datos que guarda

@@ -8,7 +8,7 @@
             <Border Style="{StaticResource Card}" Padding="26,24" Margin="0,0,0,16">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/logo.png" Width="64" Height="64" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <Image Source="/Assets/logo.png" Width="92" Height="92" RenderOptions.BitmapScalingMode="HighQuality" />
                         <StackPanel Margin="18,0,0,0" VerticalAlignment="Center">
                             <TextBlock Text="KizaTweaks" Style="{StaticResource H1}" />
                             <TextBlock Text="Optimizador de Windows para juegos" Foreground="{StaticResource MutedBrush}" />
