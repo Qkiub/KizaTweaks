@@ -17,43 +17,27 @@ public sealed class NavItem : ObservableObject
     internal bool Opened { get; set; }
 }
 
-public sealed record AboutPoint(string Glyph, string Title, string Text);
-
 public sealed class AboutViewModel
 {
     public const string RepoUrl = "https://github.com/QkiubYT/KizaTweaks";
 
     public string Version { get; } = "v" + (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.0.0");
-    public string Author => "Qkiub";
-    public string Tagline => "Gamer de Colombia · creador de KizaTweaks";
 
-    public IReadOnlyList<string> Bio { get; } = new[]
+    public IReadOnlyList<string> NotIncluded { get; } = new[]
     {
-        "Soy Qkiub. Hice KizaTweaks para mi propio PC: quería sacarle más FPS sin instalar «optimizadores» que prometen milagros, llenan Windows de basura o lo dañan sin decirte qué tocaron.",
-        "Así que me tocó hacer el mío. Cada ajuste dice qué cambia, cuánto ayuda y qué riesgo tiene, y todo se deshace con un clic. Lo que no sirve no está, y lo dudoso va marcado como experimental para que lo midas tú mismo en tu equipo.",
-    };
-
-    public IReadOnlyList<AboutPoint> Promises { get; } = new[]
-    {
-        new AboutPoint("\uE890", "Nada escondido", "Ves exactamente qué toca cada ajuste antes de aplicarlo."),
-        new AboutPoint("\uE7A7", "Todo reversible", "Guardo el estado original de tu PC antes de cambiar cualquier cosa."),
-        new AboutPoint("\uE72E", "Sin anuncios ni rastreo", "La app no envía tus datos a ningún lado."),
-    };
-
-    public IReadOnlyList<string> WhatWeDontDo { get; } = new[]
-    {
-        "Apagar Microsoft Defender: te deja expuesto y no da FPS medibles.",
-        "Apagar Windows Update: te quedas sin parches de seguridad ni drivers.",
-        "Quitar Microsoft Edge: launchers y apps dependen de su motor (WebView2).",
-        "Borrar el archivo de paginación: los juegos se cierran cuando se llena la RAM.",
-        "Tocar los temporizadores con BCDEdit (HPET): no hay mejora real y puede empeorar la latencia.",
-        "Desactivar servicios de Windows en masa: rompe cosas en silencio y luego nadie sabe por qué.",
-        "«Limpiar la RAM» o borrar Prefetch: Windows la usa a propósito; vaciarla solo vuelve todo más lento.",
-        "«Optimizar» la red con netsh: no baja el ping y puede bajar la velocidad.",
+        "Desactivar Microsoft Defender",
+        "Desactivar Windows Update",
+        "Quitar Microsoft Edge (launchers y apps usan WebView2)",
+        "Borrar el archivo de paginación",
+        "Temporizadores con BCDEdit (HPET, useplatformclock)",
+        "Desactivar servicios en masa",
+        "Limpiadores de RAM y borrado de Prefetch",
+        "Ajustes de red con netsh",
     };
 
     public RelayCommand OpenRepoCommand { get; } = new(() => ProcessRunner.OpenShell(RepoUrl));
     public RelayCommand OpenIssuesCommand { get; } = new(() => ProcessRunner.OpenShell(RepoUrl + "/issues"));
+    public RelayCommand OpenDataCommand { get; } = new(() => ProcessRunner.OpenShell(Core.AppPaths.DataDir));
 }
 
 [SupportedOSPlatform("windows")]
