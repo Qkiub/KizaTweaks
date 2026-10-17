@@ -21,6 +21,7 @@ public sealed class QuickItem : ObservableObject
     public long Bytes { get; set; } = -1;
     private bool _checked = true;
     public bool IsChecked { get => _checked; set => SetProperty(ref _checked, value); }
+    public System.Windows.Input.ICommand ToggleCommand => new RelayCommand(() => IsChecked = !IsChecked);
 }
 
 public sealed class QuickActionViewModel : ObservableObject

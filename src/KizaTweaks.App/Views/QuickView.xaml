@@ -127,12 +127,14 @@
                                     <DockPanel>
                                         <TextBlock DockPanel.Dock="Right" Text="{Binding Size}" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}"
                                                    VerticalAlignment="Top" Margin="12,1,0,0" />
-                                        <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" VerticalAlignment="Top">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Text}" FontWeight="SemiBold" />
-                                                <TextBlock Text="{Binding Detail}" Style="{StaticResource Caption}" FontSize="12" Margin="0,2,0,0" TextWrapping="Wrap" />
-                                            </StackPanel>
-                                        </CheckBox>
+                                        <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsChecked, Mode=TwoWay}" VerticalAlignment="Top" Margin="0,1,8,0" />
+                                        <StackPanel Background="Transparent" Cursor="Hand">
+                                            <StackPanel.InputBindings>
+                                                <MouseBinding MouseAction="LeftClick" Command="{Binding ToggleCommand}" />
+                                            </StackPanel.InputBindings>
+                                            <TextBlock Text="{Binding Text}" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding Detail}" Style="{StaticResource Caption}" FontSize="12" Margin="0,2,0,0" TextWrapping="Wrap" />
+                                        </StackPanel>
                                     </DockPanel>
                                 </Border>
                             </DataTemplate>
