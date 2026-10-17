@@ -11,6 +11,7 @@
         TextOptions.TextFormattingMode="Display" UseLayoutRounding="True">
 
     <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:QuickViewModel}"><views:QuickView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><views:DashboardView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:FpsViewModel}"><views:FpsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:TweaksViewModel}"><views:TweaksView /></DataTemplate>

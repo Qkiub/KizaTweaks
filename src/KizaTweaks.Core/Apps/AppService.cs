@@ -25,6 +25,32 @@ public sealed class AppService
                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Otras apps de la Store instaladas que no están en el catálogo (sin las de Microsoft, frameworks ni las
+    /// que acompañan drivers: NVIDIA, AMD, Intel, Realtek, audio, periféricos, fabricantes).
+    /// </summary>
+    public List<(string Id, string Name)> GetOtherStoreApps()
+    {
+        const string script = """
+            $hw = 'NVIDIA|Realtek|Intel|Advanced Micro|AMD|Dolby|DTS|Waves|Synaptics|ELAN|Logitech|Razer|Corsair|ASUS|ASUSTeK|Micro-Star|MSI|GIGABYTE|SteelSeries|HyperX|HP Inc|Hewlett|Dell|Lenovo|Acer|Samsung|Thunderbolt|Nahimic|Sonic|Creative|Qualcomm|MediaTek|Broadcom|Killer|Rivet|Canonical|Microsoft'
+            Get-AppxPackage -PackageTypeFilter Main -ErrorAction SilentlyContinue |
+              Where-Object { -not $_.IsFramework -and -not $_.NonRemovable -and $_.SignatureKind -eq 'Store' -and $_.Publisher -notmatch $hw -and $_.Name -notmatch $hw } |
+              Sort-Object Name -Unique | ForEach-Object {
+                $d = $null
+                try { $d = (Get-AppxPackageManifest -Package $_.PackageFullName).Package.Properties.DisplayName } catch {}
+                if (-not $d -or $d -like 'ms-resource*') { $d = ($_.Name -split '\.')[-1] }
+                'KIZA_APP|' + $_.Name + '|' + $d
+              }
+            """;
+        var r = ProcessRunner.PowerShell(script, 120_000);
+        return r.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                       .Where(l => l.StartsWith("KIZA_APP|"))
+                       .Select(l => l.Split('|'))
+                       .Where(p => p.Length >= 3 && p[1].Length > 0)
+                       .Select(p => (p[1], p[2].Length > 0 ? p[2] : p[1]))
+                       .ToList();
+    }
+
     public static string? WingetPath()
     {
         var local = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),

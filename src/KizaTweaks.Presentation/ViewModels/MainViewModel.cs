@@ -55,6 +55,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
     public StartupViewModel Startup { get; }
     public MaintenanceViewModel Maintenance { get; }
     public FpsViewModel Fps { get; }
+    public QuickViewModel Quick { get; }
     public BenchmarkViewModel Benchmark { get; }
     public BackupsViewModel Backups { get; }
     public AboutViewModel About { get; } = new();
@@ -69,6 +70,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Tweaks = new TweaksViewModel(services, dialogs, this);
         Dashboard = new DashboardViewModel(services, dialogs, this, Tweaks);
         Fps = new FpsViewModel(services, dialogs, this, Tweaks);
+        Quick = new QuickViewModel(services, dialogs, this, Tweaks);
         Apps = new AppsViewModel(services, dialogs, this);
         Processes = new ProcessesViewModel(services, dialogs, this);
         Startup = new StartupViewModel(services, this);
@@ -76,6 +78,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Benchmark = new BenchmarkViewModel(services, dialogs, this);
         Backups = new BackupsViewModel(services, dialogs, this, Tweaks);
 
+        Nav.Add(new NavItem { Key = "quick", Title = "Rápido", Glyph = "\uE73A", Page = Quick, OnFirstOpen = Quick.LoadAsync });
         Nav.Add(new NavItem { Key = "home", Title = "Inicio", Glyph = "", Page = Dashboard, OnFirstOpen = Dashboard.LoadAsync });
         Nav.Add(new NavItem { Key = "fps", Title = "Modo FPS", Glyph = "\uEC4A", Page = Fps, OnFirstOpen = Fps.LoadAsync });
         Nav.Add(new NavItem { Key = "tweaks", Title = "Optimizar", Glyph = "", Page = Tweaks, OnFirstOpen = async () => { if (!Tweaks.Loaded) await Tweaks.RefreshAsync(); } });

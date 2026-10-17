@@ -838,6 +838,21 @@ APP_OVERRIDES = {
 }
 
 
+# Apps de terceros que Windows instala o fija solo tras formatear y que no están en la lista base
+EXTRA_APPS = [
+    (["AppleInc.iTunes"], "iTunes", "Reproductor y tienda de Apple. Windows la instala o la sugiere solo."),
+    (["AppleInc.AppleMusicWin"], "Apple Music", "App de música de Apple."),
+    (["AppleInc.AppleTVWin"], "Apple TV", "App de video de Apple."),
+    (["AppleInc.AppleDevices"], "Dispositivos Apple", "Para respaldar iPhone o iPad. Quítala si no tienes uno."),
+    (["AppleInc.iCloud"], "iCloud", "Nube de Apple."),
+    (["5319275A.WhatsAppDesktop"], "WhatsApp", "WhatsApp de escritorio (versión de la Store)."),
+    (["FACEBOOK.317180B0BB486"], "Messenger", "Messenger de Facebook."),
+    (["Microsoft.Copilot"], "Copilot (app)", "App de Copilot que Windows instala sola."),
+    (["Microsoft.Edge.GameAssist"], "Game Assist de Edge", "Navegador superpuesto en juegos."),
+    (["ROBLOXCORPORATION.ROBLOX"], "Roblox", "Juego que a veces viene fijado en Inicio."),
+]
+
+
 def build_apps(w11d):
     apps = json.load(open(os.path.join(w11d, "Config", "Apps.json"), encoding="utf-8-sig"))["Apps"]
     out = []
@@ -855,6 +870,12 @@ def build_apps(w11d):
             "selectedByDefault": bool(a["SelectedByDefault"]) and ov.get("recommendation", a["Recommendation"]) == "safe",
             "method": a["RemovalMethod"],
         })
+    known = {i for a in out for i in a["ids"]}
+    for ids, name, desc in EXTRA_APPS:
+        if ids[0] in known:
+            continue
+        out.append({"ids": ids, "name": name, "description": desc, "recommendation": "safe",
+                    "selectedByDefault": False, "method": "Appx"})
     return out
 
 

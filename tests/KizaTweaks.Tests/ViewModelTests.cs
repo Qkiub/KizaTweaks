@@ -153,10 +153,33 @@ public static class ViewModelTests
             throw new Exception("quedó la clave IFEO");
     }
 
+    /// <summary>Rápido: el plan solo trae ajustes seguros y «Menos input delay» los aplica con punto de restauración.</summary>
+    public static void QuickFlow()
+    {
+        var (vm, dialogs, b) = Create();
+        vm.Quick.LoadAsync().GetAwaiter().GetResult();
+        var c = vm.Services.Catalog;
+        foreach (var id in QuickPlan.DelayTweaks(c).Concat(QuickPlan.PrivacyTweaks))
+        {
+            var t = c.Find(id) ?? throw new Exception($"{id} no existe");
+            if (t.Retired || t.Risk != "safe") throw new Exception($"{id} no es seguro");
+        }
+        if (QuickPlan.Apps(vm.Services.AppsCatalog).Count() < 25) throw new Exception("lista de apps basura incompleta");
+        if (QuickPlan.Apps(vm.Services.AppsCatalog).Any(a => a.Recommendation != "safe")) throw new Exception("app no segura en la lista rápida");
+        if (vm.Quick.Clean.Items.Count < 10 || vm.Quick.Clean.Items.Any(i => i.Junk!.Id == "windows-old" && i.IsChecked))
+            throw new Exception("limpieza");
+        if (vm.Quick.Delay.Items.Count < 6) throw new Exception($"input delay: {vm.Quick.Delay.Items.Count}");
+        dialogs.Answers.Enqueue(0);
+        vm.Quick.Delay.Command.Execute(null);
+        for (int i = 0; i < 400 && !vm.Quick.Delay.IsDone; i++) Thread.Sleep(50);
+        if (!vm.Quick.Delay.IsDone) throw new Exception("no quedó aplicado: " + vm.Quick.Delay.Status + " | " + string.Join(" || ", dialogs.Shown));
+        if (!vm.Services.RestorePointCreated) throw new Exception("sin punto de restauración");
+    }
+
     public static void NavigationAndFilters()
     {
         var (vm, _, _) = Create();
-        if (vm.Nav.Count != 10) throw new Exception("páginas");
+        if (vm.Nav.Count != 11 || vm.Nav[0].Key != "quick") throw new Exception("páginas");
         vm.Navigate("about");
         if (vm.CurrentPage is not AboutViewModel) throw new Exception("navegación");
         var t = vm.Tweaks;

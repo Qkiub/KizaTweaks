@@ -1380,6 +1380,106 @@
    "recommendation": "optional",
    "selectedByDefault": false,
    "method": "Appx"
+  },
+  {
+   "ids": [
+    "AppleInc.iTunes"
+   ],
+   "name": "iTunes",
+   "description": "Reproductor y tienda de Apple. Windows la instala o la sugiere solo.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AppleInc.AppleMusicWin"
+   ],
+   "name": "Apple Music",
+   "description": "App de música de Apple.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AppleInc.AppleTVWin"
+   ],
+   "name": "Apple TV",
+   "description": "App de video de Apple.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AppleInc.AppleDevices"
+   ],
+   "name": "Dispositivos Apple",
+   "description": "Para respaldar iPhone o iPad. Quítala si no tienes uno.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "AppleInc.iCloud"
+   ],
+   "name": "iCloud",
+   "description": "Nube de Apple.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "5319275A.WhatsAppDesktop"
+   ],
+   "name": "WhatsApp",
+   "description": "WhatsApp de escritorio (versión de la Store).",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "FACEBOOK.317180B0BB486"
+   ],
+   "name": "Messenger",
+   "description": "Messenger de Facebook.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Copilot"
+   ],
+   "name": "Copilot (app)",
+   "description": "App de Copilot que Windows instala sola.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "Microsoft.Edge.GameAssist"
+   ],
+   "name": "Game Assist de Edge",
+   "description": "Navegador superpuesto en juegos.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
+  },
+  {
+   "ids": [
+    "ROBLOXCORPORATION.ROBLOX"
+   ],
+   "name": "Roblox",
+   "description": "Juego que a veces viene fijado en Inicio.",
+   "recommendation": "safe",
+   "selectedByDefault": false,
+   "method": "Appx"
   }
  ]
 }

@@ -225,7 +225,7 @@ public sealed class TweaksViewModel : ObservableObject
     }
 
     /// <summary>Flujo completo: advertencias, punto de restauración, aplicar, reiniciar Explorador.</summary>
-    public async Task ApplyAsync(IReadOnlyList<TweakDefinition> targets)
+    public async Task ApplyAsync(IReadOnlyList<TweakDefinition> targets, bool askConfirm = true)
     {
         targets = ProfileResolver.ApplyOrder(targets);
         var risky = targets.Where(t => t.Risk != "safe" || t.IsExperimental).ToList();
@@ -241,7 +241,7 @@ public sealed class TweaksViewModel : ObservableObject
 
         if (!_s.RestorePointCreated)
             sb.Append("\n\nAntes se creará un punto de restauración de Windows, para que puedas volver atrás aunque algo falle (tarda menos de un minuto).");
-        if (await _dialogs.ChooseAsync("Aplicar ajustes", sb.ToString(), "Aplicar", "Cancelar") != 0) return;
+        if (askConfirm && await _dialogs.ChooseAsync("Aplicar ajustes", sb.ToString(), "Aplicar", "Cancelar") != 0) return;
 
         // Punto de restauración obligatorio (una vez por sesión). Si falla, se pregunta antes de seguir.
         if (!_s.RestorePointCreated)

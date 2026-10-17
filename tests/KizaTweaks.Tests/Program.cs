@@ -37,7 +37,9 @@ var tests = new List<(string name, Action body)>
     ("Interfaz: navegación, filtros y búsqueda", ViewModelTests.NavigationAndFilters),
     ("Modo FPS: activar nivel, progreso e interruptor", ViewModelTests.FpsModeFlow),
     ("Modo FPS: configurar y quitar un juego", ViewModelTests.GameConfigFlow),
+    ("Rápido: solo ajustes seguros y aplica con punto de restauración", ViewModelTests.QuickFlow),
     ("Cierres: lectura del registro de eventos y explicación del módulo", CrashLogParse),
+    ("Limpieza: solo borra lo previsto y mide bien", JunkScannerSafe),
 };
 
 int failed = 0;
@@ -449,6 +451,40 @@ static void ProfileApplyOrder()
     var c = CatalogLoader.LoadTweaks();
     var order = ProfileResolver.ApplyOrder(new[] { c.Find("kiza.usbSuspend")!, c.Find("kiza.gameMode")!, c.Find("kiza.powerUltimate")! });
     Assert(order[0].Id == "kiza.powerUltimate" && order[2].Id == "kiza.usbSuspend", string.Join(",", order.Select(t => t.Id)));
+}
+
+static void JunkScannerSafe()
+{
+    // Solo se permiten borrar enteras C:\NVIDIA y C:\AMD (restos de drivers), nada más.
+    foreach (var bad in new[] { "/", "/home", "/tmp/NVIDIA", "/usr", Path.GetTempPath(), "/NVIDIA/sub" })
+        if (JunkScanner.IsAllowedTree(bad)) throw new Exception("permitió " + bad);
+    if (!JunkScanner.IsAllowedTree("/NVIDIA") || !JunkScanner.IsAllowedTree("/AMD")) throw new Exception("restos de drivers");
+
+    var cats = JunkScanner.Categories();
+    if (cats.Select(c => c.Id).Distinct().Count() != cats.Count) throw new Exception("ids repetidos");
+    if (cats.First(c => c.Id == "windows-old").DefaultChecked) throw new Exception("Windows.old no debe ir marcado");
+    if (cats.Any(c => c.Id is "recycle" or "shader")) throw new Exception("papelera o shaders no van en la limpieza rápida");
+
+    var root = Path.Combine(Path.GetTempPath(), "kiza-junk-" + Guid.NewGuid().ToString("N"));
+    var keep = Path.Combine(root, "keep");
+    var junk = Path.Combine(root, "junk");
+    Directory.CreateDirectory(keep);
+    Directory.CreateDirectory(Path.Combine(junk, "sub"));
+    File.WriteAllBytes(Path.Combine(keep, "mio.txt"), new byte[100]);
+    File.WriteAllBytes(Path.Combine(junk, "a.tmp"), new byte[1000]);
+    File.WriteAllBytes(Path.Combine(junk, "sub", "b.tmp"), new byte[500]);
+    File.WriteAllBytes(Path.Combine(root, "suelto.dmp"), new byte[50]);
+    try
+    {
+        var c = new JunkCategory { Id = "t", Name = "t", Description = "t", Dirs = new[] { junk }, Files = new[] { Path.Combine(root, "suelto.dmp") },
+                                   Trees = new[] { keep } }; // keep no está en la lista fija: no se borra
+        if (JunkScanner.Measure(c) != 1650) throw new Exception("medida " + JunkScanner.Measure(c));
+        var freed = JunkScanner.CleanFiles(c, _ => { });
+        if (freed != 1550) throw new Exception("liberado " + freed);
+        if (!File.Exists(Path.Combine(keep, "mio.txt"))) throw new Exception("borró una carpeta fuera de la lista");
+        if (!Directory.Exists(junk) || Directory.EnumerateFileSystemEntries(junk).Any()) throw new Exception("no vació la carpeta");
+    }
+    finally { Directory.Delete(root, true); }
 }
 
 static void CrashLogParse()
