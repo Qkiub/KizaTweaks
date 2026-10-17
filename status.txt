@@ -1,0 +1,7 @@
+commit=93f4f7dc84f074f24b4d6d4637dc4042d477d06b
+build=success
+unit=success
+integration=success
+smoke=success
+release=success
+version=1.0.24

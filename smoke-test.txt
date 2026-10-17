@@ -1,0 +1,15 @@
+OK página: Rápido
+OK página: Inicio
+OK página: Modo FPS
+OK página: Optimizar
+OK página: Apps
+OK página: Procesos
+OK página: Arranque
+OK página: Mantenimiento
+OK página: Benchmark
+OK página: Respaldos
+OK página: Acerca de
+Tweaks cargados: 74, aplicados: 3
+Recomendaciones: 3, puntaje 82
+CPU: AMD EPYC 9V74 80-Core Processor | GPU: Microsoft Hyper-V Video | RAM: 16 GB ?
+RESULTADO: OK
