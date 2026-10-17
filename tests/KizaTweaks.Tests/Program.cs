@@ -466,4 +466,5 @@ static void CrashLogParse()
     Assert(list[0].Hint.Contains("NVIDIA"), list[0].Hint);
     Assert(list[1].App == "chrome.exe" && list[1].Module == "ntdll.dll", list[1].ToString());
     Assert(CrashLog.Parse("basura <<").Count == 0, "XML dañado");
+    Assert(CrashLog.Explain("Photoshop.exe", "Photoshop.exe", "c00000fd").Contains("licencia"), "explicación de Photoshop");
 }

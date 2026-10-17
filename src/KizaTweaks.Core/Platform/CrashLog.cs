@@ -6,7 +6,7 @@ namespace KizaTweaks.Core.Platform;
 /// <summary>Un cierre inesperado registrado por Windows (Visor de eventos, Aplicación, id 1000).</summary>
 public sealed record CrashEntry(DateTime Time, string App, string Module, string ExceptionCode)
 {
-    public string Hint => CrashLog.Explain(Module);
+    public string Hint => CrashLog.Explain(Module, App, ExceptionCode);
 }
 
 /// <summary>Lee del registro de eventos por qué se cerraron los programas.</summary>
@@ -18,7 +18,7 @@ public static class CrashLog
         try
         {
             var r = ProcessRunner.Run(ProcessRunner.System32("wevtutil.exe"),
-                $"qe Application \"/q:*[System[(EventID=1000)]]\" /c:{max} /rd:true /f:xml", 30_000);
+                $"qe Application \"/q:*[System[Provider[@Name='Application Error'] and (EventID=1000)]]\" /c:{max} /rd:true /f:xml", 30_000);
             return r.ExitCode == 0 ? Parse(r.Output) : new();
         }
         catch (Exception ex)
@@ -56,9 +56,25 @@ public static class CrashLog
     }
 
     /// <summary>Explica en palabras simples qué suele significar el módulo que falló.</summary>
-    public static string Explain(string module)
+    public static string Explain(string module, string app = "", string code = "")
     {
         var m = module.ToLowerInvariant();
+        var c = code.ToLowerInvariant().Replace("0x", "");
+        if (app.Length > 0 && m == app.ToLowerInvariant())
+        {
+            var what = c switch
+            {
+                "c00000fd" => "desbordamiento de pila (stack overflow)",
+                "c0000005" => "acceso a memoria inválido",
+                "c0000409" => "error de seguridad interno",
+                "c000001d" => "instrucción no válida",
+                _ => "error interno",
+            };
+            var adobe = app.Equals("Photoshop.exe", StringComparison.OrdinalIgnoreCase) && c == "c00000fd"
+                ? " Es un fallo conocido de Photoshop 2026 ligado a la verificación de licencia de Adobe, no de Windows."
+                : "";
+            return $"Falla dentro del propio programa ({what}).{adobe} Actualízalo o reinstálalo.";
+        }
         bool Any(params string[] parts) => parts.Any(m.StartsWith);
         if (Any("nvoglv", "nvwgf2um", "nvd3dum", "nvcuda", "nvldumd", "nvgpucomp"))
             return "Driver de NVIDIA. Actualízalo (instalación limpia). Si empezó al optimizar, deja apagada la programación de GPU (HAGS).";
