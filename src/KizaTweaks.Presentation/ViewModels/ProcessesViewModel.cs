@@ -62,7 +62,6 @@ public sealed class ProcessesViewModel : ObservableObject
     public AsyncCommand RefreshCommand { get; }
     public AsyncCommand KillCommand { get; }
     public AsyncCommand SetPriorityCommand { get; }
-    public AsyncCommand PermanentHighCommand { get; }
     public AsyncCommand CloseCandidatesCommand { get; }
     public RelayCommand RefreshCandidatesCommand { get; }
 
@@ -76,7 +75,6 @@ public sealed class ProcessesViewModel : ObservableObject
         RefreshCommand = new AsyncCommand(RefreshAsync);
         KillCommand = new AsyncCommand(KillAsync, () => Selected is { IsProtected: false });
         SetPriorityCommand = new AsyncCommand(p => SetPriorityAsync(p as string));
-        PermanentHighCommand = new AsyncCommand(PermanentHighAsync);
         CloseCandidatesCommand = new AsyncCommand(CloseCandidatesAsync);
         RefreshCandidatesCommand = new RelayCommand(RefreshCandidates);
     }
@@ -147,28 +145,6 @@ public sealed class ProcessesViewModel : ObservableObject
         var (ok, msg) = await Task.Run(() => _s.Processes.SetPriority(p.Pid, prio));
         _shell.Toast(msg + (ok ? " (hasta que se cierre)" : ""), !ok);
         await RefreshAsync();
-    }
-
-    private async Task PermanentHighAsync()
-    {
-        if (Selected is not { } p) return;
-        if (p.IsProtected)
-        {
-            _shell.Toast("No se cambia la prioridad de procesos del sistema.", true);
-            return;
-        }
-        if (!await _dialogs.ConfirmAsync("Prioridad alta permanente",
-                $"Windows abrirá {p.Name}.exe siempre con prioridad Alta.\n\n" +
-                "Útil para el juego, no para launchers ni navegadores. Puede ayudar en CPUs con pocos núcleos; " +
-                "en equipos potentes la diferencia suele ser mínima. Se quita desde esta misma página.",
-                "Aplicar")) return;
-        try
-        {
-            await Task.Run(() => ProcessService.SetPriorityRule(_s.Backend, p.Name, 3));
-            _shell.Toast($"{p.Name}.exe se abrirá con prioridad Alta.");
-        }
-        catch (Exception ex) { _shell.Toast(ex.Message, true); }
-        RefreshRules();
     }
 
     private async Task RemoveRuleAsync(PriorityRule r)

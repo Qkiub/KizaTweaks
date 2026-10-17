@@ -89,8 +89,7 @@
                     <Button Content="Normal" Command="{Binding SetPriorityCommand}" CommandParameter="Normal" Margin="0,0,8,6" />
                     <Button Content="Baja" Command="{Binding SetPriorityCommand}" CommandParameter="BelowNormal" Margin="0,0,8,6"
                             ToolTip="Útil para programas de fondo pesados mientras juegas." />
-                    <Button Content="Alta permanente (juego)" Command="{Binding PermanentHighCommand}" Margin="0,0,8,6"
-                            ToolTip="Windows abrirá este .exe siempre con prioridad Alta." />
+
                 </WrapPanel>
             </Grid>
         </Border>

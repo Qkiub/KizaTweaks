@@ -22,7 +22,8 @@ var tests = new List<(string name, Action body)>
     ("DirectX: los ajustes conviven sin pisarse", DxSettingsIndependent),
     ("Energía: deshacer vuelve al plan anterior", PowerSchemeRestores),
     ("Energía: ajuste del plan activo se aplica y se restaura exacto", PowerSettingRestores),
-    ("Perfiles: Máximo rendimiento y Competitivo se adaptan a portátil y Ryzen X3D", ProfilesAdaptToHardware),
+    ("Perfiles: Máximo rendimiento es seguro, acumulativo y se adapta a portátil", ProfilesAdaptToHardware),
+    ("Limpieza: deshace solo los ajustes retirados que aplicó KizaTweaks y quita prioridades", SafetyCleanupRevertsRetired),
     ("Perfiles: el plan de energía se aplica antes que sus ajustes", ProfileApplyOrder),
     ("FPS: promedio, 1 % low y 0,1 % low", FrameStatsMath),
     ("FPS: lectura de CSV de PresentMon", PresentMonCsv),
@@ -36,9 +37,7 @@ var tests = new List<(string name, Action body)>
     ("Interfaz: navegación, filtros y búsqueda", ViewModelTests.NavigationAndFilters),
     ("Modo FPS: activar nivel, progreso e interruptor", ViewModelTests.FpsModeFlow),
     ("Modo FPS: configurar y quitar un juego", ViewModelTests.GameConfigFlow),
-    ("Apps de trabajo: proteger y desproteger sin pisar otras preferencias", CreativeAppsProtect),
     ("Cierres: lectura del registro de eventos y explicación del módulo", CrashLogParse),
-    ("Modo FPS: proteger una app de trabajo desde la interfaz", ViewModelTests.WorkAppFlow),
 };
 
 int failed = 0;
@@ -285,7 +284,7 @@ static void RecommendationsRealCase()
     Assert(recs.Any(x => x.Title.Contains("144 Hz")), "no detectó el monitor");
     Assert(recs.Any(x => x.Title.Contains("3200")), "no detectó XMP");
     Assert(recs.Any(x => x.Title.Contains("disco más lento")), "no detectó Windows en el disco lento");
-    Assert(recs.Any(x => x.TweakId == "kiza.hags"), "no recomendó HAGS");
+    Assert(!recs.Any(x => x.TweakId is { } id && CatalogLoader.LoadTweaks().Find(id)!.Retired), "recomendó un ajuste retirado");
     Assert(recs.Any(x => x.TweakId == "kiza.hibernate"), "no recomendó quitar hibernación con C: de 120 GB");
     Assert(recs[0].Severity == RecSeverity.High, "orden por severidad");
     var score = RecommendationEngine.Score(recs);
@@ -402,19 +401,42 @@ static void ProfilesAdaptToHardware()
     var c = CatalogLoader.LoadTweaks();
     var desktop = new HardwareReport { IsLaptop = false, Cpu = new CpuInfo { Name = "Intel Core i5-12400F", Cores = 6 } };
     var laptop = new HardwareReport { IsLaptop = true, Cpu = new CpuInfo { Name = "AMD Ryzen 7 6800H", Cores = 8 } };
-    var x3d = new HardwareReport { IsLaptop = false, Cpu = new CpuInfo { Name = "AMD Ryzen 9 7950X3D 16-Core Processor", Cores = 16 } };
     var gamer = ProfileResolver.Resolve(Profiles.Gamer, c, null).Ids;
     var perf = ProfileResolver.Resolve(Profiles.Performance, c, desktop).Ids;
-    var pro = ProfileResolver.Resolve(Profiles.Competitive, c, desktop).Ids;
-    Assert(gamer.IsSubsetOf(perf) && perf.IsSubsetOf(pro), "los perfiles deben ser acumulativos");
-    Assert(perf.Contains("kiza.powerUltimate") && perf.Contains("kiza.usbSuspend"), "máximo rendimiento incompleto");
-    Assert(!perf.Contains("kiza.coreParking") && pro.Contains("kiza.coreParking"), "coreParking solo en competitivo");
-    Assert(!perf.Contains("q.DisableLocationServices") && !pro.Contains("q.DisableNotifications"), "no debe quitar funciones básicas");
-    Assert(!pro.Any(id => c.Find(id)!.Risk == "risky" || c.Find(id)!.Category == "security"), "ningún perfil toca la seguridad");
-    var lap = ProfileResolver.Resolve(Profiles.Competitive, c, laptop);
-    Assert(!lap.Ids.Contains("kiza.powerUltimate") && !lap.Ids.Contains("kiza.timerResolution") && lap.AdjustedForHardware.Count == 1, "portátil");
-    var amd = ProfileResolver.Resolve(Profiles.Competitive, c, x3d);
-    Assert(!amd.Ids.Contains("kiza.coreParking") && amd.AdjustedForHardware.Count == 1, "X3D");
+    Assert(gamer.IsSubsetOf(perf), "Máximo rendimiento debe incluir Gamer");
+    Assert(perf.Contains("kiza.powerUltimate") && perf.Contains("kiza.usbSuspend") && perf.Contains("kiza.pcieLspm"), "máximo rendimiento incompleto");
+    foreach (var id in new[] { Profiles.Gamer, Profiles.Performance, Profiles.Privacy, ProfileResolver.Safe })
+    {
+        var sel = ProfileResolver.Resolve(id, c, desktop).Ids;
+        Assert(!sel.Any(x => c.Find(x)!.Retired), $"{id} incluye ajustes retirados");
+        Assert(!sel.Any(x => c.Find(x)!.Risk == "risky" || c.Find(x)!.Category is "security" or "experimental"), $"{id} incluye ajustes con riesgo");
+    }
+    foreach (var id in new[] { "kiza.hags", "kiza.windowedOpt", "kiza.vrr", "kiza.win32Priority", "kiza.timerResolution", "kiza.coreParking", "kiza.mmcssGames" })
+        Assert(c.Find(id)!.Retired, $"{id} debería estar retirado");
+    Assert(!perf.Contains("q.DisableLocationServices") && !perf.Contains("q.DisableNotifications"), "no debe quitar funciones básicas");
+    var lap = ProfileResolver.Resolve(Profiles.Performance, c, laptop);
+    Assert(!lap.Ids.Contains("kiza.powerUltimate") && lap.AdjustedForHardware.Count == 1, "portátil");
+}
+
+static void SafetyCleanupRevertsRetired()
+{
+    var b = new InMemoryBackend();
+    var e = NewEngine(b);
+    var c = CatalogLoader.LoadTweaks();
+    const string prio = @"SYSTEM\CurrentControlSet\Control\PriorityControl";
+    b.SetValue("HKLM", prio, "Win32PrioritySeparation", RegValue.Dword(2));
+    Assert(e.Apply(c.Find("kiza.win32Priority")!).Success, "aplicar retirado");
+    Assert(e.Apply(c.Find("kiza.gameMode")!).Success, "aplicar seguro");
+    // HAGS activado por el usuario (sin respaldo de KizaTweaks): no se toca
+    b.SetValue("HKLM", @"SYSTEM\CurrentControlSet\Control\GraphicsDrivers", "HwSchMode", RegValue.Dword(2));
+    ProcessService.SetPriorityRule(b, "FiveM_GTAProcess.exe", 3);
+    var r = SafetyCleanup.Run(e, c, b, removePriorityRules: true);
+    Assert(r.Reverted.Count == 1, $"deshechos: {string.Join(",", r.Reverted)}");
+    Assert(b.GetValue("HKLM", prio, "Win32PrioritySeparation")!.Number == 2, "no volvió al valor original");
+    Assert(e.GetState(c.Find("kiza.gameMode")!) == TweakState.Applied, "no debe tocar ajustes seguros");
+    Assert(b.GetValue("HKLM", @"SYSTEM\CurrentControlSet\Control\GraphicsDrivers", "HwSchMode")!.Number == 2, "no debe tocar lo que el usuario activó");
+    Assert(r.PriorityRulesRemoved.SequenceEqual(new[] { "FiveM_GTAProcess.exe" }) && ProcessService.GetPriorityRules(b).Count == 0, "prioridad");
+    Assert(!SafetyCleanup.Run(e, c, b, true).AnythingDone, "la segunda vez no hay nada que hacer");
 }
 
 static void ProfileApplyOrder()
@@ -422,27 +444,6 @@ static void ProfileApplyOrder()
     var c = CatalogLoader.LoadTweaks();
     var order = ProfileResolver.ApplyOrder(new[] { c.Find("kiza.usbSuspend")!, c.Find("kiza.gameMode")!, c.Find("kiza.powerUltimate")! });
     Assert(order[0].Id == "kiza.powerUltimate" && order[2].Id == "kiza.usbSuspend", string.Join(",", order.Select(t => t.Id)));
-}
-
-static void CreativeAppsProtect()
-{
-    const string ps = @"C:\Program Files\Adobe\Adobe Photoshop 2025\Photoshop.exe";
-    var b = new InMemoryBackend();
-    b.SetValue("HKCU", DxSettings.Path, ps, RegValue.Str("GpuPreference=1;"));
-    Assert(!CreativeApps.IsProtected(b, ps), "no debería estar protegida");
-    CreativeApps.Protect(b, ps);
-    Assert(CreativeApps.IsProtected(b, ps), "no quedó protegida");
-    var raw = b.GetValue("HKCU", DxSettings.Path, ps)!.Text!;
-    Assert(raw.Contains("GpuPreference=1") && raw.Contains("SwapEffectUpgradeEnable=0") && raw.Contains("VRROptimizeEnable=0"), raw);
-    Assert(GameService.List(b).Count == 0, "una app protegida no es un juego");
-    var list = CreativeApps.List(b, Array.Empty<string>());
-    Assert(list.Count == 1 && list[0].Protected && list[0].Name == "Adobe Photoshop 2025", string.Join(",", list));
-    CreativeApps.Unprotect(b, ps);
-    Assert(b.GetValue("HKCU", DxSettings.Path, ps)!.Text == "GpuPreference=1;", "debe conservar la preferencia de GPU");
-    var other = @"D:\Apps\Krita\krita.exe";
-    CreativeApps.Protect(b, other);
-    CreativeApps.Unprotect(b, other);
-    Assert(b.GetValue("HKCU", DxSettings.Path, other) is null, "si no quedan preferencias, se borra el valor");
 }
 
 static void CrashLogParse()

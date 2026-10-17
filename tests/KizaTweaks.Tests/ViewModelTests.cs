@@ -110,11 +110,11 @@ public static class ViewModelTests
         var (vm, dialogs, b) = Create();
         vm.Services.LastHardware = new HardwareReport { IsLaptop = false, Cpu = new CpuInfo { Name = "AMD Ryzen 5 7600", Cores = 6, Threads = 12 } };
         vm.Fps.LoadAsync().GetAwaiter().GetResult();
-        if (vm.Fps.Groups.Count < 3) throw new Exception($"grupos FPS: {vm.Fps.Groups.Count}");
+        if (vm.Fps.Groups.Count < 2) throw new Exception($"grupos FPS: {vm.Fps.Groups.Count}");
         if (vm.Fps.Groups.SelectMany(g => g.Items).Any(i => i.Item.Def.Impact is not ("fps" or "latency" or "stability" or "appearance")))
             throw new Exception("el Modo FPS debe mostrar solo ajustes de rendimiento");
         var perf = vm.Fps.Levels.First(l => l.Id == Profiles.Performance);
-        if (perf.Total < 15 || perf.Pending == 0) throw new Exception($"nivel máximo rendimiento: {perf.Pending}/{perf.Total}");
+        if (perf.Total < 12 || perf.Pending == 0) throw new Exception($"nivel máximo rendimiento: {perf.Pending}/{perf.Total}");
 
         dialogs.Answers.Enqueue(1); // «Aplicar sin punto»
         perf.ActivateCommand.Execute(null);
@@ -141,27 +141,12 @@ public static class ViewModelTests
         vm.Fps.AddGameCommand.Execute(null);
         for (int i = 0; i < 400 && vm.Fps.Games.Count == 0; i++) Thread.Sleep(50);
         var g = vm.Fps.Games.SingleOrDefault() ?? throw new Exception("el juego no aparece");
-        if (!g.Game.HighPriority || !g.Game.DedicatedGpu) throw new Exception("configuración incompleta: " + g.Detail);
+        if (g.Game.HighPriority || !g.Game.DedicatedGpu) throw new Exception("solo debe forzar la GPU, no la prioridad: " + g.Detail);
         g.RemoveCommand.Execute(null);
         for (int i = 0; i < 400 && vm.Fps.Games.Count > 0; i++) Thread.Sleep(50);
         if (vm.Fps.Games.Count != 0) throw new Exception("no se quitó el juego");
         if (b.KeyExists("HKLM", @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\VALORANT-Win64-Shipping.exe"))
             throw new Exception("quedó la clave IFEO");
-    }
-
-    public static void WorkAppFlow()
-    {
-        var (vm, dialogs, b) = Create();
-        vm.Services.LastHardware = new HardwareReport();
-        vm.Fps.LoadAsync().GetAwaiter().GetResult();
-        dialogs.Files.Enqueue(@"C:\Program Files\Adobe\Adobe Photoshop 2025\Photoshop.exe");
-        vm.Fps.AddWorkAppCommand.Execute(null);
-        for (int i = 0; i < 400 && vm.Fps.WorkApps.Count == 0; i++) Thread.Sleep(50);
-        var app = vm.Fps.WorkApps.SingleOrDefault() ?? throw new Exception("la app no aparece");
-        if (!app.IsProtected) throw new Exception("no quedó protegida");
-        app.ToggleCommand.Execute(null);
-        for (int i = 0; i < 400 && vm.Fps.WorkApps.Count > 0; i++) Thread.Sleep(50);
-        if (vm.Fps.WorkApps.Any(a => a.IsProtected)) throw new Exception("no se quitó la protección");
     }
 
     public static void NavigationAndFilters()

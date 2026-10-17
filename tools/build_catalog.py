@@ -417,16 +417,15 @@ def w11d_tweaks(w11d):
     return out
 
 
-# Máximo rendimiento: lo del perfil Gamer + esto (sin tocar funciones básicas).
-# La app quita lo que no conviene según el hardware (portátil, Ryzen X3D).
-PROFILE_PERF = {
-    "kiza.powerUltimate", "kiza.usbSuspend", "kiza.pcieLspm", "kiza.mmcssGames",
-    "kiza.powerThrottling", "kiza.startupDelay",
-}
-# Competitivo: Máximo rendimiento + experimentales y menos efectos visuales.
-PROFILE_PRO = PROFILE_PERF | {
-    "kiza.coreParking", "kiza.win32Priority", "kiza.timerResolution", "kiza.networkThrottling",
-    "kiza.bgApps", "q.DisableTransparency", "q.DisableAnimations",
+# Máximo rendimiento: lo del perfil Gamer + esto. Solo ajustes sin riesgo de conflicto con apps o juegos.
+PROFILE_PERF = {"kiza.powerUltimate", "kiza.usbSuspend", "kiza.pcieLspm", "kiza.startupDelay"}
+
+# Retirados: pueden hacer fallar apps o juegos en algunos equipos (Photoshop, FiveM/GTA, anticheats, audio).
+# Siguen en el catálogo solo para poder deshacerlos en quien ya los aplicó; la app no los muestra.
+RETIRED = {
+    "kiza.hags", "kiza.windowedOpt", "kiza.vrr", "kiza.mmcssGames", "kiza.networkThrottling",
+    "kiza.powerThrottling", "kiza.disableMpo", "kiza.fseGlobal", "kiza.coreParking", "kiza.win32Priority",
+    "kiza.timerResolution", "kiza.vmp", "kiza.memoryIntegrity", "kiza.bgApps", "q.DisableGameBarIntegration",
 }
 
 # --------------------------------------------------------------------------
@@ -842,11 +841,16 @@ def main():
         commit = "desconocido"
     tweaks = w11d_tweaks(w11d) + KIZA
     for t in tweaks:
-        for tag, ids_ in (("perf", PROFILE_PERF), ("pro", PROFILE_PRO)):
-            if t["id"] in ids_ and tag not in t["profiles"]:
-                t["profiles"].append(tag)
-    missing = (PROFILE_PERF | PROFILE_PRO) - {t["id"] for t in tweaks}
-    assert not missing, f"ids de perfil inexistentes: {missing}"
+        if t["id"] in PROFILE_PERF and "perf" not in t["profiles"]:
+            t["profiles"].append("perf")
+        if t["id"] in RETIRED:
+            t["retired"] = True
+            t["profiles"] = []
+        if t["id"] == "kiza.startupDelay":
+            t["category"] = "system"
+    missing = (PROFILE_PERF | RETIRED) - {t["id"] for t in tweaks}
+    assert not missing, f"ids inexistentes: {missing}"
+    assert not (PROFILE_PERF & RETIRED)
     ids = [t["id"] for t in tweaks]
     assert len(ids) == len(set(ids)), "ids duplicados"
     for t in tweaks:

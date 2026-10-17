@@ -144,12 +144,7 @@ public static class RecommendationEngine
             if (state(id) != TweakState.Applied)
                 list.Add(new Recommendation { Severity = sev, Title = title, Detail = detail, TweakId = id });
         }
-        if (r.HagsEnabled != true)
-            Tweak("kiza.hags", RecSeverity.Medium, "Activa la programación de GPU acelerada por hardware",
-                "Frames más estables y requisito para DLSS Frame Generation.");
-        if (r.WindowedOptimizations != true)
-            Tweak("kiza.windowedOpt", RecSeverity.Medium, "Activa las optimizaciones para juegos en ventana",
-                "Menos latencia en juegos en ventana o sin bordes, y habilita VRR.");
+        // HAGS y las optimizaciones de DirectX no se recomiendan: pueden hacer fallar apps y juegos (p. ej. Photoshop, FiveM).
         if (r.GameMode == false)
             Tweak("kiza.gameMode", RecSeverity.Medium, "Activa el Modo de juego", "Prioriza el juego y pausa actualizaciones mientras juegas.");
         Tweak("q.DisableDVR", RecSeverity.Medium, "Desactiva la grabación en segundo plano de Xbox",
@@ -161,17 +156,6 @@ public static class RecommendationEngine
             Tweak("kiza.hibernate", RecSeverity.Info, "Desactiva la hibernación para liberar espacio",
                 $"Libera unos {r.RamTotalBytes / (double)GB:0} GB en {v2.Letter}. No afecta el rendimiento.");
 
-        if (r.HvciRunning == true)
-        {
-            list.Add(new Recommendation
-            {
-                Severity = RecSeverity.Info,
-                Title = "Integridad de memoria (HVCI) está activa",
-                Detail = "Protege contra drivers maliciosos y puede costar algo de rendimiento en ciertos equipos. Solo apágala si el benchmark muestra una mejora clara.",
-                TweakId = "kiza.memoryIntegrity",
-            });
-        }
-
         if (r.IsLaptop && r.PowerSchemeGuid is { } g &&
             (g.Equals(Platform.WindowsBackend.KizaUltimateGuid, StringComparison.OrdinalIgnoreCase)))
         {
@@ -179,8 +163,7 @@ public static class RecommendationEngine
             {
                 Severity = RecSeverity.Info,
                 Title = "Plan 'Máximo rendimiento' en un portátil",
-                Detail = "Gasta más batería y calienta más. Úsalo solo conectado a la corriente.",
-                TweakId = "kiza.powerUltimate",
+                Detail = "Gasta más batería y calienta más. Úsalo solo conectado a la corriente, o deshazlo en Respaldos.",
             });
         }
 

@@ -30,6 +30,8 @@ public sealed class AppServices
     public int Build { get; init; }
     public bool IsAdmin { get; init; }
     public bool RestorePointCreated { get; set; }
+    /// <summary>Carpeta de estado (marcas de migración). Null en pruebas.</summary>
+    public string? StateDir { get; init; }
 
     /// <summary>Última detección de hardware (la usan los perfiles y el Modo FPS).</summary>
     public HardwareReport? LastHardware { get; set; }
@@ -62,6 +64,7 @@ public sealed class AppServices
             Maintenance = new MaintenanceService(),
             Build = SystemActions.OsBuild(),
             IsAdmin = SystemActions.IsAdministrator(),
+            StateDir = AppPaths.StateDir,
         };
         Log.Info($"KizaTweaks iniciado. {SystemActions.OsDisplayVersion()} | admin={s.IsAdmin} | tweaks={s.Catalog.Tweaks.Count}");
         return s;

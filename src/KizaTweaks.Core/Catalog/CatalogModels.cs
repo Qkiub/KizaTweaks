@@ -81,6 +81,8 @@ public sealed class TweakDefinition
     [JsonPropertyName("minBuild")] public int? MinBuild { get; set; }
     [JsonPropertyName("maxBuild")] public int? MaxBuild { get; set; }
     [JsonPropertyName("profiles")] public List<string> Profiles { get; set; } = new();
+    /// <summary>Retirado: no se muestra ni se aplica; solo se conserva para deshacerlo donde ya estaba aplicado.</summary>
+    [JsonPropertyName("retired")] public bool Retired { get; set; }
     [JsonPropertyName("source")] public string? Source { get; set; }
     [JsonPropertyName("apply")] public List<TweakOp> Apply { get; set; } = new();
     [JsonPropertyName("undo")] public List<TweakOp> Undo { get; set; } = new();
@@ -135,5 +137,4 @@ public static class Profiles
     public const string Gamer = "gamer";
     public const string Privacy = "privacy";
     public const string Performance = "perf";
-    public const string Competitive = "pro";
 }

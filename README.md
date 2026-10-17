@@ -11,8 +11,8 @@ aplica ajustes con un clic y **todo se puede deshacer**.
 | Página | Función |
 |---|---|
 | **Inicio** | Detecta CPU, GPU (VRAM real), RAM (velocidad actual vs. soportada → XMP/EXPO), monitor (Hz actual vs. máximo), discos (NVMe/SATA/HDD, salud, temperatura, desgaste), VBS/HVCI, HAGS, plan de energía. Genera recomendaciones ordenadas por impacto y un puntaje de configuración. |
-| **Modo FPS** | Solo lo que sube FPS o baja la latencia, con un medidor de progreso. Dos niveles de un clic: **Máximo rendimiento** (sin quitar nada básico) y **Competitivo** (suma ajustes experimentales). Interruptor por ajuste, revisión del PC (Hz del monitor, XMP/EXPO, driver de GPU, VBS, plan de energía), **Sesión de juego** y **Configurar mi juego** (prioridad alta + GPU de alto rendimiento cada vez que se abre). Los niveles se adaptan al equipo: en portátil no fuerza el consumo máximo y en Ryzen X3D de dos chiplets no toca el estacionamiento de núcleos. |
-| **Optimizar** | 87 ajustes en 12 categorías (juegos, privacidad, IA, sistema, barra de tareas, Explorador, Windows Update, seguridad vs. rendimiento, experimental…). Cada uno muestra impacto, riesgo, si requiere reinicio y **exactamente qué cambia**. Perfiles: *Gamer recomendado*, *Máximo rendimiento*, *Competitivo*, *Gamer + privacidad máxima*, *Todo lo seguro*. |
+| **Modo FPS** | Solo ajustes que dan rendimiento sin cambiar cómo funcionan tus apps y juegos, con un medidor de progreso y el nivel **Máximo rendimiento** de un clic. Interruptor por ajuste, revisión del PC (Hz del monitor, XMP/EXPO, driver de GPU, VBS, plan de energía), **Sesión de juego**, **GPU de alto rendimiento por juego** y **cierres recientes** (qué programa se cerró y qué falló, desde el visor de eventos). En portátil no fuerza el consumo máximo. |
+| **Optimizar** | 72 ajustes (juegos, privacidad, IA, sistema, barra de tareas, Explorador, Windows Update, apariencia…). Cada uno muestra impacto, riesgo, si requiere reinicio y **exactamente qué cambia**. Perfiles: *Gamer recomendado*, *Máximo rendimiento*, *Gamer + privacidad máxima*, *Todo lo seguro*. |
 | **Apps** | Quita 138 apps preinstaladas (Microsoft, juegos patrocinados, OEM de HP/Dell/Lenovo, OneDrive, Copilot…) con recomendación *seguro / opcional / no recomendado*. |
 | **Procesos** | Lista con CPU y RAM reales, cerrar procesos (los críticos de Windows están protegidos), cambiar prioridad, **prioridad alta permanente** para un juego (IFEO PerfOptions) y **Sesión de juego**: cierra de un clic lo que corre de fondo. |
 | **Arranque** | Activa o desactiva programas que inician con Windows, igual que el Administrador de tareas (reversible). |
@@ -21,8 +21,10 @@ aplica ajustes con un clic y **todo se puede deshacer**.
 | **Respaldos** | Cada ajuste guarda el estado **anterior exacto** antes de cambiar nada. Deshacer uno o todo, crear punto de restauración, historial. |
 
 ### Lo que no hace (a propósito)
-Desactivar Defender o Windows Update, quitar Edge, borrar el archivo de paginación, BCDEdit/HPET, desactivar servicios en masa
-ni «limpiar RAM». Están explicados en la página *Acerca de*.
+Desactivar Defender o Windows Update, quitar Edge, borrar el archivo de paginación, BCDEdit/HPET, desactivar servicios en masa,
+«limpiar RAM», forzar prioridades de CPU o tiempos del sistema, ni cambios globales de DirectX o de la GPU (HAGS). Estos últimos
+estuvieron en versiones anteriores y se retiraron porque hacían fallar apps y juegos en algunos equipos (Photoshop, FiveM):
+siguen en el catálogo marcados como `retired` solo para deshacerlos automáticamente en quien ya los tenía. Están explicados en la página *Acerca de*.
 
 ## Descargar el .exe
 

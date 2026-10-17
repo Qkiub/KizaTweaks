@@ -105,7 +105,7 @@ public sealed class TweaksViewModel : ObservableObject
         _shell = shell;
         var catNames = s.Catalog.Categories.ToDictionary(c => c.Id, c => c.Name);
         var order = s.Catalog.Categories.Select(c => c.Id).ToList();
-        _all = s.Catalog.Tweaks
+        _all = s.Catalog.Tweaks.Where(t => !t.Retired)
             .OrderBy(t => order.IndexOf(t.Category)).ThenBy(t => t.Risk == "safe" ? 0 : t.Risk == "moderate" ? 1 : 2).ThenBy(t => t.Name)
             .Select(t => new TweakItemViewModel(t, catNames.GetValueOrDefault(t.Category, t.Category), t.IsCompatible(s.Build)))
             .ToList();
@@ -186,7 +186,7 @@ public sealed class TweaksViewModel : ObservableObject
     public async Task<ProfileSelection> SelectProfileAsync(string id, bool quiet = false)
     {
         HardwareReport? hw = null;
-        if (id is Profiles.Performance or Profiles.Competitive)
+        if (id == Profiles.Performance)
         {
             try { hw = await _s.GetHardwareAsync(); }
             catch (Exception ex) { Log.Warn("No se pudo detectar el hardware para el perfil: " + ex.Message); }

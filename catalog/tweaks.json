@@ -1641,7 +1641,8 @@
      "hive": "HKCR",
      "path": "ms-gamebarservices\\shell\\open\\command"
     }
-   ]
+   ],
+   "retired": true
   },
   {
    "id": "q.DisableStartRecommended",
@@ -3718,9 +3719,7 @@
    "restartExplorer": true,
    "minBuild": null,
    "maxBuild": null,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -3754,9 +3753,7 @@
    "restartExplorer": true,
    "minBuild": null,
    "maxBuild": null,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -4690,10 +4687,7 @@
    "description": "La GPU organiza su propia cola de trabajo en lugar del CPU. Frames más estables y requisito para DLSS Frame Generation.",
    "note": "Requiere GPU compatible (NVIDIA GTX 10 o superior, AMD RX 5000 o superior) y driver actualizado.",
    "requiresReboot": true,
-   "profiles": [
-    "gamer",
-    "privacy"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -4716,7 +4710,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.windowedOpt",
@@ -4727,10 +4722,7 @@
    "description": "Pasa los juegos DirectX 10/11 en ventana o sin bordes al modelo de presentación 'flip': menos latencia y habilita VRR (G-Sync/FreeSync).",
    "note": null,
    "requiresReboot": false,
-   "profiles": [
-    "gamer",
-    "privacy"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "dx.set",
@@ -4747,7 +4739,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.vrr",
@@ -4758,10 +4751,7 @@
    "description": "Permite VRR en juegos que no lo soportan de forma nativa, en monitores G-Sync/FreeSync.",
    "note": "Solo tiene efecto si tu monitor soporta VRR.",
    "requiresReboot": false,
-   "profiles": [
-    "gamer",
-    "privacy"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "dx.set",
@@ -4778,7 +4768,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.gameMode",
@@ -4865,8 +4856,7 @@
    "note": "No recomendado en portátiles: gasta batería y calienta más.",
    "requiresReboot": false,
    "profiles": [
-    "perf",
-    "pro"
+    "perf"
    ],
    "apply": [
     {
@@ -4966,9 +4956,7 @@
    "description": "Las apps de la Microsoft Store dejan de ejecutarse cuando no están abiertas.",
    "note": "Apps de Store como WhatsApp o Spotify (versión Store) dejarán de notificar cerradas.",
    "requiresReboot": false,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -4991,7 +4979,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.telemetryServices",
@@ -5139,8 +5128,7 @@
    "note": "Se aplica al plan de energía activo. En portátil, gasta un poco más de batería.",
    "requiresReboot": false,
    "profiles": [
-    "perf",
-    "pro"
+    "perf"
    ],
    "apply": [
     {
@@ -5172,8 +5160,7 @@
    "note": "Se aplica al plan de energía activo. Los planes Alto y Máximo rendimiento ya lo traen así.",
    "requiresReboot": false,
    "profiles": [
-    "perf",
-    "pro"
+    "perf"
    ],
    "apply": [
     {
@@ -5221,7 +5208,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.memoryIntegrity",
@@ -5255,7 +5243,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.mmcssGames",
@@ -5266,10 +5255,7 @@
    "description": "Sube la prioridad de CPU/GPU que el programador multimedia de Windows asigna a los juegos y reduce la reserva para tareas de fondo (SystemResponsiveness 10).",
    "note": "Muy popular en foros; efecto medido inconsistente. Usa el benchmark para confirmar.",
    "requiresReboot": true,
-   "profiles": [
-    "perf",
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -5356,7 +5342,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.networkThrottling",
@@ -5367,9 +5354,7 @@
    "description": "Desactiva el límite que Windows pone al tráfico de red mientras reproduce audio/video (NetworkThrottlingIndex).",
    "note": "Popular en foros para ping; no hay evidencia sólida de mejora en juegos online.",
    "requiresReboot": true,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -5392,7 +5377,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.powerThrottling",
@@ -5403,10 +5389,7 @@
    "description": "Windows deja de bajar la prioridad de energía a procesos en segundo plano (Power Throttling).",
    "note": "En portátiles reduce la batería. Efecto en FPS normalmente nulo si el juego está en primer plano.",
    "requiresReboot": true,
-   "profiles": [
-    "perf",
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -5427,7 +5410,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.coreParking",
@@ -5438,9 +5422,7 @@
    "description": "Desactiva el 'estacionamiento' de núcleos: el CPU no apaga núcleos para ahorrar energía. Puede mejorar los 1 % low en juegos que usan muchos hilos.",
    "note": "No lo uses en Ryzen X3D de dos chiplets (7900X3D, 7950X3D, 9900X3D, 9950X3D): dependen de esto para mandar el juego a los núcleos con caché extra. Más consumo en portátil.",
    "requiresReboot": false,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "power.setting",
@@ -5459,7 +5441,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.win32Priority",
@@ -5470,9 +5453,7 @@
    "description": "Cambia cómo Windows reparte el CPU: turnos cortos y más tiempo para el programa en primer plano (Win32PrioritySeparation 0x26). Puede mejorar la respuesta del juego.",
    "note": "Popular en la escena competitiva; el efecto varía según el juego y el CPU. Mide con el Benchmark.",
    "requiresReboot": false,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "apply": [
     {
      "op": "reg.set",
@@ -5495,7 +5476,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.timerResolution",
@@ -5506,9 +5488,7 @@
    "description": "Desde Windows 11 cada programa recibe su propia precisión de temporizador. Esto vuelve al modo anterior: si el juego pide 0,5 ms, se respeta aunque esté minimizado o haya otras apps. Ayuda a la consistencia de frame time en algunos juegos.",
    "note": "Aumenta un poco el consumo en reposo. En portátil no conviene.",
    "requiresReboot": true,
-   "profiles": [
-    "pro"
-   ],
+   "profiles": [],
    "minBuild": 22000,
    "apply": [
     {
@@ -5529,11 +5509,12 @@
     }
    ],
    "restartExplorer": false,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.startupDelay",
-   "category": "experimental",
+   "category": "system",
    "impact": "stability",
    "risk": "safe",
    "name": "Quitar retraso de apps de inicio",
@@ -5541,8 +5522,7 @@
    "note": "El escritorio puede sentirse más pesado justo al iniciar sesión.",
    "requiresReboot": false,
    "profiles": [
-    "perf",
-    "pro"
+    "perf"
    ],
    "apply": [
     {
@@ -5596,7 +5576,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   },
   {
    "id": "kiza.fseGlobal",
@@ -5676,7 +5657,8 @@
    ],
    "restartExplorer": false,
    "minBuild": null,
-   "maxBuild": null
+   "maxBuild": null,
+   "retired": true
   }
  ]
 }

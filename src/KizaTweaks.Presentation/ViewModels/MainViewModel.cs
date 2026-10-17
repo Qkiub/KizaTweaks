@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Runtime.Versioning;
+using KizaTweaks.Core.Engine;
 using KizaTweaks.Core.Platform;
 using KizaTweaks.Presentation.Mvvm;
 
@@ -33,6 +34,8 @@ public sealed class AboutViewModel
         "Desactivar servicios en masa",
         "Limpiadores de RAM y borrado de Prefetch",
         "Ajustes de red con netsh",
+        "Prioridades de CPU forzadas o cambios en los tiempos del sistema",
+        "Cambios globales de DirectX o de la GPU (HAGS)",
     };
 
     public RelayCommand OpenRepoCommand { get; } = new(() => ProcessRunner.OpenShell(RepoUrl));
@@ -62,6 +65,7 @@ public sealed class MainViewModel : ObservableObject, IShellHost
     public MainViewModel(AppServices services, IDialogService dialogs)
     {
         Services = services;
+        _dialogs = dialogs;
         Tweaks = new TweaksViewModel(services, dialogs, this);
         Dashboard = new DashboardViewModel(services, dialogs, this, Tweaks);
         Fps = new FpsViewModel(services, dialogs, this, Tweaks);
@@ -107,7 +111,52 @@ public sealed class MainViewModel : ObservableObject, IShellHost
     public object CurrentPage => _selected.Page;
 
     /// <summary>Llamar una vez cuando la ventana está lista.</summary>
-    public Task InitializeAsync() => OpenAsync(_selected);
+    public async Task InitializeAsync()
+    {
+        await RunSafetyCleanupAsync();
+        await OpenAsync(_selected);
+    }
+
+    private IDialogService? _dialogs;
+
+    /// <summary>
+    /// Una sola vez por versión: deshace lo que versiones anteriores aplicaron y que se retiró por poder
+    /// hacer fallar apps o juegos (Photoshop, FiveM/GTA…).
+    /// </summary>
+    public async Task RunSafetyCleanupAsync()
+    {
+        string? marker = Services.StateDir is { } dir ? Path.Combine(dir, "safety-cleanup-1.done") : null;
+        if (marker is not null && File.Exists(marker)) return;
+        CleanupResult? result = null;
+        try
+        {
+            await RunBusyAsync("Quitando ajustes que podían causar conflictos…", async _ =>
+            {
+                result = await Task.Run(() => SafetyCleanup.Run(Services.Engine, Services.Catalog, Services.Backend, removePriorityRules: true));
+                if (result.RestartExplorer) await Task.Run(SystemActions.RestartExplorer);
+                await Tweaks.RefreshAsync();
+            });
+        }
+        catch (Exception ex)
+        {
+            Core.Log.Error("Limpieza de seguridad", ex);
+            return;
+        }
+        if (marker is not null)
+        {
+            try { Directory.CreateDirectory(Path.GetDirectoryName(marker)!); File.WriteAllText(marker, DateTime.Now.ToString("o")); }
+            catch { }
+        }
+        if (result is not { AnythingDone: true }) return;
+        if (result.RequiresReboot || result.PriorityRulesRemoved.Count > 0) MarkRebootRequired();
+        var lines = result.Reverted.Select(n => "• " + n)
+            .Concat(result.PriorityRulesRemoved.Select(e => $"• Prioridad alta permanente de {e}"));
+        if (_dialogs is not null)
+            await _dialogs.InfoAsync("Ajustes con riesgo quitados",
+                "Esta versión solo trae ajustes que no cambian cómo funcionan tus apps y juegos. " +
+                "Se deshicieron los que habías aplicado y podían hacer fallar programas como Photoshop o FiveM:\n\n" +
+                string.Join("\n", lines) + "\n\nReinicia el PC para que todo quede como antes.");
+    }
 
     private async Task OpenAsync(NavItem item)
     {
