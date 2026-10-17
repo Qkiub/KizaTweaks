@@ -106,7 +106,7 @@
             <!-- ============ Niveles ============ -->
             <ItemsControl ItemsSource="{Binding Levels}" Margin="0,0,-14,18">
                 <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate><UniformGrid Columns="1" /></ItemsPanelTemplate>
+                    <ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

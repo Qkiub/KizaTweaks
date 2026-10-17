@@ -137,4 +137,5 @@ public static class Profiles
     public const string Gamer = "gamer";
     public const string Privacy = "privacy";
     public const string Performance = "perf";
+    public const string Input = "input";
 }

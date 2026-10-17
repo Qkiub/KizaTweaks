@@ -1436,7 +1436,8 @@
    "maxBuild": null,
    "profiles": [
     "gamer",
-    "privacy"
+    "privacy",
+    "input"
    ],
    "apply": [
     {
@@ -2568,7 +2569,8 @@
    "maxBuild": null,
    "profiles": [
     "gamer",
-    "privacy"
+    "privacy",
+    "input"
    ],
    "apply": [
     {
@@ -2637,7 +2639,8 @@
    "maxBuild": null,
    "profiles": [
     "gamer",
-    "privacy"
+    "privacy",
+    "input"
    ],
    "apply": [
     {
@@ -4782,7 +4785,8 @@
    "requiresReboot": false,
    "profiles": [
     "gamer",
-    "privacy"
+    "privacy",
+    "input"
    ],
    "apply": [
     {
@@ -4856,7 +4860,8 @@
    "note": "No recomendado en portátiles: gasta batería y calienta más.",
    "requiresReboot": false,
    "profiles": [
-    "perf"
+    "perf",
+    "input"
    ],
    "apply": [
     {
@@ -5128,7 +5133,8 @@
    "note": "Se aplica al plan de energía activo. En portátil, gasta un poco más de batería.",
    "requiresReboot": false,
    "profiles": [
-    "perf"
+    "perf",
+    "input"
    ],
    "apply": [
     {
@@ -5160,7 +5166,8 @@
    "note": "Se aplica al plan de energía activo. Los planes Alto y Máximo rendimiento ya lo traen así.",
    "requiresReboot": false,
    "profiles": [
-    "perf"
+    "perf",
+    "input"
    ],
    "apply": [
     {
@@ -5176,6 +5183,110 @@
      "sub": "501a4d13-42af-4429-9fd1-a8218c268e20",
      "setting": "ee12f906-d277-404b-b6da-e5fa1a576df5",
      "value": 1
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.keyboardRepeat",
+   "category": "system",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Teclado con respuesta inmediata",
+   "description": "Al mantener una tecla, se repite sin la espera inicial de Windows y a la velocidad máxima. Se nota al moverte en menús, chats y al escribir.",
+   "note": "Se aplica al cerrar sesión o reiniciar.",
+   "requiresReboot": true,
+   "profiles": [
+    "input"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Keyboard",
+     "name": "KeyboardDelay",
+     "type": "String",
+     "value": "0"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Keyboard",
+     "name": "KeyboardSpeed",
+     "type": "String",
+     "value": "31"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Keyboard",
+     "name": "KeyboardDelay",
+     "type": "String",
+     "value": "1"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Keyboard",
+     "name": "KeyboardSpeed",
+     "type": "String",
+     "value": "31"
+    }
+   ],
+   "restartExplorer": false,
+   "minBuild": null,
+   "maxBuild": null
+  },
+  {
+   "id": "kiza.accessibilityShortcuts",
+   "category": "system",
+   "impact": "latency",
+   "risk": "safe",
+   "name": "Sin atajos de Teclas filtro y Teclas de alternancia",
+   "description": "Mantener Shift derecho 8 segundos o Bloq Num 5 segundos ya no activa funciones que retrasan o ignoran tus teclas en medio de la partida.",
+   "note": null,
+   "requiresReboot": false,
+   "profiles": [
+    "input"
+   ],
+   "apply": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Accessibility\\Keyboard Response",
+     "name": "Flags",
+     "type": "String",
+     "value": "122"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Accessibility\\ToggleKeys",
+     "name": "Flags",
+     "type": "String",
+     "value": "58"
+    }
+   ],
+   "undo": [
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Accessibility\\Keyboard Response",
+     "name": "Flags",
+     "type": "String",
+     "value": "126"
+    },
+    {
+     "op": "reg.set",
+     "hive": "HKCU",
+     "path": "Control Panel\\Accessibility\\ToggleKeys",
+     "name": "Flags",
+     "type": "String",
+     "value": "62"
     }
    ],
    "restartExplorer": false,

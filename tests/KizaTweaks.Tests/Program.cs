@@ -405,7 +405,7 @@ static void ProfilesAdaptToHardware()
     var perf = ProfileResolver.Resolve(Profiles.Performance, c, desktop).Ids;
     Assert(gamer.IsSubsetOf(perf), "Máximo rendimiento debe incluir Gamer");
     Assert(perf.Contains("kiza.powerUltimate") && perf.Contains("kiza.usbSuspend") && perf.Contains("kiza.pcieLspm"), "máximo rendimiento incompleto");
-    foreach (var id in new[] { Profiles.Gamer, Profiles.Performance, Profiles.Privacy, ProfileResolver.Safe })
+    foreach (var id in new[] { Profiles.Gamer, Profiles.Performance, Profiles.Input, Profiles.Privacy, ProfileResolver.Safe })
     {
         var sel = ProfileResolver.Resolve(id, c, desktop).Ids;
         Assert(!sel.Any(x => c.Find(x)!.Retired), $"{id} incluye ajustes retirados");
@@ -414,6 +414,11 @@ static void ProfilesAdaptToHardware()
     foreach (var id in new[] { "kiza.hags", "kiza.windowedOpt", "kiza.vrr", "kiza.win32Priority", "kiza.timerResolution", "kiza.coreParking", "kiza.mmcssGames" })
         Assert(c.Find(id)!.Retired, $"{id} debería estar retirado");
     Assert(!perf.Contains("q.DisableLocationServices") && !perf.Contains("q.DisableNotifications"), "no debe quitar funciones básicas");
+    var input = ProfileResolver.Resolve(Profiles.Input, c, desktop).Ids;
+    foreach (var id in new[] { "q.DisableMouseAcceleration", "kiza.keyboardRepeat", "kiza.accessibilityShortcuts", "kiza.usbSuspend", "kiza.pcieLspm" })
+        Assert(input.Contains(id), $"menos input delay sin {id}");
+    Assert(!input.Any(x => c.Find(x)!.Retired || c.Find(x)!.Risk != "safe" && x != "kiza.powerUltimate"), "input delay con ajustes con riesgo");
+    Assert(!ProfileResolver.Resolve(Profiles.Input, c, laptop).Ids.Contains("kiza.powerUltimate"), "input delay en portátil");
     var lap = ProfileResolver.Resolve(Profiles.Performance, c, laptop);
     Assert(!lap.Ids.Contains("kiza.powerUltimate") && lap.AdjustedForHardware.Count == 1, "portátil");
 }

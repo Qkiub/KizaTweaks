@@ -30,6 +30,8 @@ public sealed class AppServices
     public int Build { get; init; }
     public bool IsAdmin { get; init; }
     public bool RestorePointCreated { get; set; }
+    /// <summary>Crea un punto de restauración (reemplazable en pruebas).</summary>
+    public Func<string, (bool ok, string message)> CreateRestorePoint { get; init; } = SystemActions.CreateRestorePoint;
     /// <summary>Carpeta de estado (marcas de migración). Null en pruebas.</summary>
     public string? StateDir { get; init; }
 

@@ -89,16 +89,40 @@ public sealed class BackupsViewModel : ObservableObject
             return;
         }
         if (!await _dialogs.ConfirmAsync("Deshacer todo",
-                $"Se restaurará el estado original de {defs.Count} ajustes aplicados con KizaTweaks.", "Deshacer todo")) return;
+                $"Se restaurará el estado original de {defs.Count} ajustes aplicados con KizaTweaks." + NotUndoneText(), "Deshacer todo")) return;
         await _tweaks.RevertAsync(defs);
         Refresh();
+    }
+
+    /// <summary>Lo que «Deshacer todo» no revierte, con las apps quitadas según los registros.</summary>
+    private static string NotUndoneText()
+    {
+        var removed = new List<string>();
+        try
+        {
+            if (Directory.Exists(AppPaths.LogsDir))
+                foreach (var f in Directory.EnumerateFiles(AppPaths.LogsDir, "kizatweaks-*.log"))
+                    foreach (var line in File.ReadLines(f))
+                    {
+                        var m = System.Text.RegularExpressions.Regex.Match(line, @"Quitar app (.+): ok$");
+                        if (m.Success) removed.Add(m.Groups[1].Value.Trim());
+                    }
+        }
+        catch { }
+        var apps = removed.Distinct().ToList();
+        return "\n\nEsto NO lo revierte:\n" +
+               (apps.Count > 0 ? $"• Apps quitadas ({string.Join(", ", apps.Take(15))}{(apps.Count > 15 ? "…" : "")}): se reinstalan gratis desde Microsoft Store.\n"
+                               : "• Apps quitadas en la página Apps: se reinstalan desde Microsoft Store.\n") +
+               "• Programas apagados en Arranque: vuelve a activarlos en esa página.\n" +
+               "• Limpiezas de Mantenimiento (temporales, cachés): no hace falta, Windows las recrea solo.\n" +
+               "Para volver a todo exactamente como estaba, usa el punto de restauración «KizaTweaks - antes de optimizar».";
     }
 
     private async Task RestorePointAsync()
     {
         (bool ok, string msg) r = default;
         await _shell.RunBusyAsync("Creando punto de restauración…", async _ =>
-            r = await Task.Run(() => SystemActions.CreateRestorePoint("KizaTweaks - manual")));
+            r = await Task.Run(() => _s.CreateRestorePoint("KizaTweaks - manual")));
         if (r.ok) _s.RestorePointCreated = true;
         _shell.Toast(r.ok ? "Punto de restauración creado." : $"No se pudo crear: {r.msg}", !r.ok);
     }

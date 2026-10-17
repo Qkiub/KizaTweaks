@@ -239,29 +239,28 @@ public sealed class TweaksViewModel : ObservableObject
         }
         sb.Append("\n\nTodo se puede deshacer desde «Respaldos».");
 
-        int choice;
+        if (!_s.RestorePointCreated)
+            sb.Append("\n\nAntes se creará un punto de restauración de Windows, para que puedas volver atrás aunque algo falle (tarda menos de un minuto).");
+        if (await _dialogs.ChooseAsync("Aplicar ajustes", sb.ToString(), "Aplicar", "Cancelar") != 0) return;
+
+        // Punto de restauración obligatorio (una vez por sesión). Si falla, se pregunta antes de seguir.
         if (!_s.RestorePointCreated)
         {
-            sb.Append("\n\nRecomendado: crear un punto de restauración de Windows antes (tarda menos de un minuto).");
-            choice = await _dialogs.ChooseAsync("Aplicar ajustes", sb.ToString(), "Crear punto y aplicar", "Aplicar sin punto", "Cancelar");
-            if (choice is < 0 or 2) return;
-        }
-        else
-        {
-            choice = await _dialogs.ChooseAsync("Aplicar ajustes", sb.ToString(), "Aplicar", "Cancelar") == 0 ? 1 : -1;
-            if (choice < 0) return;
+            (bool ok, string msg) rp = default;
+            await _shell.RunBusyAsync("Creando punto de restauración…", async _ =>
+            {
+                try { rp = await Task.Run(() => _s.CreateRestorePoint("KizaTweaks - antes de optimizar")); }
+                catch (Exception ex) { rp = (false, ex.Message); }
+            });
+            if (rp.ok) _s.RestorePointCreated = true;
+            else if (await _dialogs.ChooseAsync("Sin punto de restauración",
+                         $"No se pudo crear el punto de restauración:\n{rp.msg}\n\nLos ajustes igual se pueden deshacer desde «Respaldos». ¿Aplicar de todas formas?",
+                         "Aplicar igual", "Cancelar") != 0) return;
         }
 
         var results = new List<TweakRunResult>();
         await _shell.RunBusyAsync("Preparando…", async progress =>
         {
-            if (choice == 0)
-            {
-                progress.Report("Creando punto de restauración…");
-                var (ok, msg) = await Task.Run(() => SystemActions.CreateRestorePoint("KizaTweaks - antes de optimizar"));
-                if (ok) _s.RestorePointCreated = true;
-                else _shell.Toast($"No se pudo crear el punto de restauración: {msg}", error: true);
-            }
             int i = 0;
             foreach (var t in targets)
             {

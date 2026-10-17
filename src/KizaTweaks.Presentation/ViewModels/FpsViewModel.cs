@@ -164,6 +164,12 @@ public sealed class FpsViewModel : ObservableObject
             Description = "Lo esencial para jugar + plan de energía al máximo y USB/PCIe sin ahorro. Solo ajustes que no cambian cómo funcionan tus apps y juegos: nada de prioridades forzadas, ni cambios en DirectX o en la GPU.",
             ActivateCommand = new AsyncCommand(() => ActivateLevelAsync(Profiles.Performance)),
         });
+        Levels.Add(new FpsLevelViewModel
+        {
+            Id = Profiles.Input, Name = "Menos input delay", Glyph = "\uE962",
+            Description = "Solo lo que hace que el mouse y el teclado respondan antes: sin aceleración del mouse, teclado inmediato, sin atajos que retrasan teclas, USB y PCIe sin ahorro y energía al máximo.",
+            ActivateCommand = new AsyncCommand(() => ActivateLevelAsync(Profiles.Input)),
+        });
     }
 
     private bool _isLoading = true;
@@ -207,6 +213,7 @@ public sealed class FpsViewModel : ObservableObject
     {
         var byId = _tweaks.All.Where(t => t.IsCompatible).ToDictionary(t => t.Def.Id);
         var perf = ProfileResolver.Resolve(Profiles.Performance, _s.Catalog, _hw);
+        var input = ProfileResolver.Resolve(Profiles.Input, _s.Catalog, null).Ids;
         var gamerFps = ProfileResolver.Resolve(Profiles.Gamer, _s.Catalog, null).Ids
             .Where(id => byId.TryGetValue(id, out var t) && FpsImpacts.Contains(t.Def.Impact)).ToHashSet();
 
@@ -234,8 +241,10 @@ public sealed class FpsViewModel : ObservableObject
         Groups.Clear();
         Groups.Add(Group("Esenciales", "Lo que todo PC gamer debería tener activo. Riesgo bajo.", "", Labels.Green,
             Ordered(gamerFps)));
-        Groups.Add(Group("Máximo rendimiento", "Energía al máximo, sin tocar funciones básicas de Windows ni cómo corren tus programas.", "", Labels.Cyan,
-            Ordered(_s.Catalog.Tweaks.Where(t => t.Profiles.Contains(Profiles.Performance)).Select(t => t.Id).Except(gamerFps))));
+        Groups.Add(Group("Menos input delay", "El mouse y el teclado responden antes. Ninguno toca cómo corren tus juegos o apps.", "\uE962", Labels.Pink,
+            Ordered(input.Except(gamerFps))));
+        Groups.Add(Group("Máximo rendimiento", "Energía al máximo, sin tocar funciones básicas de Windows ni cómo corren tus programas.", "\uE945", Labels.Cyan,
+            Ordered(_s.Catalog.Tweaks.Where(t => t.Profiles.Contains(Profiles.Performance)).Select(t => t.Id).Except(gamerFps).Except(input))));
         foreach (var g in Groups.Where(g => g.Items.Count == 0).ToList()) Groups.Remove(g);
     }
 
@@ -269,6 +278,7 @@ public sealed class FpsViewModel : ObservableObject
             level.Update(items.Count(i => !i.IsApplied), items.Count, sel.AdjustedForHardware);
         }
         var target = ProfileResolver.Resolve(Profiles.Performance, _s.Catalog, _hw).Ids
+            .Union(ProfileResolver.Resolve(Profiles.Input, _s.Catalog, _hw).Ids)
             .Where(compatible.ContainsKey).Select(id => compatible[id]).ToList();
         var applied = target.Count(t => t.IsApplied);
         Percent = target.Count == 0 ? 0 : (int)Math.Round(100.0 * applied / target.Count);

@@ -35,6 +35,8 @@ public sealed class FakeDialogs : IDialogService
 
 public static class ViewModelTests
 {
+    public static int RestorePointsCreated;
+
     public static (MainViewModel vm, FakeDialogs dialogs, InMemoryBackend backend) Create()
     {
         var b = new InMemoryBackend();
@@ -56,6 +58,7 @@ public static class ViewModelTests
             Build = 26100,
             IsAdmin = true,
             RestorePointCreated = false,
+            CreateRestorePoint = _ => { RestorePointsCreated++; return (true, "ok"); },
         };
         var dialogs = new FakeDialogs();
         return (new MainViewModel(services, dialogs), dialogs, b);
@@ -75,11 +78,12 @@ public static class ViewModelTests
         if (vm.Tweaks.All.Any(t => t.IsSelected && t.Def.Risk == "risky"))
             throw new Exception("el perfil gamer no debe incluir ajustes de riesgo");
 
-        dialogs.Answers.Enqueue(1); // «Aplicar sin punto»
+        dialogs.Answers.Enqueue(0); // «Aplicar» (crea el punto de restauración solo)
         vm.Tweaks.ApplySelectedAsync().GetAwaiter().GetResult();
         if (vm.Tweaks.AppliedCount != initial + selected)
             throw new Exception($"se esperaban {initial + selected} aplicados y hay {vm.Tweaks.AppliedCount}. Diálogos: {string.Join(" || ", dialogs.Shown)}");
         if (vm.Tweaks.SelectedCount != 0) throw new Exception("la selección debería limpiarse");
+        if (!vm.Services.RestorePointCreated) throw new Exception("debe crear el punto de restauración antes de aplicar");
         if (vm.IsBusy) throw new Exception("quedó en estado ocupado");
 
         vm.Backups.Refresh();
@@ -99,7 +103,7 @@ public static class ViewModelTests
         vm.Tweaks.RefreshAsync().GetAwaiter().GetResult();
         var before = b.Dump();
         vm.Tweaks.SelectProfileAsync(Profiles.Privacy).GetAwaiter().GetResult();
-        dialogs.Answers.Enqueue(2); // «Cancelar»
+        dialogs.Answers.Enqueue(1); // «Cancelar»
         vm.Tweaks.ApplySelectedAsync().GetAwaiter().GetResult();
         if (b.Dump() != before) throw new Exception("cancelar modificó el sistema");
     }
@@ -116,7 +120,7 @@ public static class ViewModelTests
         var perf = vm.Fps.Levels.First(l => l.Id == Profiles.Performance);
         if (perf.Total < 12 || perf.Pending == 0) throw new Exception($"nivel máximo rendimiento: {perf.Pending}/{perf.Total}");
 
-        dialogs.Answers.Enqueue(1); // «Aplicar sin punto»
+        dialogs.Answers.Enqueue(0); // «Aplicar» (crea el punto de restauración solo)
         perf.ActivateCommand.Execute(null);
         for (int i = 0; i < 400 && !perf.IsComplete; i++) Thread.Sleep(50);
         if (!perf.IsComplete) throw new Exception($"quedaron {perf.Pending} pendientes. Diálogos: {string.Join(" || ", dialogs.Shown)}");

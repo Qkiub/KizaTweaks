@@ -420,6 +420,12 @@ def w11d_tweaks(w11d):
 # Máximo rendimiento: lo del perfil Gamer + esto. Solo ajustes sin riesgo de conflicto con apps o juegos.
 PROFILE_PERF = {"kiza.powerUltimate", "kiza.usbSuspend", "kiza.pcieLspm", "kiza.startupDelay"}
 
+# Menos input delay: solo ajustes de entrada y energía que no cambian cómo funcionan apps ni juegos.
+PROFILE_INPUT = {
+    "q.DisableMouseAcceleration", "kiza.keyboardRepeat", "q.DisableStickyKeys", "kiza.accessibilityShortcuts",
+    "kiza.usbSuspend", "kiza.pcieLspm", "kiza.powerUltimate", "q.DisableDVR", "kiza.gameMode",
+}
+
 # Retirados: pueden hacer fallar apps o juegos en algunos equipos (Photoshop, FiveM/GTA, anticheats, audio).
 # Siguen en el catálogo solo para poder deshacerlos en quien ya los aplicó; la app no los muestra.
 RETIRED = {
@@ -581,6 +587,28 @@ KIZA = [
         "requiresReboot": False, "profiles": ["perf"],
         "apply": [{"op": "power.setting", "sub": PWR_PCIE, "setting": PWR_PCIE_LSPM, "value": 0}],
         "undo": [{"op": "power.setting", "sub": PWR_PCIE, "setting": PWR_PCIE_LSPM, "value": 1}],
+    },
+    # ---------------- Entrada (input delay) ----------------
+    {
+        "id": "kiza.keyboardRepeat", "category": "system", "impact": "latency", "risk": "safe",
+        "name": "Teclado con respuesta inmediata",
+        "description": "Al mantener una tecla, se repite sin la espera inicial de Windows y a la velocidad máxima. Se nota al moverte en menús, chats y al escribir.",
+        "note": "Se aplica al cerrar sesión o reiniciar.",
+        "requiresReboot": True, "profiles": [],
+        "apply": [reg("HKCU", r"Control Panel\Keyboard", "KeyboardDelay", "String", "0"),
+                  reg("HKCU", r"Control Panel\Keyboard", "KeyboardSpeed", "String", "31")],
+        "undo": [reg("HKCU", r"Control Panel\Keyboard", "KeyboardDelay", "String", "1"),
+                 reg("HKCU", r"Control Panel\Keyboard", "KeyboardSpeed", "String", "31")],
+    },
+    {
+        "id": "kiza.accessibilityShortcuts", "category": "system", "impact": "latency", "risk": "safe",
+        "name": "Sin atajos de Teclas filtro y Teclas de alternancia",
+        "description": "Mantener Shift derecho 8 segundos o Bloq Num 5 segundos ya no activa funciones que retrasan o ignoran tus teclas en medio de la partida.",
+        "note": None, "requiresReboot": False, "profiles": [],
+        "apply": [reg("HKCU", r"Control Panel\Accessibility\Keyboard Response", "Flags", "String", "122"),
+                  reg("HKCU", r"Control Panel\Accessibility\ToggleKeys", "Flags", "String", "58")],
+        "undo": [reg("HKCU", r"Control Panel\Accessibility\Keyboard Response", "Flags", "String", "126"),
+                 reg("HKCU", r"Control Panel\Accessibility\ToggleKeys", "Flags", "String", "62")],
     },
     # ---------------- Seguridad vs rendimiento ----------------
     {
@@ -843,14 +871,16 @@ def main():
     for t in tweaks:
         if t["id"] in PROFILE_PERF and "perf" not in t["profiles"]:
             t["profiles"].append("perf")
+        if t["id"] in PROFILE_INPUT and "input" not in t["profiles"]:
+            t["profiles"].append("input")
         if t["id"] in RETIRED:
             t["retired"] = True
             t["profiles"] = []
         if t["id"] == "kiza.startupDelay":
             t["category"] = "system"
-    missing = (PROFILE_PERF | RETIRED) - {t["id"] for t in tweaks}
+    missing = (PROFILE_PERF | PROFILE_INPUT | RETIRED) - {t["id"] for t in tweaks}
     assert not missing, f"ids inexistentes: {missing}"
-    assert not (PROFILE_PERF & RETIRED)
+    assert not ((PROFILE_PERF | PROFILE_INPUT) & RETIRED)
     ids = [t["id"] for t in tweaks]
     assert len(ids) == len(set(ids)), "ids duplicados"
     for t in tweaks:

@@ -19,6 +19,7 @@ public static class ProfileResolver
     {
         new ProfileInfo(Profiles.Gamer, "Gamer recomendado", "Rendimiento y limpieza sin riesgo. Ideal para empezar.", ""),
         new ProfileInfo(Profiles.Performance, "Máximo rendimiento", "Gamer + plan de energía al máximo y USB/PCIe sin ahorro. Sin quitar nada básico ni cambiar cómo funcionan tus apps y juegos.", ""),
+        new ProfileInfo(Profiles.Input, "Menos input delay", "Solo lo que hace que el mouse y el teclado respondan antes: sin aceleración, teclado inmediato, USB y PCIe sin ahorro, energía al máximo.", "\uE962"),
         new ProfileInfo(Profiles.Privacy, "Gamer + privacidad máxima", "Gamer + ubicación, IA de apps y OneDrive fuera.", ""),
         new ProfileInfo(Safe, "Todo lo seguro", "Todos los ajustes marcados como seguros (incluye apariencia).", ""),
     };
@@ -35,7 +36,7 @@ public static class ProfileResolver
             if (!t.Retired && Includes(profileId, t)) ids.Add(t.Id);
         }
 
-        if (hw is not null && profileId == Profiles.Performance && hw.IsLaptop)
+        if (hw is not null && profileId is Profiles.Performance or Profiles.Input && hw.IsLaptop)
         {
             var removed = ids.Where(NotOnLaptop.Contains).ToList();
             if (removed.Count > 0)

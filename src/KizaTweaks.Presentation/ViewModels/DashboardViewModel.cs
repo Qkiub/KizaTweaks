@@ -160,7 +160,7 @@ public sealed class DashboardViewModel : ObservableObject
     {
         (bool ok, string msg) result = default;
         await _shell.RunBusyAsync("Creando punto de restauración…", async _ =>
-            result = await Task.Run(() => SystemActions.CreateRestorePoint("KizaTweaks - manual")));
+            result = await Task.Run(() => _s.CreateRestorePoint("KizaTweaks - manual")));
         if (result.ok) _s.RestorePointCreated = true;
         _shell.Toast(result.ok ? "Punto de restauración creado." : $"No se pudo crear: {result.msg}", !result.ok);
     }
