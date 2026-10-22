@@ -1,0 +1,15 @@
+OK página: Optimizar
+OK página: Modo FPS
+OK página: Avanzado
+OK página: Apps
+OK página: Mantenimiento
+OK página: Procesos
+OK página: Arranque
+OK página: Benchmark
+OK página: Todos los ajustes
+OK página: Respaldos
+OK página: Acerca de
+Tweaks cargados: 89, aplicados: 5
+Optimización segura: 10% (3 de 31 ajustes seguros activos.) | Escritorio · AMD EPYC 9V45 96-Core Processor · Microsoft Hyper-V Video · 16 GB de RAM
+Secciones seguras: 4, avanzados: 16
+RESULTADO: OK

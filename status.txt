@@ -1,0 +1,7 @@
+commit=dab61ec8ac4283156269bc5190c25de826c5d3db
+build=success
+unit=success
+integration=success
+smoke=success
+release=success
+version=1.0.26

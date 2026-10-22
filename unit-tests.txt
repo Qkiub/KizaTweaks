@@ -1,0 +1,31 @@
+  ✔ Catálogo: carga, ids únicos y categorías válidas
+  ✔ Catálogo: todos los valores de registro se pueden convertir
+  ✔ Motor: aplicar y deshacer TODO el catálogo deja el sistema idéntico
+  ✔ Motor: deshacer restaura valores previos exactos (no los 'por defecto')
+  ✔ Motor: reaplicar no pisa el respaldo original
+  ✔ Motor: estado aplicado / no aplicado / parcial
+  ✔ Motor: borrar clave se respalda con todo su árbol
+  ✔ Motor: sin respaldo usa las operaciones 'undo' del catálogo
+  ✔ DirectX: los ajustes conviven sin pisarse
+  ✔ Energía: deshacer vuelve al plan anterior
+  ✔ Energía: ajuste del plan activo se aplica y se restaura exacto
+  ✔ Perfiles: Máximo rendimiento es seguro, acumulativo y se adapta a portátil
+  ✔ Limpieza: deshace solo los ajustes retirados que aplicó KizaTweaks y quita prioridades
+  ✔ Perfiles: el plan de energía se aplica antes que sus ajustes
+  ✔ FPS: promedio, 1 % low y 0,1 % low
+  ✔ FPS: lectura de CSV de PresentMon
+  ✔ Recomendaciones: caso real (BX500 + NV3, 60/144 Hz, RAM sin XMP)
+  ✔ Respaldo: se guarda y se lee desde disco
+  ✔ Mantenimiento: catálogo válido y sin comandos peligrosos
+  ✔ Limpieza: borra solo lo viejo, salta enlaces y conserva la carpeta
+  ✔ Limpieza: se niega a tocar carpetas críticas
+  ✔ Interfaz: perfil Gamer → aplicar → respaldos → deshacer todo
+  ✔ Interfaz: cancelar no modifica nada
+  ✔ Interfaz: navegación, filtros y búsqueda
+  ✔ Modo FPS: activar nivel, progreso e interruptor
+  ✔ Modo FPS: configurar y quitar un juego
+  ✔ Optimizar y Avanzado: plan seguro, secciones y avanzados con confirmación
+  ✔ Cierres: lectura del registro de eventos y explicación del módulo
+  ✔ Limpieza: solo borra lo previsto y mide bien
+
+OK: 29 pruebas
