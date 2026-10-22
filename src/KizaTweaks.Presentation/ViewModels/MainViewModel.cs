@@ -13,6 +13,8 @@ public sealed class NavItem : ObservableObject
     public required string Title { get; init; }
     public required string Glyph { get; init; }
     public required object Page { get; init; }
+    /// <summary>Grupo del menú lateral.</summary>
+    public string Group { get; init; } = "";
     /// <summary>Se ejecuta la primera vez que se abre la página.</summary>
     public Func<Task>? OnFirstOpen { get; init; }
     internal bool Opened { get; set; }
@@ -34,8 +36,8 @@ public sealed class AboutViewModel
         "Desactivar servicios en masa",
         "Limpiadores de RAM y borrado de Prefetch",
         "Ajustes de red con netsh",
-        "Prioridades de CPU forzadas o cambios en los tiempos del sistema",
-        "Cambios globales de DirectX o de la GPU (HAGS)",
+        "Prioridad alta permanente por juego",
+        "Activar por su cuenta algo de «Avanzado»: eso solo lo activas tú",
     };
 
     public RelayCommand OpenRepoCommand { get; } = new(() => ProcessRunner.OpenShell(RepoUrl));
@@ -48,14 +50,14 @@ public sealed class MainViewModel : ObservableObject, IShellHost
 {
     public AppServices Services { get; }
     public ObservableCollection<NavItem> Nav { get; } = new();
-    public DashboardViewModel Dashboard { get; }
     public TweaksViewModel Tweaks { get; }
     public AppsViewModel Apps { get; }
     public ProcessesViewModel Processes { get; }
     public StartupViewModel Startup { get; }
     public MaintenanceViewModel Maintenance { get; }
     public FpsViewModel Fps { get; }
-    public QuickViewModel Quick { get; }
+    public OptimizeViewModel Optimize { get; }
+    public AdvancedViewModel Advanced { get; }
     public BenchmarkViewModel Benchmark { get; }
     public BackupsViewModel Backups { get; }
     public AboutViewModel About { get; } = new();
@@ -68,9 +70,9 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Services = services;
         _dialogs = dialogs;
         Tweaks = new TweaksViewModel(services, dialogs, this);
-        Dashboard = new DashboardViewModel(services, dialogs, this, Tweaks);
         Fps = new FpsViewModel(services, dialogs, this, Tweaks);
-        Quick = new QuickViewModel(services, dialogs, this, Tweaks);
+        Optimize = new OptimizeViewModel(services, dialogs, this, Tweaks);
+        Advanced = new AdvancedViewModel(dialogs, Tweaks);
         Apps = new AppsViewModel(services, dialogs, this);
         Processes = new ProcessesViewModel(services, dialogs, this);
         Startup = new StartupViewModel(services, this);
@@ -78,17 +80,18 @@ public sealed class MainViewModel : ObservableObject, IShellHost
         Benchmark = new BenchmarkViewModel(services, dialogs, this);
         Backups = new BackupsViewModel(services, dialogs, this, Tweaks);
 
-        Nav.Add(new NavItem { Key = "quick", Title = "Rápido", Glyph = "\uE73A", Page = Quick, OnFirstOpen = Quick.LoadAsync });
-        Nav.Add(new NavItem { Key = "home", Title = "Inicio", Glyph = "", Page = Dashboard, OnFirstOpen = Dashboard.LoadAsync });
-        Nav.Add(new NavItem { Key = "fps", Title = "Modo FPS", Glyph = "\uEC4A", Page = Fps, OnFirstOpen = Fps.LoadAsync });
-        Nav.Add(new NavItem { Key = "tweaks", Title = "Optimizar", Glyph = "", Page = Tweaks, OnFirstOpen = async () => { if (!Tweaks.Loaded) await Tweaks.RefreshAsync(); } });
-        Nav.Add(new NavItem { Key = "apps", Title = "Apps", Glyph = "", Page = Apps, OnFirstOpen = Apps.ScanAsync });
-        Nav.Add(new NavItem { Key = "processes", Title = "Procesos", Glyph = "", Page = Processes, OnFirstOpen = Processes.RefreshAsync });
-        Nav.Add(new NavItem { Key = "startup", Title = "Arranque", Glyph = "", Page = Startup, OnFirstOpen = Startup.RefreshAsync });
-        Nav.Add(new NavItem { Key = "maintenance", Title = "Mantenimiento", Glyph = "\uE90F", Page = Maintenance });
-        Nav.Add(new NavItem { Key = "benchmark", Title = "Benchmark", Glyph = "", Page = Benchmark, OnFirstOpen = Benchmark.LoadAsync });
-        Nav.Add(new NavItem { Key = "backups", Title = "Respaldos", Glyph = "", Page = Backups, OnFirstOpen = () => { Backups.Refresh(); return Task.CompletedTask; } });
-        Nav.Add(new NavItem { Key = "about", Title = "Acerca de", Glyph = "", Page = About });
+        const string opt = "OPTIMIZAR", tools = "HERRAMIENTAS", app = "KIZATWEAKS";
+        Nav.Add(new NavItem { Group = opt, Key = "optimize", Title = "Optimizar", Glyph = "\uE945", Page = Optimize, OnFirstOpen = Optimize.LoadAsync });
+        Nav.Add(new NavItem { Group = opt, Key = "fps", Title = "Modo FPS", Glyph = "\uEC4A", Page = Fps, OnFirstOpen = Fps.LoadAsync });
+        Nav.Add(new NavItem { Group = opt, Key = "advanced", Title = "Avanzado", Glyph = "\uE7BA", Page = Advanced, OnFirstOpen = Advanced.LoadAsync });
+        Nav.Add(new NavItem { Group = tools, Key = "apps", Title = "Apps", Glyph = "", Page = Apps, OnFirstOpen = Apps.ScanAsync });
+        Nav.Add(new NavItem { Group = tools, Key = "maintenance", Title = "Mantenimiento", Glyph = "\uE90F", Page = Maintenance });
+        Nav.Add(new NavItem { Group = tools, Key = "processes", Title = "Procesos", Glyph = "", Page = Processes, OnFirstOpen = Processes.RefreshAsync });
+        Nav.Add(new NavItem { Group = tools, Key = "startup", Title = "Arranque", Glyph = "", Page = Startup, OnFirstOpen = Startup.RefreshAsync });
+        Nav.Add(new NavItem { Group = tools, Key = "benchmark", Title = "Benchmark", Glyph = "", Page = Benchmark, OnFirstOpen = Benchmark.LoadAsync });
+        Nav.Add(new NavItem { Group = tools, Key = "tweaks", Title = "Todos los ajustes", Glyph = "", Page = Tweaks, OnFirstOpen = async () => { if (!Tweaks.Loaded) await Tweaks.RefreshAsync(); } });
+        Nav.Add(new NavItem { Group = app, Key = "backups", Title = "Respaldos", Glyph = "", Page = Backups, OnFirstOpen = () => { Backups.Refresh(); return Task.CompletedTask; } });
+        Nav.Add(new NavItem { Group = app, Key = "about", Title = "Acerca de", Glyph = "", Page = About });
 
         RebootCommand = new RelayCommand(SystemActions.Reboot);
         DismissToastCommand = new RelayCommand(() => ToastText = null);

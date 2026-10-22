@@ -10,10 +10,10 @@ aplica ajustes con un clic y **todo se puede deshacer**.
 
 | Página | Función |
 |---|---|
-| **Inicio** | Detecta CPU, GPU (VRAM real), RAM (velocidad actual vs. soportada → XMP/EXPO), monitor (Hz actual vs. máximo), discos (NVMe/SATA/HDD, salud, temperatura, desgaste), VBS/HVCI, HAGS, plan de energía. Genera recomendaciones ordenadas por impacto y un puntaje de configuración. |
-| **Rápido** | Para un Windows recién formateado, con un botón **Optimizar todo**: quitar apps basura con casillas (iTunes, TikTok, Instagram, Netflix, juegos patrocinados, relleno de Microsoft y otras apps de la Store que no instalaste), **revisar las carpetas de Windows** y mostrar cuánto ocupa lo que sobra (temporales, descargas de Windows Update, registros viejos, restos de instalación y de drivers, Windows.old), menos input delay y sin anuncios ni rastreo. Nada que cambie cómo funcionan tus programas o juegos. |
-| **Modo FPS** | Solo ajustes que dan rendimiento sin cambiar cómo funcionan tus apps y juegos, con un medidor de progreso y dos niveles de un clic: **Máximo rendimiento** y **Menos input delay** (mouse sin aceleración, teclado inmediato, USB/PCIe sin ahorro). Interruptor por ajuste, revisión del PC (Hz del monitor, XMP/EXPO, driver de GPU, VBS, plan de energía), **Sesión de juego**, **GPU de alto rendimiento por juego** y **cierres recientes** (qué programa se cerró y qué falló, desde el visor de eventos). En portátil no fuerza el consumo máximo. |
-| **Optimizar** | 74 ajustes (juegos, privacidad, IA, sistema, barra de tareas, Explorador, Windows Update, apariencia…). Cada uno muestra impacto, riesgo, si requiere reinicio y **exactamente qué cambia**. Perfiles: *Gamer recomendado*, *Máximo rendimiento*, *Menos input delay*, *Gamer + privacidad máxima*, *Todo lo seguro*. Antes de aplicar se crea siempre un punto de restauración. |
+| **Optimizar** | Página principal. **Optimización segura** de un clic, con medidor y un interruptor por ajuste, en cuatro secciones: *Quitar lo inservible* (Widgets, Copilot, Recall, Bing en Inicio, apps automáticas), *Menos input lag* (mouse sin aceleración, teclado inmediato, USB/PCIe sin ahorro, sin grabación de fondo), *Rendimiento seguro* (alto rendimiento en escritorio, arranque sin esperas, sin reinicios sorpresa) y *Sin anuncios ni rastreo*. Además quita con casillas las apps que Windows instala solo (iTunes, TikTok, Instagram, juegos patrocinados…) y **revisa las carpetas de Windows** mostrando cuánto ocupa lo que sobra. Nada de esto cambia cómo funcionan Photoshop, las apps o los juegos. |
+| **Modo FPS** | Medidor y dos niveles de un clic (*Máximo rendimiento* y *Menos input delay*), revisión del PC (Hz del monitor, XMP/EXPO, driver de GPU, VBS, plan de energía), **Sesión de juego**, **GPU de alto rendimiento por juego** y **cierres recientes** (qué programa se cerró y qué falló). |
+| **Avanzado** | Ajustes con más efecto que **pueden** hacer fallar apps o juegos en algunos PCs: HAGS, MPO, pantalla completa, VRR, núcleos, temporizador, prioridad Win32, MMCSS, plan máximo, integridad de memoria… Nunca se activan solos ni entran en perfiles: cada uno dice qué puede causar y pide confirmación. Botón para apagarlos todos. |
+| **Todos los ajustes** | Los ajustes seguros uno por uno (privacidad, IA, sistema, barra de tareas, Explorador, Windows Update, apariencia…) con impacto, riesgo, reinicio y **exactamente qué cambia**. Perfiles: *Gamer recomendado*, *Máximo rendimiento*, *Menos input delay*, *Gamer + privacidad máxima*, *Todo lo seguro*. |
 | **Apps** | Quita 138 apps preinstaladas (Microsoft, juegos patrocinados, OEM de HP/Dell/Lenovo, OneDrive, Copilot…) con recomendación *seguro / opcional / no recomendado*. |
 | **Procesos** | Lista con CPU y RAM reales, cerrar procesos (los críticos de Windows están protegidos), cambiar prioridad, **prioridad alta permanente** para un juego (IFEO PerfOptions) y **Sesión de juego**: cierra de un clic lo que corre de fondo. |
 | **Arranque** | Activa o desactiva programas que inician con Windows, igual que el Administrador de tareas (reversible). |
@@ -23,9 +23,8 @@ aplica ajustes con un clic y **todo se puede deshacer**.
 
 ### Lo que no hace (a propósito)
 Desactivar Defender o Windows Update, quitar Edge, borrar el archivo de paginación, BCDEdit/HPET, desactivar servicios en masa,
-«limpiar RAM», forzar prioridades de CPU o tiempos del sistema, ni cambios globales de DirectX o de la GPU (HAGS). Estos últimos
-estuvieron en versiones anteriores y se retiraron porque hacían fallar apps y juegos en algunos equipos (Photoshop, FiveM):
-siguen en el catálogo marcados como `retired` solo para deshacerlos automáticamente en quien ya los tenía. Están explicados en la página *Acerca de*.
+«limpiar RAM» ni prioridad alta permanente por juego. Los ajustes que pueden chocar con apps (HAGS, MPO, temporizador, núcleos,
+prioridades) solo están en **Avanzado**, marcados `advanced` en el catálogo con su `caution`, y nunca se activan solos.
 
 ## Descargar el .exe
 

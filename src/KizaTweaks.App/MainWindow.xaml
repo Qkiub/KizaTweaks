@@ -11,8 +11,8 @@
         TextOptions.TextFormattingMode="Display" UseLayoutRounding="True">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:QuickViewModel}"><views:QuickView /></DataTemplate>
-        <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><views:DashboardView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:OptimizeViewModel}"><views:OptimizeView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AdvancedViewModel}"><views:AdvancedView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:FpsViewModel}"><views:FpsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:TweaksViewModel}"><views:TweaksView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:AppsViewModel}"><views:AppsView /></DataTemplate>
@@ -62,6 +62,16 @@
 
                 <ListBox ItemsSource="{Binding Nav}" SelectedItem="{Binding SelectedNav, Mode=TwoWay}"
                          Style="{StaticResource PlainListBox}" ItemContainerStyle="{StaticResource NavItem}">
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource SubtleBrush}"
+                                               Margin="14,14,0,6" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

@@ -123,8 +123,8 @@ public partial class App : Application
                 report.AppendLine($"OK página: {item.Title}");
             }
             report.AppendLine($"Tweaks cargados: {vm.Tweaks.All.Count}, aplicados: {vm.Tweaks.AppliedCount}");
-            report.AppendLine($"Recomendaciones: {vm.Dashboard.Recommendations.Count}, puntaje {vm.Dashboard.Score}");
-            report.AppendLine($"CPU: {vm.Dashboard.CpuText} | GPU: {vm.Dashboard.GpuText} | RAM: {vm.Dashboard.RamText}");
+            report.AppendLine($"Optimización segura: {vm.Optimize.Percent}% ({vm.Optimize.ScoreText}) | {vm.Optimize.HardwareText}");
+            report.AppendLine($"Secciones seguras: {vm.Optimize.Sections.Count}, avanzados: {vm.Advanced.Groups.Sum(g => g.Items.Count)}");
         }
         catch (Exception ex)
         {

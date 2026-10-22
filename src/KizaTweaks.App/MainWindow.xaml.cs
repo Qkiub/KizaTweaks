@@ -10,6 +10,14 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        // Menú lateral agrupado (Optimizar / Herramientas / KizaTweaks)
+        DataContextChanged += (_, _) =>
+        {
+            if (DataContext is not MainViewModel m) return;
+            var view = System.Windows.Data.CollectionViewSource.GetDefaultView(m.Nav);
+            if (view.GroupDescriptions.Count == 0)
+                view.GroupDescriptions.Add(new System.Windows.Data.PropertyGroupDescription(nameof(NavItem.Group)));
+        };
         Loaded += async (_, _) =>
         {
             if (DataContext is MainViewModel vm) await vm.InitializeAsync();

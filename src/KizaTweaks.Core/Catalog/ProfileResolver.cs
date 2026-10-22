@@ -33,10 +33,10 @@ public static class ProfileResolver
         var adjusted = new List<string>();
         foreach (var t in catalog.Tweaks)
         {
-            if (!t.Retired && Includes(profileId, t)) ids.Add(t.Id);
+            if (!t.Advanced && Includes(profileId, t)) ids.Add(t.Id);
         }
 
-        if (hw is not null && profileId is Profiles.Performance or Profiles.Input && hw.IsLaptop)
+        if (hw is not null && profileId is Profiles.Performance or Profiles.Input or Safe && hw.IsLaptop)
         {
             var removed = ids.Where(NotOnLaptop.Contains).ToList();
             if (removed.Count > 0)

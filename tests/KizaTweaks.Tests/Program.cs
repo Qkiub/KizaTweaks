@@ -37,7 +37,7 @@ var tests = new List<(string name, Action body)>
     ("Interfaz: navegación, filtros y búsqueda", ViewModelTests.NavigationAndFilters),
     ("Modo FPS: activar nivel, progreso e interruptor", ViewModelTests.FpsModeFlow),
     ("Modo FPS: configurar y quitar un juego", ViewModelTests.GameConfigFlow),
-    ("Rápido: solo ajustes seguros y aplica con punto de restauración", ViewModelTests.QuickFlow),
+    ("Optimizar y Avanzado: plan seguro, secciones y avanzados con confirmación", ViewModelTests.OptimizeFlow),
     ("Cierres: lectura del registro de eventos y explicación del módulo", CrashLogParse),
     ("Limpieza: solo borra lo previsto y mide bien", JunkScannerSafe),
 };
@@ -286,7 +286,7 @@ static void RecommendationsRealCase()
     Assert(recs.Any(x => x.Title.Contains("144 Hz")), "no detectó el monitor");
     Assert(recs.Any(x => x.Title.Contains("3200")), "no detectó XMP");
     Assert(recs.Any(x => x.Title.Contains("disco más lento")), "no detectó Windows en el disco lento");
-    Assert(!recs.Any(x => x.TweakId is { } id && CatalogLoader.LoadTweaks().Find(id)!.Retired), "recomendó un ajuste retirado");
+    Assert(!recs.Any(x => x.TweakId is { } id && CatalogLoader.LoadTweaks().Find(id)!.Advanced), "recomendó un ajuste avanzado");
     Assert(recs.Any(x => x.TweakId == "kiza.hibernate"), "no recomendó quitar hibernación con C: de 120 GB");
     Assert(recs[0].Severity == RecSeverity.High, "orden por severidad");
     var score = RecommendationEngine.Score(recs);
@@ -410,16 +410,16 @@ static void ProfilesAdaptToHardware()
     foreach (var id in new[] { Profiles.Gamer, Profiles.Performance, Profiles.Input, Profiles.Privacy, ProfileResolver.Safe })
     {
         var sel = ProfileResolver.Resolve(id, c, desktop).Ids;
-        Assert(!sel.Any(x => c.Find(x)!.Retired), $"{id} incluye ajustes retirados");
+        Assert(!sel.Any(x => c.Find(x)!.Advanced), $"{id} incluye ajustes avanzados");
         Assert(!sel.Any(x => c.Find(x)!.Risk == "risky" || c.Find(x)!.Category is "security" or "experimental"), $"{id} incluye ajustes con riesgo");
     }
     foreach (var id in new[] { "kiza.hags", "kiza.windowedOpt", "kiza.vrr", "kiza.win32Priority", "kiza.timerResolution", "kiza.coreParking", "kiza.mmcssGames" })
-        Assert(c.Find(id)!.Retired, $"{id} debería estar retirado");
+        Assert(c.Find(id)!.Advanced && !string.IsNullOrWhiteSpace(c.Find(id)!.Caution), $"{id} debería ser avanzado y decir qué puede causar");
     Assert(!perf.Contains("q.DisableLocationServices") && !perf.Contains("q.DisableNotifications"), "no debe quitar funciones básicas");
     var input = ProfileResolver.Resolve(Profiles.Input, c, desktop).Ids;
     foreach (var id in new[] { "q.DisableMouseAcceleration", "kiza.keyboardRepeat", "kiza.accessibilityShortcuts", "kiza.usbSuspend", "kiza.pcieLspm" })
         Assert(input.Contains(id), $"menos input delay sin {id}");
-    Assert(!input.Any(x => c.Find(x)!.Retired || c.Find(x)!.Risk != "safe" && x != "kiza.powerUltimate"), "input delay con ajustes con riesgo");
+    Assert(!input.Any(x => c.Find(x)!.Advanced || c.Find(x)!.Risk != "safe" && x != "kiza.powerUltimate"), "input delay con ajustes con riesgo");
     Assert(!ProfileResolver.Resolve(Profiles.Input, c, laptop).Ids.Contains("kiza.powerUltimate"), "input delay en portátil");
     var lap = ProfileResolver.Resolve(Profiles.Performance, c, laptop);
     Assert(!lap.Ids.Contains("kiza.powerUltimate") && lap.AdjustedForHardware.Count == 1, "portátil");

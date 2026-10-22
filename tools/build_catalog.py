@@ -427,11 +427,25 @@ PROFILE_INPUT = {
 }
 
 # Retirados: pueden hacer fallar apps o juegos en algunos equipos (Photoshop, FiveM/GTA, anticheats, audio).
-# Siguen en el catálogo solo para poder deshacerlos en quien ya los aplicó; la app no los muestra.
-RETIRED = {
-    "kiza.hags", "kiza.windowedOpt", "kiza.vrr", "kiza.mmcssGames", "kiza.networkThrottling",
-    "kiza.powerThrottling", "kiza.disableMpo", "kiza.fseGlobal", "kiza.coreParking", "kiza.win32Priority",
-    "kiza.timerResolution", "kiza.vmp", "kiza.memoryIntegrity", "kiza.bgApps", "q.DisableGameBarIntegration",
+# Avanzados: pueden dar más FPS o menos delay, pero en algunos PCs hacen fallar apps o juegos
+# (Photoshop, FiveM/GTA, anticheats, audio). Nunca entran en perfiles ni se activan solos: van en la
+# página «Avanzado», cada uno con lo que puede causar.
+ADVANCED = {
+    "kiza.hags": "Photoshop, Illustrator y otras apps que usan la GPU pueden cerrarse o parpadear. También puede fallar con OBS o grabadores.",
+    "kiza.windowedOpt": "Puede dar problemas con grabadores, overlays viejos y algunos juegos en ventana.",
+    "kiza.vrr": "Puede causar parpadeos en apps y en monitores que no lo soportan bien.",
+    "kiza.disableMpo": "Puede bajar el rendimiento en ventana, romper HDR y overlays, y causar parpadeos con algunos drivers.",
+    "kiza.fseGlobal": "Puede romper HDR, Game Bar y el Alt+Tab en algunos juegos.",
+    "q.DisableGameBarIntegration": "Dejan de funcionar Game Bar, la grabación de Xbox y algunos juegos de la Store.",
+    "kiza.coreParking": "Más consumo y temperatura. En algunos CPUs empeora el reparto de trabajo entre núcleos.",
+    "kiza.powerThrottling": "Más consumo y temperatura: los programas en segundo plano dejan de ahorrar energía.",
+    "kiza.win32Priority": "Exportes, renders y descargas en segundo plano pueden ir más lentos, y algunos programas se vuelven inestables.",
+    "kiza.timerResolution": "Más consumo. En algunos equipos causa fallos en apps de audio, animaciones o juegos.",
+    "kiza.mmcssGames": "Puede causar cortes de audio o tirones en algunos equipos.",
+    "kiza.networkThrottling": "Ganancia mínima. En algunos PCs sube el uso de CPU mientras hay tráfico de red.",
+    "kiza.bgApps": "Las apps de la Store (WhatsApp, Spotify de la Store, correo) dejan de notificar cuando están cerradas.",
+    "kiza.vmp": "Dejan de funcionar WSL, el subsistema de Android, Docker y algunas protecciones de Windows.",
+    "kiza.memoryIntegrity": "Tu PC queda menos protegido contra malware que ataca el kernel. Algunos anticheat la exigen activa.",
 }
 
 # --------------------------------------------------------------------------
@@ -894,14 +908,19 @@ def main():
             t["profiles"].append("perf")
         if t["id"] in PROFILE_INPUT and "input" not in t["profiles"]:
             t["profiles"].append("input")
-        if t["id"] in RETIRED:
-            t["retired"] = True
+        if t["id"] in ADVANCED:
+            t["advanced"] = True
+            t["caution"] = ADVANCED[t["id"]]
             t["profiles"] = []
+            if t["risk"] == "safe":
+                t["risk"] = "moderate"
+        if t["id"] == "kiza.powerHigh":
+            t["risk"] = "safe"
         if t["id"] == "kiza.startupDelay":
             t["category"] = "system"
-    missing = (PROFILE_PERF | PROFILE_INPUT | RETIRED) - {t["id"] for t in tweaks}
+    missing = (PROFILE_PERF | PROFILE_INPUT | set(ADVANCED)) - {t["id"] for t in tweaks}
     assert not missing, f"ids inexistentes: {missing}"
-    assert not ((PROFILE_PERF | PROFILE_INPUT) & RETIRED)
+    assert not ((PROFILE_PERF | PROFILE_INPUT) & set(ADVANCED))
     ids = [t["id"] for t in tweaks]
     assert len(ids) == len(set(ids)), "ids duplicados"
     for t in tweaks:

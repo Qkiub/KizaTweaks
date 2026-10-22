@@ -1643,7 +1643,8 @@
      "path": "ms-gamebarservices\\shell\\open\\command"
     }
    ],
-   "retired": true
+   "advanced": true,
+   "caution": "Dejan de funcionar Game Bar, la grabación de Xbox y algunos juegos de la Store."
   },
   {
    "id": "q.DisableStartRecommended",
@@ -4685,7 +4686,7 @@
    "id": "kiza.hags",
    "category": "gaming",
    "impact": "latency",
-   "risk": "safe",
+   "risk": "moderate",
    "name": "Programación de GPU acelerada por hardware (HAGS)",
    "description": "La GPU organiza su propia cola de trabajo en lugar del CPU. Frames más estables y requisito para DLSS Frame Generation.",
    "note": "Requiere GPU compatible (NVIDIA GTX 10 o superior, AMD RX 5000 o superior) y driver actualizado.",
@@ -4714,13 +4715,14 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Photoshop, Illustrator y otras apps que usan la GPU pueden cerrarse o parpadear. También puede fallar con OBS o grabadores."
   },
   {
    "id": "kiza.windowedOpt",
    "category": "gaming",
    "impact": "latency",
-   "risk": "safe",
+   "risk": "moderate",
    "name": "Optimizaciones para juegos en ventana",
    "description": "Pasa los juegos DirectX 10/11 en ventana o sin bordes al modelo de presentación 'flip': menos latencia y habilita VRR (G-Sync/FreeSync).",
    "note": null,
@@ -4743,13 +4745,14 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Puede dar problemas con grabadores, overlays viejos y algunos juegos en ventana."
   },
   {
    "id": "kiza.vrr",
    "category": "gaming",
    "impact": "latency",
-   "risk": "safe",
+   "risk": "moderate",
    "name": "Frecuencia de actualización variable (VRR)",
    "description": "Permite VRR en juegos que no lo soportan de forma nativa, en monitores G-Sync/FreeSync.",
    "note": "Solo tiene efecto si tu monitor soporta VRR.",
@@ -4772,7 +4775,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Puede causar parpadeos en apps y en monitores que no lo soportan bien."
   },
   {
    "id": "kiza.gameMode",
@@ -4828,7 +4832,7 @@
    "id": "kiza.powerHigh",
    "category": "gaming",
    "impact": "fps",
-   "risk": "moderate",
+   "risk": "safe",
    "name": "Plan de energía: Alto rendimiento",
    "description": "El CPU sube de frecuencia más rápido y no se 'duerme' entre frames. Ganancia pequeña en CPUs modernas; más notable en equipos antiguos.",
    "note": "Más consumo y temperatura. En portátil, solo conectado a la corriente.",
@@ -4985,7 +4989,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Las apps de la Store (WhatsApp, Spotify de la Store, correo) dejan de notificar cuando están cerradas."
   },
   {
    "id": "kiza.telemetryServices",
@@ -5320,7 +5325,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Dejan de funcionar WSL, el subsistema de Android, Docker y algunas protecciones de Windows."
   },
   {
    "id": "kiza.memoryIntegrity",
@@ -5355,7 +5361,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Tu PC queda menos protegido contra malware que ataca el kernel. Algunos anticheat la exigen activa."
   },
   {
    "id": "kiza.mmcssGames",
@@ -5454,7 +5461,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Puede causar cortes de audio o tirones en algunos equipos."
   },
   {
    "id": "kiza.networkThrottling",
@@ -5489,7 +5497,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Ganancia mínima. En algunos PCs sube el uso de CPU mientras hay tráfico de red."
   },
   {
    "id": "kiza.powerThrottling",
@@ -5522,7 +5531,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Más consumo y temperatura: los programas en segundo plano dejan de ahorrar energía."
   },
   {
    "id": "kiza.coreParking",
@@ -5553,7 +5563,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Más consumo y temperatura. En algunos CPUs empeora el reparto de trabajo entre núcleos."
   },
   {
    "id": "kiza.win32Priority",
@@ -5588,7 +5599,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Exportes, renders y descargas en segundo plano pueden ir más lentos, y algunos programas se vuelven inestables."
   },
   {
    "id": "kiza.timerResolution",
@@ -5621,7 +5633,8 @@
    ],
    "restartExplorer": false,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Más consumo. En algunos equipos causa fallos en apps de audio, animaciones o juegos."
   },
   {
    "id": "kiza.startupDelay",
@@ -5688,7 +5701,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Puede bajar el rendimiento en ventana, romper HDR y overlays, y causar parpadeos con algunos drivers."
   },
   {
    "id": "kiza.fseGlobal",
@@ -5769,7 +5783,8 @@
    "restartExplorer": false,
    "minBuild": null,
    "maxBuild": null,
-   "retired": true
+   "advanced": true,
+   "caution": "Puede romper HDR, Game Bar y el Alt+Tab en algunos juegos."
   }
  ]
 }

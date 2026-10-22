@@ -81,8 +81,13 @@ public sealed class TweakDefinition
     [JsonPropertyName("minBuild")] public int? MinBuild { get; set; }
     [JsonPropertyName("maxBuild")] public int? MaxBuild { get; set; }
     [JsonPropertyName("profiles")] public List<string> Profiles { get; set; } = new();
-    /// <summary>Retirado: no se muestra ni se aplica; solo se conserva para deshacerlo donde ya estaba aplicado.</summary>
-    [JsonPropertyName("retired")] public bool Retired { get; set; }
+    /// <summary>
+    /// Avanzado: puede dar más FPS o menos delay pero en algunos PCs hace fallar apps o juegos. Nunca entra
+    /// en perfiles ni en la optimización segura; solo se activa a mano desde «Avanzado».
+    /// </summary>
+    [JsonPropertyName("advanced")] public bool Advanced { get; set; }
+    /// <summary>Qué puede causar (solo en avanzados).</summary>
+    [JsonPropertyName("caution")] public string? Caution { get; set; }
     [JsonPropertyName("source")] public string? Source { get; set; }
     [JsonPropertyName("apply")] public List<TweakOp> Apply { get; set; } = new();
     [JsonPropertyName("undo")] public List<TweakOp> Undo { get; set; } = new();

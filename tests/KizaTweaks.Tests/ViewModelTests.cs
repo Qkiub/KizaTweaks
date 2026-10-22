@@ -153,33 +153,55 @@ public static class ViewModelTests
             throw new Exception("quedó la clave IFEO");
     }
 
-    /// <summary>Rápido: el plan solo trae ajustes seguros y «Menos input delay» los aplica con punto de restauración.</summary>
-    public static void QuickFlow()
+    /// <summary>Optimizar: el plan seguro no trae nada avanzado y cada sección se activa con punto de restauración.</summary>
+    public static void OptimizeFlow()
     {
         var (vm, dialogs, b) = Create();
-        vm.Quick.LoadAsync().GetAwaiter().GetResult();
+        vm.Optimize.LoadAsync().GetAwaiter().GetResult();
         var c = vm.Services.Catalog;
-        foreach (var id in QuickPlan.DelayTweaks(c).Concat(QuickPlan.PrivacyTweaks))
+        var ids = SafePlan.AllTweakIds(c);
+        if (ids.Count < 25) throw new Exception($"plan seguro corto: {ids.Count}");
+        foreach (var id in ids)
         {
             var t = c.Find(id) ?? throw new Exception($"{id} no existe");
-            if (t.Retired || t.Risk != "safe") throw new Exception($"{id} no es seguro");
+            if (t.Advanced || t.Risk != "safe") throw new Exception($"{id} no es seguro");
         }
-        if (QuickPlan.Apps(vm.Services.AppsCatalog).Count() < 25) throw new Exception("lista de apps basura incompleta");
-        if (QuickPlan.Apps(vm.Services.AppsCatalog).Any(a => a.Recommendation != "safe")) throw new Exception("app no segura en la lista rápida");
-        if (vm.Quick.Clean.Items.Count < 10 || vm.Quick.Clean.Items.Any(i => i.Junk!.Id == "windows-old" && i.IsChecked))
+        if (SafePlan.Sections(c, new KizaTweaks.Core.Hardware.HardwareReport { IsLaptop = true }).SelectMany(s => s.TweakIds).Any(SafePlan.DesktopOnly.Contains))
+            throw new Exception("portátil con plan de escritorio");
+        if (SafePlan.Apps(vm.Services.AppsCatalog).Count() < 25) throw new Exception("lista de apps basura incompleta");
+        if (SafePlan.Apps(vm.Services.AppsCatalog).Any(a => a.Recommendation != "safe")) throw new Exception("app no segura en la lista");
+        if (vm.Optimize.Clean.Items.Count < 10 || vm.Optimize.Clean.Items.Any(i => i.Junk!.Id == "windows-old" && i.IsChecked))
             throw new Exception("limpieza");
-        if (vm.Quick.Delay.Items.Count < 6) throw new Exception($"input delay: {vm.Quick.Delay.Items.Count}");
+        if (vm.Optimize.Sections.Count != 4) throw new Exception($"secciones: {vm.Optimize.Sections.Count}");
+        var input = vm.Optimize.Sections.First(s => s.Id == "input");
         dialogs.Answers.Enqueue(0);
-        vm.Quick.Delay.Command.Execute(null);
-        for (int i = 0; i < 400 && !vm.Quick.Delay.IsDone; i++) Thread.Sleep(50);
-        if (!vm.Quick.Delay.IsDone) throw new Exception("no quedó aplicado: " + vm.Quick.Delay.Status + " | " + string.Join(" || ", dialogs.Shown));
+        input.ActivateCommand.Execute(null);
+        for (int i = 0; i < 400 && !input.IsComplete; i++) Thread.Sleep(50);
+        if (!input.IsComplete) throw new Exception("no quedó aplicado: " + input.ActiveText + " | " + string.Join(" || ", dialogs.Shown));
         if (!vm.Services.RestorePointCreated) throw new Exception("sin punto de restauración");
+        if (vm.Optimize.Percent <= 0 || vm.Optimize.Percent >= 100) throw new Exception($"puntaje {vm.Optimize.Percent}");
+
+        // Avanzado: solo ajustes avanzados (o el plan máximo), y activar uno pide confirmación
+        vm.Advanced.LoadAsync().GetAwaiter().GetResult();
+        var adv = vm.Advanced.Groups.SelectMany(g => g.Items).ToList();
+        if (adv.Count < 12 || adv.Any(a => !a.Item.IsAdvanced && a.Item.Def.Id != "kiza.powerUltimate") || adv.Any(a => !a.HasWarning))
+            throw new Exception("avanzado");
+        var hags = adv.First(a => a.Item.Def.Id == "kiza.hags");
+        dialogs.Answers.Enqueue(1); // cancelar
+        hags.ToggleCommand.Execute(null);
+        Thread.Sleep(300);
+        if (hags.IsApplied) throw new Exception("se activó sin confirmar");
+        dialogs.Answers.Enqueue(0);
+        hags.ToggleCommand.Execute(null);
+        for (int i = 0; i < 400 && !hags.IsApplied; i++) Thread.Sleep(50);
+        if (!hags.IsApplied || !vm.Advanced.HasActive) throw new Exception("no se activó HAGS");
+        if (vm.Tweaks.Visible.Any(t => t.IsAdvanced)) throw new Exception("avanzados en «Todos los ajustes»");
     }
 
     public static void NavigationAndFilters()
     {
         var (vm, _, _) = Create();
-        if (vm.Nav.Count != 11 || vm.Nav[0].Key != "quick") throw new Exception("páginas");
+        if (vm.Nav.Count != 11 || vm.Nav[0].Key != "optimize" || vm.Nav.Any(n => n.Group.Length == 0)) throw new Exception("páginas");
         vm.Navigate("about");
         if (vm.CurrentPage is not AboutViewModel) throw new Exception("navegación");
         var t = vm.Tweaks;

@@ -20,10 +20,18 @@ public sealed class CleanupResult
 /// </summary>
 public static class SafetyCleanup
 {
+    /// <summary>Ajustes que la versión 1.0.21 retiró (hoy están en «Avanzado» y solo se activan a mano).</summary>
+    public static readonly IReadOnlySet<string> RetiredIn1021 = new HashSet<string>
+    {
+        "kiza.hags", "kiza.windowedOpt", "kiza.vrr", "kiza.mmcssGames", "kiza.networkThrottling",
+        "kiza.powerThrottling", "kiza.disableMpo", "kiza.fseGlobal", "kiza.coreParking", "kiza.win32Priority",
+        "kiza.timerResolution", "kiza.vmp", "kiza.memoryIntegrity", "kiza.bgApps", "q.DisableGameBarIntegration",
+    };
+
     public static CleanupResult Run(TweakEngine engine, TweakCatalog catalog, ISystemBackend backend, bool removePriorityRules)
     {
         var result = new CleanupResult();
-        foreach (var t in catalog.Tweaks.Where(t => t.Retired && engine.Store.Get(t.Id) is not null))
+        foreach (var t in catalog.Tweaks.Where(t => RetiredIn1021.Contains(t.Id) && engine.Store.Get(t.Id) is not null))
         {
             var r = engine.Revert(t);
             if (r.Success) result.Reverted.Add(t.Name);

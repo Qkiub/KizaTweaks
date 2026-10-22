@@ -25,6 +25,8 @@ public sealed class TweakItemViewModel : ObservableObject
     public string Name => Def.Name;
     public string Description => Def.Description;
     public string? Note => Def.Note;
+    public string? Caution => Def.Caution;
+    public bool IsAdvanced => Def.Advanced;
     public bool HasNote => !string.IsNullOrWhiteSpace(Def.Note);
     public string CategoryName { get; }
     public string ImpactLabel { get; }
@@ -105,16 +107,16 @@ public sealed class TweaksViewModel : ObservableObject
         _shell = shell;
         var catNames = s.Catalog.Categories.ToDictionary(c => c.Id, c => c.Name);
         var order = s.Catalog.Categories.Select(c => c.Id).ToList();
-        _all = s.Catalog.Tweaks.Where(t => !t.Retired)
+        _all = s.Catalog.Tweaks
             .OrderBy(t => order.IndexOf(t.Category)).ThenBy(t => t.Risk == "safe" ? 0 : t.Risk == "moderate" ? 1 : 2).ThenBy(t => t.Name)
             .Select(t => new TweakItemViewModel(t, catNames.GetValueOrDefault(t.Category, t.Category), t.IsCompatible(s.Build)))
             .ToList();
         foreach (var t in _all) t.SelectionChanged = () => OnPropertyChanged(nameof(SelectedCount));
 
-        Categories.Add(new CategoryFilterViewModel { Id = "all", Name = "Todos", Glyph = "", Count = _all.Count });
+        Categories.Add(new CategoryFilterViewModel { Id = "all", Name = "Todos", Glyph = "", Count = _all.Count(t => !t.Def.Advanced) });
         foreach (var c in s.Catalog.Categories)
         {
-            var n = _all.Count(t => t.Def.Category == c.Id);
+            var n = _all.Count(t => t.Def.Category == c.Id && !t.Def.Advanced);
             if (n > 0) Categories.Add(new CategoryFilterViewModel { Id = c.Id, Name = c.Name, Glyph = c.Icon, Count = n });
         }
         _selectedCategory = Categories[0];
@@ -164,7 +166,7 @@ public sealed class TweaksViewModel : ObservableObject
     private void ApplyFilter()
     {
         var q = _search.Trim();
-        var items = _all.Where(t =>
+        var items = _all.Where(t => !t.Def.Advanced &&
             (_selectedCategory.Id == "all" || t.Def.Category == _selectedCategory.Id) &&
             (!_hideApplied || !t.IsApplied) &&
             (q.Length == 0 || t.Name.Contains(q, StringComparison.OrdinalIgnoreCase)

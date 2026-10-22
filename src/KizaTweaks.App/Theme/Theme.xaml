@@ -528,4 +528,35 @@
         </Setter>
     </Style>
 
+
+    <!-- Interruptor de ajuste (el DataContext expone IsApplied) -->
+    <Style x:Key="TweakSwitch" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="Button">
+            <Border x:Name="Track" Width="46" Height="26" CornerRadius="13" Background="{StaticResource BgBrush}"
+                BorderBrush="{StaticResource LineBrush}" BorderThickness="1">
+                <Ellipse x:Name="Thumb" Width="16" Height="16" Fill="{StaticResource SubtleBrush}"
+                     HorizontalAlignment="Left" Margin="4,0" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsApplied}" Value="True">
+                <Setter TargetName="Track" Property="Background" Value="{StaticResource BrandGradient}" />
+                <Setter TargetName="Track" Property="BorderBrush" Value="Transparent" />
+                <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right" />
+                <Setter TargetName="Thumb" Property="Fill" Value="White" />
+                </DataTrigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Track" Property="Opacity" Value="0.88" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter TargetName="Track" Property="BorderBrush" Value="{StaticResource Accent2Brush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
