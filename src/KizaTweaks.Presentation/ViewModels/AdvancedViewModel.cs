@@ -71,7 +71,7 @@ public sealed class AdvancedViewModel : ObservableObject
                 if (!byId.TryGetValue(id, out var item) || !item.IsCompatible) continue;
                 var caution = item.Caution ?? item.Note;
                 g.Items.Add(new FpsTweakViewModel(item, new AsyncCommand(() => ToggleAsync(item)),
-                    string.IsNullOrWhiteSpace(caution) ? null : "Puede causar: " + caution));
+                    string.IsNullOrWhiteSpace(caution) ? null : "Riesgo: " + caution));
             }
             if (g.Items.Count > 0) Groups.Add(g);
         }
@@ -88,7 +88,7 @@ public sealed class AdvancedViewModel : ObservableObject
         }
         var caution = item.Caution ?? item.Note ?? "";
         if (await _dialogs.ChooseAsync("Activar ajuste avanzado",
-                $"{item.Name}\n\n{item.Description}\n\nPuede causar: {caution}\n\n" +
+                $"{item.Name}\n\n{item.Description}\n\nRiesgo: {caution}\n\n" +
                 "Si después algo se cierra o falla, vuelve aquí y apágalo (o usa «Apagar todos los avanzados»).",
                 "Activar", "Cancelar") != 0) return;
         await _tweaks.ApplyAsync(new[] { item.Def }, askConfirm: false);

@@ -67,7 +67,7 @@
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource SubtleBrush}"
-                                               Margin="14,14,0,6" />
+                                               Margin="14,10,0,4" />
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
                         </GroupStyle>
